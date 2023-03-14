@@ -1,12 +1,9 @@
 import logo from './logo.svg';
 import './App.css';
+import Login from './login';
 
 function App() {
-  return (
-    <div className="App">
-      <h1>Heyyyyy Tan</h1>
-    </div>
-  );
+  return <Login />;
 }
 
 export default App;
