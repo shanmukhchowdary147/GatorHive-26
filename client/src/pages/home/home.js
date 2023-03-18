@@ -6,35 +6,35 @@ import './Home.css';
 const Home = () => {
   // state for the carousel images
   const images = [
-    require('./bg3.jpg'),
-    require('./bg6.jpg'),
-    require('./bg7.jpg'),
+    require('../../images/bg3.jpg'),
+    require('../../images/bg4.jpg'),
+    require('../../images/bg5.jpg'),
   ];
 
   // state for the card data
   const [cardData, setCardData] = useState([
     {
-      imagePath: require('./bg3.jpg'),
+      imagePath: require('../../images/bg4.jpg'),
       name: 'Card Name 1',
       date: '15th March, 2023',
     },
     {
-      imagePath: require('./bg3.jpg'),
+      imagePath: require('../../images/bg5.jpg'),
       name: 'Card Name 2',
       date: '14th March, 2023',
     },
     {
-      imagePath: require('./bg3.jpg'),
+      imagePath: require('../../images/bg3.jpg'),
       name: 'Card Name 3',
       date: '13th March, 2023',
     },
     {
-      imagePath: require('./bg3.jpg'),
+      imagePath: require('../../images/bg4.jpg'),
       name: 'Card Name 4',
       date: '12th March, 2023',
     },
     {
-      imagePath: require('./bg3.jpg'),
+      imagePath: require('../../images/bg5.jpg'),
       name: 'Card Name 5',
       date: '11th March, 2023',
     },
@@ -105,6 +105,7 @@ const Home = () => {
         />
         <button type="submit">🔍</button>
       </form>
+      <h2 className="trending-events">Trending Events</h2>
       <div className="cards">
         {cardData.map((card, index) => (
           <div key={index} className="card">
