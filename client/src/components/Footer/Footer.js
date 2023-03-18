@@ -7,28 +7,21 @@ function Footer() {
       <div className="empty-part"></div>
       <div className="empty-part"></div>
       <div className="social-links">
-        <ul>
-          <li>
-            {' '}
-            <a href="https://www.instagram.com/">Instagram</a>
-          </li>
-          <li>
-            {' '}
-            <a href="https://www.instagram.com/">Instagram</a>
-          </li>
-          <li>
-            {' '}
-            <a href="https://www.instagram.com/">Instagram</a>
-          </li>
-          <li>
-            {' '}
-            <a href="https://www.instagram.com/">Instagram</a>
-          </li>
-          <li>
-            {' '}
-            <a href="https://www.instagram.com/">Instagram</a>
-          </li>
-        </ul>
+        <div>
+          <a href="https://www.instagram.com/">Instagram</a>
+        </div>
+        <div>
+          <a href="https://www.instagram.com/">LinkedIn</a>
+        </div>
+        <div>
+          <a href="https://www.instagram.com/">Facebook</a>
+        </div>
+        <div>
+          <a href="https://www.instagram.com/">Twitter</a>
+        </div>
+        <div>
+          <a href="https://www.instagram.com/">Github</a>
+        </div>
       </div>
     </div>
   );

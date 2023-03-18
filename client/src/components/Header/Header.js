@@ -10,7 +10,9 @@ function Header() {
 
   return (
     <nav className="sticky-header">
-      <div className="logo">GatorHive</div>
+      <div className="logo">
+        <a href="/">GatorHive</a>
+      </div>
       <a href="hostevent" className="host-event">
         Host an Event
       </a>
@@ -18,10 +20,10 @@ function Header() {
         <button className="profile-btn">Profile</button>
         {showDropdown && (
           <div className="dropdown-content">
-            <a href="account/profile">My Profile</a>
-            <a href="account/events-registered">Events Registered</a>
-            <a href="account/events-hosted">Events Hosted</a>
-            <a href="account/my-calendar">My Calendar</a>
+            <a href="/account/profile">My Profile</a>
+            <a href="/account/events-registered">Events Registered</a>
+            <a href="/account/events-hosted">Events Hosted</a>
+            <a href="/account/my-calendar">My Calendar</a>
           </div>
         )}
       </div>
