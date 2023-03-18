@@ -30,7 +30,7 @@
 
 .search-form input {
   padding: 10px;
-  border: black;
+  border: 2px solid black;
   border-radius: 15px 0px 0px 15px;
   width: 70%;
   font-size: 16px;
@@ -44,7 +44,9 @@
   padding: 10px;
   font-size: 16px;
 }
-
+.trending-events {
+  text-align: center;
+}
 .cards {
   display: flex;
   flex-wrap: wrap;

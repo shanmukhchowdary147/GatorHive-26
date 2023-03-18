@@ -5,14 +5,12 @@ import {
   Route,
   Redirect,
 } from 'react-router-dom';
-// import Switch from 'react-router-dom/Switch';
 
 import './App.css';
 import Login from './pages/Login/Login';
 import Home from './pages/Home/Home';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
-import Homex from './pages/Home/Homex';
 import Account from './pages/Account/Account';
 import Search from './pages/Search/Search';
 import EventDetails from './pages/EventDetails/EventDetails';
