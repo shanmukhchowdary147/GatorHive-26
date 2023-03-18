@@ -39,8 +39,8 @@
 .search-form button {
   background-color: black;
   color: #fff;
-  border: none;
-  border-radius: 0px 15px 15px 0px;
+  border: 2px solid black;
+  border-radius: 1px 15px 15px 1px;
   padding: 10px;
   font-size: 16px;
 }

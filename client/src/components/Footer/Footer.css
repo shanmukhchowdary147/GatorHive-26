@@ -1,7 +1,7 @@
 .footer {
   height: 300px;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   background-color: #01152b;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
