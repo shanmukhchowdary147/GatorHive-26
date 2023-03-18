@@ -1,0 +1,21 @@
+.footer {
+  height: 300px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #01152b;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.empty-part {
+  width: 33.33%;
+}
+
+.social-links a {
+  margin-right: 10px;
+  color: gray;
+}
+
+.social-links a:hover {
+  color: black;
+}

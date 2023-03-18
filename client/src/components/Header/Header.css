@@ -1,0 +1,59 @@
+.sticky-header {
+  position: sticky;
+  top: 0;
+  background-color: #ffffff;
+  z-index: 1000;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.host-event {
+  color: #ffffff;
+  background-color: #007bff;
+  border-radius: 4px;
+  padding: 10px 16px;
+  text-decoration: none;
+}
+
+.profile-dropdown {
+  position: relative;
+}
+
+.profile-btn {
+  background-color: transparent;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  top: 40px;
+  right: 0;
+  z-index: 1000;
+  background-color: #ffffff;
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
+}
+
+.dropdown-content a {
+  display: block;
+  padding: 10px;
+  text-decoration: none;
+  color: #333333;
+}
+
+.dropdown-content a:hover {
+  background-color: #f5f5f5;
+}
+
+.profile-dropdown:hover .dropdown-content {
+  display: block;
+}
