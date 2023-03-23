@@ -27,7 +27,7 @@ function App() {
           <Route exact path="/" component={Home} />
           <Route path="/account/:section" component={Account} />
           <Route path="/search" component={Search} />
-          <Route path="/host-event" component={HostEvent} />
+          <Route path="/hostevent" component={HostEvent} />
           <Route path="/event/:eventId" component={EventDetails} />
         </Switch>
         <Footer />
