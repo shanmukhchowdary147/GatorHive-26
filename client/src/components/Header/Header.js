@@ -25,7 +25,6 @@ function Header() {
             <a href="/account/upcoming">Upcoming Events</a>
             <a href="/account/attended">Events Registered</a>
             <a href="/account/hosted">Events Hosted</a>
-            
           </div>
         )}
       </div>
