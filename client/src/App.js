@@ -15,19 +15,20 @@ import Account from './pages/Account/Account';
 import Search from './pages/Search/Search';
 import EventDetails from './pages/EventDetails/EventDetails';
 import HostEvent from './pages/HostEvent/HostEvent';
+import Fake from './Fake';
 
 function App() {
   return (
     <Router>
       <div>
         <Header />
-
         <Switch>
           <Route exact path="/login" component={Login} />
           <Route exact path="/" component={Home} />
           <Route path="/account/:section" component={Account} />
           <Route path="/search" component={Search} />
           <Route path="/host-event" component={HostEvent} />
+          <Route path="/fake" component={Fake} />
           <Route path="/event/:eventId" component={EventDetails} />
         </Switch>
         <Footer />
