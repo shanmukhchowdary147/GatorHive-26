@@ -15,6 +15,7 @@ import Account from './pages/Account/Account';
 import Search from './pages/Search/Search';
 import EventDetails from './pages/EventDetails/EventDetails';
 import HostEvent from './pages/HostEvent/HostEvent';
+import EditProfile from './components/Account/EditProfile';
 import Fake from './Fake';
 
 function App() {
@@ -25,7 +26,7 @@ function App() {
         <Switch>
           <Route exact path="/login" component={Login} />
           <Route exact path="/" component={Home} />
-          <Route path="/account/:section" component={Account} />
+          <Route path="/account" component={Account} />
           <Route path="/search" component={Search} />
           <Route path="/host-event" component={HostEvent} />
           <Route path="/fake" component={Fake} />
