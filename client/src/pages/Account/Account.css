@@ -1,0 +1,64 @@
+.account-page {
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+}
+
+.profile-avatar{
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-bottom: 20px;
+}
+
+.sidebar {
+  width: 22%;
+  height: 100%;
+  background-color: #f2f2f2;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 20px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+}
+
+.sidebar a {
+  text-decoration: none;
+  color: #333;
+  font-size: 16px;
+  margin-bottom: 10px;
+  transition: all 0.3s ease;
+  display: inline-block;
+  width: 100%; 
+  padding: 10px; 
+  box-sizing: border-box; 
+  border: 1px solid #ccc; 
+  border-radius: 5px; 
+}
+
+.sidebar a:hover, .sidebar a.active {
+  color: #fff;
+  background-color: #333;
+}
+
+.sidebar .active {
+  font-weight: bold;
+}
+
+.content {
+  width: 80%;
+  height: 100%;
+  background-color: #fff;
+  padding: 20px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 5px; 
+}
+
+.content h2 {
+  margin-top: 0;
+}
+
