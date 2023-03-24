@@ -14,12 +14,37 @@ const Account = () => {
   return (
     <div className="account-page">
       <div className="sidebar">
-        <img src={require('../../images/owl.png')} className='profile-avatar'/>
-        <a href='/account/home' className={location.pathname === `${url}/home` ? "active" : ""}>Home</a>
-        <a href='/account/edit' className={location.pathname === `${url}/edit` ? "active" : ""}>Edit Profile</a>
-        <a href='/account/upcoming' className={location.pathname === `${url}/upcoming` ? "active" : ""}>Upcoming Events</a>
-        <a href='/account/attended' className={location.pathname === `${url}/attended` ? "active" : ""}>Events Attended</a>
-        <a href='/account/hosted' className={location.pathname === `${url}/hosted` ? "active" : ""}>Events Hosted</a>
+        <img src={require('../../images/owl.png')} className="profile-avatar" />
+        <a
+          href="/account/home"
+          className={location.pathname === `${url}/home` ? 'active' : ''}
+        >
+          Home
+        </a>
+        <a
+          href="/account/edit"
+          className={location.pathname === `${url}/edit` ? 'active' : ''}
+        >
+          Edit Profile
+        </a>
+        <a
+          href="/account/upcoming"
+          className={location.pathname === `${url}/upcoming` ? 'active' : ''}
+        >
+          Upcoming Events
+        </a>
+        <a
+          href="/account/attended"
+          className={location.pathname === `${url}/attended` ? 'active' : ''}
+        >
+          Events Attended
+        </a>
+        <a
+          href="/account/hosted"
+          className={location.pathname === `${url}/hosted` ? 'active' : ''}
+        >
+          Events Hosted
+        </a>
       </div>
       <div className="content">
         <Switch>
