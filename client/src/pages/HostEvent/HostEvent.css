@@ -3,22 +3,22 @@ h1 {
   margin-bottom: 2rem;
 }
 
-form {
+.eventHost-form {
   display: flex;
   flex-direction: column;
   gap: 1rem;
 }
 
-label {
+.eventHost-form label {
   display: block;
   font-size: 1.2rem;
 }
 
-input[type="text"],
-input[type="number"],
-input[type="date"],
-select,
-textarea {
+.eventHost-form input[type='text'],
+.eventHost-form input[type='number'],
+.eventHost-form input[type='date'],
+.eventHost-form select,
+.eventHost-form textarea {
   font-size: 1.2rem;
   padding: 0.5rem;
   border-radius: 0.5rem;
@@ -28,18 +28,18 @@ textarea {
   margin-bottom: 1rem;
 }
 
-input[type="text"]:disabled {
+.eventHost-form input[type='text']:disabled {
   background-color: white;
 }
-input {
+.eventHost-form input {
   margin: 10px;
 }
 
-input[type="checkbox"] {
+.eventHost-form input[type='checkbox'] {
   margin-right: 0.5rem;
 }
 
-button[type="submit"] {
+.eventHost-form button[type='submit'] {
   background-color: #2a9d8f;
   color: white;
   font-size: 1.2rem;
@@ -50,7 +50,7 @@ button[type="submit"] {
   transition: background-color 0.2s ease-in-out;
 }
 
-button[type="submit"]:hover {
+button[type='submit']:hover {
   background-color: #1e7c72;
   margin: 10px;
 }
