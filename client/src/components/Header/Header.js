@@ -13,17 +13,19 @@ function Header() {
       <div className="logo">
         <a href="/">GatorHive</a>
       </div>
-      <a href="hostevent" className="host-event">
+      <a href="/hostevent" className="host-event">
         Host an Event
       </a>
       <div className="profile-dropdown" onClick={handleDropdown}>
         <button className="profile-btn">Profile</button>
         {showDropdown && (
           <div className="dropdown-content">
-            <a href="/account/profile">My Profile</a>
-            <a href="/account/events-registered">Events Registered</a>
-            <a href="/account/events-hosted">Events Hosted</a>
-            <a href="/account/my-calendar">My Calendar</a>
+            <a href="/account/home">My profile</a>
+            <a href="/account/edit">Edit Profile</a>
+            <a href="/account/upcoming">Upcoming Events</a>
+            <a href="/account/attended">Events Registered</a>
+            <a href="/account/hosted">Events Hosted</a>
+            
           </div>
         )}
       </div>
