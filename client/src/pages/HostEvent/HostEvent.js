@@ -12,6 +12,7 @@ function HostEventPage() {
   const [club, setClub] = useState('');
   const [entryFee, setEntryFee] = useState('');
   const [theme, setTheme] = useState('');
+  const [otherTheme, setOtherTheme] = useState('');
   const [capacity, setCapacity] = useState('');
   const [freeStuff, setFreeStuff] = useState('');
   const [allowGroupRegistration, setAllowGroupRegistration] = useState(false);
@@ -233,8 +234,8 @@ function HostEventPage() {
               {theme === 'other' && (
                 <input
                   type="text"
-                  value={theme}
-                  onChange={(e) => setTheme(e.target.value)}
+                  value={otherTheme}
+                  onChange={(e) => setOtherTheme(e.target.value)}
                 />
               )}
             </label>
