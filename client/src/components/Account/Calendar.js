@@ -71,16 +71,17 @@ function Home() {
 
   return (
     <table className="calendar">
-      <tbody>
-        <tr>
-          <td><button onClick={handlePrev}>&lt;</button></td>
-          <td colSpan="5">{renderTitleRow()}</td>
-          <td><button onClick={handleNext}>&gt;</button></td>
-        </tr>
-        {renderDayNameRow()}
-        {renderDateRows()}
-      </tbody>
-    </table>
+  <tbody>
+    <tr>
+      <td><button className="buttons" onClick={handlePrev}>&lt;</button></td>
+      <td colSpan="5">{renderTitleRow()}</td>
+      <td><button className="buttons" onClick={handleNext}>&gt;</button></td>
+    </tr>
+    {renderDayNameRow()}
+    {renderDateRows()}
+  </tbody>
+</table>
+
   );
 }
 
