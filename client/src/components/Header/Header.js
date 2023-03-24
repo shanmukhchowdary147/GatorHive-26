@@ -13,7 +13,7 @@ function Header() {
       <div className="logo">
         <a href="/">GatorHive</a>
       </div>
-      <a href="/hostevent" className="host-event">
+      <a href="/host-event" className="host-event">
         Host an Event
       </a>
       <div className="profile-dropdown" onClick={handleDropdown}>

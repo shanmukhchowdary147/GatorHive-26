@@ -73,9 +73,9 @@ function Home() {
     <table className="calendar">
       <tbody>
         <tr>
-          <td><button onClick={handlePrev}>&lt;</button></td>
+          <td><button class = "buttons" onClick={handlePrev}>&lt;</button></td>
           <td colSpan="5">{renderTitleRow()}</td>
-          <td><button onClick={handleNext}>&gt;</button></td>
+          <td><button class = "buttons" onClick={handleNext}>&gt;</button></td>
         </tr>
         {renderDayNameRow()}
         {renderDateRows()}
