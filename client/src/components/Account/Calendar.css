@@ -3,9 +3,16 @@
     width: 50%;
     font-size: 14px;
     border: 1px solid black;
-    margin: 0 auto;
+    margin-top: 6px;
+    /* margin: 0 auto; */
   }
   
+  .calendar-main{
+    display: flex;
+    justify-content: space-around;
+    
+  }
+
   .calendar-title {
     color: white;
     font-weight: bold;
@@ -56,11 +63,39 @@
     margin-bottom: 10px;
   }
   
-  .calendar td:first-child {
+  .calendar td:first-child tr:first-child{
     text-align: left;
   }
   
-  .calendar td:last-child {
+  .calendar tr:first-child td:last-child {
     text-align: right;
+  }
+
+  .event-cards-container {
+    margin-top: 6px;
+  }
+    
+  .event-card {
+  width: 100%;
+  margin-bottom: 20px;
+  background-color: #f2f2f2;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 18px;
+  box-sizing: border-box;
+  }
+  
+  .event-card h2 {
+  margin-top: 0;
+  }
+  
+  .event-card ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  }
+  
+  .event-card li {
+  margin-bottom: 10px;
   }
   

@@ -1,0 +1,14 @@
+.edit-profile label {
+  display: inline-block;
+  width: 100px;
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.edit-profile input[type="text"] {
+  width: 200px;
+}
+
+.edit-profile button {
+  margin-left: 10px;
+}
