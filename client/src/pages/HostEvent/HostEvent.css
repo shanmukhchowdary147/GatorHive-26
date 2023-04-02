@@ -50,7 +50,7 @@ h1 {
   transition: background-color 0.2s ease-in-out;
 }
 
-button[type='submit']:hover {
+.eventHost-form button[type='submit']:hover {
   background-color: #1e7c72;
   margin: 10px;
 }

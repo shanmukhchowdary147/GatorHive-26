@@ -1,21 +1,66 @@
-.footer {
-  height: 300px;
+.footer-container {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   background-color: #01152b;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  padding-bottom: 20px;
+}
+.social-container {
+  padding: 40px 50px 0px 50px;
+  display: flex;
+  align-items: center;
 }
 
-.empty-part {
-  width: 33.33%;
+.footer-options {
+  display: flex;
+  justify-content: space-evenly;
+  margin: 10px;
 }
 
-.social-links a {
-  margin-right: 10px;
-  color: gray;
+.footer-options a {
+  margin: 10px;
+  color: rgb(111, 110, 110);
 }
 
-.social-links a:hover {
-  color: black;
+.footer-options a:hover {
+  color: white;
+}
+
+a.social {
+  margin: 0 1rem;
+  transition: transform 250ms;
+  display: inline-block;
+}
+
+a.social:hover {
+  transform: translateY(-2px);
+  color: white;
+}
+
+a.youtube {
+  color: rgb(179, 177, 177);
+}
+
+a.facebook {
+  color: rgb(179, 177, 177);
+}
+
+a.twitter {
+  color: rgb(179, 177, 177);
+}
+
+a.instagram {
+  color: rgb(179, 177, 177);
+}
+a.linkedIn {
+  color: rgb(179, 177, 177);
+}
+
+.footer-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: small;
+  color: rgb(111, 110, 110);
 }
