@@ -2,7 +2,11 @@
 import { mysqlProxy } from "./api/database/proxy/mysql.proxy";
 import { expressApp } from "./config/express";
 import logger from "./api/common/logger/logger";
-import { shouldRunMigrations, shouldForceSyncDb } from "./config/vars";
+import {
+  shouldRunMigrations,
+  shouldForceSyncDb,
+  shouldSyncDB,
+} from "./config/vars";
 
 class Server {
   static bootstrap() {
@@ -22,7 +26,7 @@ class Server {
 
   async initializeDB(callback: any) {
     try {
-      await mysqlProxy.sync(true, shouldForceSyncDb);
+      await mysqlProxy.sync(shouldSyncDB, shouldForceSyncDb);
       // if (shouldRunMigrations) {
       //   // await runMigrations(mysqlProxy.sequelize);
       //   logger.info(
@@ -33,7 +37,7 @@ class Server {
       //   );
       // }
       console.log("Database connection has been established successfully.");
-      console.log("Migrations ran successfully");
+      // console.log("Migrations ran successfully");
       callback();
     } catch (error) {
       console.error("Unable to connect to the database:", error);
