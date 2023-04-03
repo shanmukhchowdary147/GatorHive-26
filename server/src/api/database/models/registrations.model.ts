@@ -18,12 +18,12 @@ export default (sequelize: Sequelize, dataType: typeof DataTypes) => {
           key: "id",
         },
       },
-      eventDetailsId: {
+      eventId: {
         type: dataType.UUID,
         allowNull: false,
         references: {
           model: {
-            tableName: collections.EventDetails,
+            tableName: collections.Event,
           } as any,
           key: "id",
         },

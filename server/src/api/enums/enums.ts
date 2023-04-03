@@ -4,5 +4,5 @@ export const collections = {
   Address: "Address",
   StudentOrg: "StudentOrg",
   Registrations: "Registrations",
-  EventDetails: "EventDetails",
+  Event: "Event",
 };
