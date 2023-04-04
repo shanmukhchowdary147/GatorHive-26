@@ -8,3 +8,7 @@ router.use("/events", eventRoutes);
 router.use("/auth", authRoutes);
 
 export { router };
+
+router.post("/auth", (req, res) => {
+  res.send("Hello World!");
+});
