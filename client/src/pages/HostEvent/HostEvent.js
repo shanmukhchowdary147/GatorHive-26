@@ -1,20 +1,20 @@
-import './HostEvent.css';
-import React, { useState } from 'react';
+import "./HostEvent.css";
+import React, { useState } from "react";
 
 function HostEventPage() {
-  const [eventName, setEventName] = useState('');
-  const [eventDetails, setEventDetails] = useState('');
-  const [eventLocation, setEventLocation] = useState('');
+  const [eventName, setEventName] = useState("");
+  const [eventDetails, setEventDetails] = useState("");
+  const [eventLocation, setEventLocation] = useState("");
   const [isOnline, setIsOnline] = useState(false);
-  const [eventDate, setEventDate] = useState('');
-  const [tags, setTags] = useState('');
+  const [eventDate, setEventDate] = useState("");
+  const [tags, setTags] = useState("");
   const [posterImage, setPosterImage] = useState(null);
-  const [club, setClub] = useState('');
-  const [entryFee, setEntryFee] = useState('');
-  const [theme, setTheme] = useState('');
-  const [otherTheme, setOtherTheme] = useState('');
-  const [capacity, setCapacity] = useState('');
-  const [freeStuff, setFreeStuff] = useState('');
+  const [club, setClub] = useState("");
+  const [entryFee, setEntryFee] = useState("");
+  const [theme, setTheme] = useState("");
+  const [otherTheme, setOtherTheme] = useState("");
+  const [capacity, setCapacity] = useState("");
+  const [freeStuff, setFreeStuff] = useState("");
   const [allowGroupRegistration, setAllowGroupRegistration] = useState(false);
   const [carpooling, setCarpooling] = useState(false);
   const [alcoholAllowed, setAlcoholAllowed] = useState(false);
@@ -31,10 +31,10 @@ function HostEventPage() {
 
   const handleLocationChange = (event) => {
     if (event.target.checked) {
-      setEventLocation('Online Event');
+      setEventLocation("Online Event");
       setIsOnline(true);
     } else {
-      setEventLocation('');
+      setEventLocation("");
       setIsOnline(false);
     }
   };
@@ -42,27 +42,27 @@ function HostEventPage() {
   const handleSubmit = (event) => {
     event.preventDefault();
     // Here you could make an API call to submit the form data and image to a server
-    console.log('Event Name:', eventName);
-    console.log('Event Details:', eventDetails);
-    console.log('Event Location:', eventLocation);
-    console.log('Is Online:', isOnline);
-    console.log('Event Date:', eventDate);
-    console.log('Tags:', tags);
-    console.log('Poster Image:', posterImage);
-    console.log('Club:', club);
-    console.log('Entry Fee:', entryFee);
-    console.log('Theme:', theme);
-    console.log('Capacity:', capacity);
-    console.log('Free Stuff:', freeStuff);
-    console.log('Allow Group Registration:', allowGroupRegistration);
-    console.log('Carpooling:', carpooling);
-    console.log('Alcohol Allowed:', alcoholAllowed);
-    console.log('Is Veg:', isVeg);
-    console.log('Is Non-Veg:', isNonVeg);
-    console.log('Guide:', guide);
-    console.log('Has Parking:', hasParking);
-    console.log('Is Private Party:', isPrivateParty);
-    console.log('Pet Allowed:', petAllowed);
+    console.log("Event Name:", eventName);
+    console.log("Event Details:", eventDetails);
+    console.log("Event Location:", eventLocation);
+    console.log("Is Online:", isOnline);
+    console.log("Event Date:", eventDate);
+    console.log("Tags:", tags);
+    console.log("Poster Image:", posterImage);
+    console.log("Club:", club);
+    console.log("Entry Fee:", entryFee);
+    console.log("Theme:", theme);
+    console.log("Capacity:", capacity);
+    console.log("Free Stuff:", freeStuff);
+    console.log("Allow Group Registration:", allowGroupRegistration);
+    console.log("Carpooling:", carpooling);
+    console.log("Alcohol Allowed:", alcoholAllowed);
+    console.log("Is Veg:", isVeg);
+    console.log("Is Non-Veg:", isNonVeg);
+    console.log("Guide:", guide);
+    console.log("Has Parking:", hasParking);
+    console.log("Is Private Party:", isPrivateParty);
+    console.log("Pet Allowed:", petAllowed);
   };
 
   const handleImageChange = (event) => {
@@ -107,7 +107,7 @@ function HostEventPage() {
                 type="checkbox"
                 checked={isOnline}
                 onChange={handleLocationChange}
-              />{' '}
+              />{" "}
             </label>
             <br />
             <label>
@@ -148,8 +148,8 @@ function HostEventPage() {
               <input
                 type="checkbox"
                 checked={!capacity}
-                onChange={() => setCapacity('')}
-              />{' '}
+                onChange={() => setCapacity("")}
+              />{" "}
               Unlimited
             </label>
             <br />
@@ -231,7 +231,7 @@ function HostEventPage() {
                 <option value="informal">Informal</option>
                 <option value="other">Other</option>
               </select>
-              {theme === 'other' && (
+              {theme === "other" && (
                 <input
                   type="text"
                   value={otherTheme}
@@ -286,7 +286,7 @@ function HostEventPage() {
               />
             </label>
             <br />
-            <button type="submit">Host Event</button>
+            <button type="submit">Create Event</button>
           </div>
         </div>
       </form>

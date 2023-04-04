@@ -209,7 +209,7 @@ function SearchPage() {
       <div className="left-box">
         <input
           type="text"
-          placeholder="Search events"
+          placeholder="Search events...."
           value={searchQuery}
           onChange={handleSearchQueryChange}
         />

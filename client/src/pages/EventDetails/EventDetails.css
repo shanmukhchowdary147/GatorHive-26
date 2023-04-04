@@ -1,1 +1,101 @@
+.event-details-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 90%;
+  margin: 30px auto;
+}
 
+.event-details-left {
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.event-details-left img {
+  width: 80%;
+  height: auto;
+  margin-bottom: 10px;
+}
+
+.event-details-right {
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+  margin-left: 20px;
+  /* padding: 1rem; */
+}
+.event-description {
+  margin-bottom: 10px;
+}
+
+.event-features {
+  margin-bottom: 30px;
+}
+
+.event-details-right ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  margin-bottom: 1rem;
+}
+
+.event-details-right li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.event-details-right li svg {
+  margin-right: 0.5rem;
+}
+
+.event-details-right li .label {
+  font-size: 1.2rem;
+}
+
+.event-availabilities {
+  list-style-type: none;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 1rem;
+  margin-top: 50px;
+}
+
+.event-availabilities li {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.feature-tick::before {
+  content: "✔";
+  color: green;
+  font-size: 1.2rem;
+  margin-right: 0.5rem;
+}
+
+.feature-cross::before {
+  content: "✘";
+  color: red;
+  font-size: 1.2rem;
+  margin-right: 0.5rem;
+}
+
+.registration-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-top: 1rem;
+}
+.registration-buttons button {
+  height: 40px;
+  background-color: #2a9d8f;
+  margin: 10px;
+  font-family: "Poppins", sans-serif;
+}
+.group-register-invisible {
+  visibility: hidden;
+}
