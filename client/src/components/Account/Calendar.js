@@ -83,21 +83,21 @@ function Home() {
         </tbody>
       </table>
       <div className="event-cards-container">
-        <div className="event-card">
+        <div className="events-card">
           <h2>Yesterday's Events</h2>
           <ul>
             <li>Event name tamporary event</li>            
             <li>Event</li>
           </ul> 
           </div>
-        <div className="event-card">
+        <div className="events-card">
           <h2>Today's Events</h2>
           <ul>
             <li>Event</li>
             <li>Event</li>
           </ul>
         </div>
-        <div className="event-card">
+        <div className="events-card">
           <h2>Tomorrow's Events</h2>
           <ul>
             <li>Event</li>

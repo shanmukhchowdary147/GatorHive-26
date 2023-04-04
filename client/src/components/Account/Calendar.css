@@ -75,7 +75,7 @@
     margin-top: 6px;
   }
     
-  .event-card {
+  .events-card {
   width: 100%;
   margin-bottom: 20px;
   background-color: #f2f2f2;
@@ -85,17 +85,17 @@
   box-sizing: border-box;
   }
   
-  .event-card h2 {
+  .events-card h2 {
   margin-top: 0;
   }
   
-  .event-card ul {
+  .events-card ul {
   margin: 0;
   padding: 0;
   list-style: none;
   }
   
-  .event-card li {
+  .events-card li {
   margin-bottom: 10px;
   }
   

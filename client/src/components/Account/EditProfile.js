@@ -86,7 +86,6 @@ function EditProfile() {
       <div>
         <label>Email:</label>
         {renderEditableField("email", email)}
-        {/* <button onClick={() => handleFieldEdit('email')} /> */}
         <BiEditAlt onClick={() => handleFieldEdit("email")} />
       </div>
       <div>
@@ -122,11 +121,14 @@ function EditProfile() {
       <div>
         <label>State:</label>
         {renderEditableField("state", state)}
+        <BiEditAlt className = "inv" onClick={() => handleFieldEdit("state")} />
       </div>
       <div>
         <label>Country:</label>
         {renderEditableField("country", country)}
+        <BiEditAlt className = "inv" onClick={() => handleFieldEdit("country")} />
       </div>
+      <button>Save</button>
     </div>
   );
 }
