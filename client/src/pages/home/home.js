@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import SimpleImageSlider from "react-simple-image-slider";
 import { Carousel } from "react-responsive-carousel";
 import "./Home.css";
+import { BiSearchAlt } from "react-icons/bi";
 // import EventSlider from "../../components/EventSlider/EventSlider";
 
 const Home = () => {
@@ -114,11 +115,13 @@ const Home = () => {
       <form className="search-form" onSubmit={handleSubmit}>
         <input
           type="text"
-          placeholder="Search"
+          placeholder="Search for events........"
           value={searchQuery}
           onChange={(event) => setSearchQuery(event.target.value)}
         />
-        <button type="submit">🔍</button>
+        <button type="submit">
+          <BiSearchAlt />
+        </button>
       </form>
       <h2 className="trending-events">Trending Events</h2>
       <div className="cards">

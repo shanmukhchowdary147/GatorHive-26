@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import './Header.css';
+import React, { useState } from "react";
+import "./Header.css";
 
 function Header() {
   const [showDropdown, setShowDropdown] = useState(false);
@@ -13,11 +13,11 @@ function Header() {
       <div className="logo">
         <a href="/">GatorHive</a>
       </div>
-      <div className="right-part">
-        <a href="/host-event" className="host-event">
+      <div className="header-ight-part">
+        <a href="/host-event" className="host-event-btn">
           Host an Event
         </a>
-        <a href="/student-orgs" className="student-orgs">
+        <a href="/student-orgs" className="student-orgs-btn">
           Student Orgs
         </a>
         <div className="profile-dropdown" onClick={handleDropdown}>

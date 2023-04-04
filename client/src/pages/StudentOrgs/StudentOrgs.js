@@ -1,55 +1,78 @@
-import React, { useState } from 'react';
-import './StudentOrgs.css';
+import React, { useState } from "react";
+import "./StudentOrgs.css";
 
 function StudentOrgs() {
   const [cardData, setCardData] = useState([
     {
-      imagePath: require('../../images/bg4.jpg'),
-      name: 'Card Name 1',
-      date: '15th March, 2023',
+      imagePath: require("../../images/bg4.jpg"),
+      name: "Card Name 1",
+      date: "15th March, 2023",
     },
     {
-      imagePath: require('../../images/bg5.jpg'),
-      name: 'Card Name 2',
-      date: '14th March, 2023',
+      imagePath: require("../../images/bg5.jpg"),
+      name: "Card Name 2",
+      date: "14th March, 2023",
     },
     {
-      imagePath: require('../../images/bg3.jpg'),
-      name: 'Card Name 3',
-      date: '13th March, 2023',
+      imagePath: require("../../images/bg3.jpg"),
+      name: "Card Name 3",
+      date: "13th March, 2023",
     },
     {
-      imagePath: require('../../images/bg4.jpg'),
-      name: 'Card Name 4',
-      date: '12th March, 2023',
+      imagePath: require("../../images/bg4.jpg"),
+      name: "Card Name 4",
+      date: "12th March, 2023",
     },
     {
-      imagePath: require('../../images/bg5.jpg'),
-      name: 'Card Name 5',
-      date: '11th March, 2023',
+      imagePath: require("../../images/bg5.jpg"),
+      name: "Card Name 5",
+      date: "11th March, 2023",
     },
     {
-      imagePath: require('../../images/bg3.jpg'),
-      name: 'Card Name 3',
-      date: '13th March, 2023',
+      imagePath: require("../../images/bg3.jpg"),
+      name: "Card Name 3",
+      date: "13th March, 2023",
     },
     {
-      imagePath: require('../../images/bg4.jpg'),
-      name: 'Card Name 4',
-      date: '12th March, 2023',
+      imagePath: require("../../images/bg4.jpg"),
+      name: "Card Name 4",
+      date: "12th March, 2023",
     },
     {
-      imagePath: require('../../images/bg5.jpg'),
-      name: 'Card Name 5',
-      date: '11th March, 2023',
+      imagePath: require("../../images/bg5.jpg"),
+      name: "Card Name 5",
+      date: "11th March, 2023",
     },
   ]);
 
-  // hhhhhhhhhhhhhh
-  const [secondaryEmails, setSecondaryEmails] = useState(['']);
+  const [secondaryEmails, setSecondaryEmails] = useState([""]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [isFormOpen, setIsFormOpen] = useState(false);
+
+  function handleButtonClick() {
+    setIsFormOpen(true);
+  }
+
+  function handleOverlayClick(event) {
+    if (event.target.classList.contains("overlay")) {
+      setIsFormOpen(false);
+    }
+  }
+
+  const redirectToCreateOrg = () => {
+    window.location.href = "/create-org";
+  };
+
+  const handleSearchOrg = (event) => {
+    event.preventDefault();
+    const filteredCardData = cardData.filter((card) =>
+      card.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+    setCardData(filteredCardData);
+  };
 
   const handleAddEmail = () => {
-    setSecondaryEmails([...secondaryEmails, '']);
+    setSecondaryEmails([...secondaryEmails, ""]);
   };
 
   const handleRemoveEmail = (index) => {
@@ -61,27 +84,6 @@ function StudentOrgs() {
     newEmails[index] = event.target.value;
     setSecondaryEmails(newEmails);
   };
-
-  // hjjjjjjjjjj
-
-  const [searchQuery, setSearchQuery] = useState('');
-  const [isFormOpen, setIsFormOpen] = useState(false);
-
-  function handleButtonClick() {
-    setIsFormOpen(true);
-  }
-
-  function handleOverlayClick(event) {
-    if (event.target.classList.contains('overlay')) {
-      setIsFormOpen(false);
-    }
-  }
-
-  const redirectToCreateOrg = () => {
-    window.location.href = '/create-org';
-  };
-  const handleSearchOrg = () => {};
-
   return (
     <div className="student-orgs" onClick={handleOverlayClick}>
       <div className="first-row">
@@ -144,15 +146,19 @@ function StudentOrgs() {
         )}
       </div>
       <div className="org-cards">
-        {cardData.map((card, index) => (
-          <div key={index} className="org-card">
-            <img src={card.imagePath} alt={`Card ${index}`} />
-            <div className="org-card-info">
-              <h3>{card.name}</h3>
-              <button className="subscribe-button">Subscribe</button>
+        {cardData
+          .filter((card) =>
+            card.name.toLowerCase().includes(searchQuery.toLowerCase())
+          )
+          .map((card, index) => (
+            <div key={index} className="org-card">
+              <img src={card.imagePath} alt={`Card ${index}`} />
+              <div className="org-card-info">
+                <h3>{card.name}</h3>
+                <button className="subscribe-button">Subscribe</button>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
       </div>
     </div>
   );
