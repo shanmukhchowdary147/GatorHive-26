@@ -6,3 +6,7 @@ router.get("/", (req: any, res: any) => res.send("We are all God's friends!"));
 router.use("/events", eventRoutes);
 
 export { router };
+
+router.post("/auth", (req, res) => {
+  res.send("Hello World!");
+});

@@ -36,9 +36,6 @@ export default (sequelize: Sequelize, dataType: typeof DataTypes) => {
       type: dataType.STRING,
       allowNull: false,
     },
-    ifPrivateParty: {
-      type: dataType.BOOLEAN,
-    },
     eventDetails: {
       type: dataType.TEXT,
     },
@@ -47,6 +44,51 @@ export default (sequelize: Sequelize, dataType: typeof DataTypes) => {
     },
     eventAtUtc: {
       type: dataType.DATE,
+    },
+    category: {
+      type: dataType.INTEGER,
+    },
+    food: {
+      type: dataType.INTEGER,
+    },
+    entryFee: {
+      type: dataType.INTEGER,
+    },
+    ifOfficial: {
+      type: dataType.BOOLEAN,
+    },
+    ifGuide: {
+      type: dataType.BOOLEAN,
+    },
+    ifDifferentlyAbledAccebility: {
+      type: dataType.BOOLEAN,
+    },
+    ifParking: {
+      type: dataType.BOOLEAN,
+    },
+    eventType: {
+      type: dataType.INTEGER,
+    },
+    ifRideTogether: {
+      type: dataType.BOOLEAN,
+    },
+    eventOpensAtUtc: {
+      type: dataType.DATE,
+    },
+    ifFreeGoodies: {
+      type: dataType.BOOLEAN,
+    },
+    ifRegisterAsGroup: {
+      type: dataType.BOOLEAN,
+    },
+    ifAlcohol: {
+      type: dataType.BOOLEAN,
+    },
+    ifPetsAllowed: {
+      type: dataType.BOOLEAN,
+    },
+    ifPlusOneAllowed: {
+      type: dataType.BOOLEAN,
     },
   });
 
