@@ -20,26 +20,31 @@ const Home = () => {
   const [cardData, setCardData] = useState([
     {
       imagePath: require("../../images/bg4.jpg"),
+      id: 1,
       name: "Card Name 1",
       date: "15th March, 2023",
     },
     {
       imagePath: require("../../images/bg5.jpg"),
+      id: 2,
       name: "Card Name 2",
       date: "14th March, 2023",
     },
     {
       imagePath: require("../../images/bg3.jpg"),
+      id: 3,
       name: "Card Name 3",
       date: "13th March, 2023",
     },
     {
       imagePath: require("../../images/bg4.jpg"),
+      id: 4,
       name: "Card Name 4",
       date: "12th March, 2023",
     },
     {
       imagePath: require("../../images/bg5.jpg"),
+      id: 5,
       name: "Card Name 5",
       date: "11th March, 2023",
     },
@@ -57,8 +62,12 @@ const Home = () => {
     }
   };
 
-  function handleSubmitkk() {
+  function handleViewMore() {
     window.location.href = `/search?q= `;
+  }
+
+  function handleTrendingEventCardClick(eventId) {
+    window.location.href = `/event/${eventId}`;
   }
 
   // update carousel images every 5 seconds
@@ -114,7 +123,11 @@ const Home = () => {
       <h2 className="trending-events">Trending Events</h2>
       <div className="cards">
         {cardData.map((card, index) => (
-          <div key={index} className="card">
+          <div
+            key={index}
+            className="card"
+            onClick={() => handleTrendingEventCardClick(card.id)}
+          >
             <img src={card.imagePath} alt={`Card ${index}`} />
             <div className="card-info">
               <h3>{card.name}</h3>
@@ -124,7 +137,7 @@ const Home = () => {
         ))}
       </div>
       <div className="view-more">
-        <button onClick={handleSubmitkk}>View More</button>
+        <button onClick={handleViewMore}>View More</button>
       </div>
     </div>
   );
