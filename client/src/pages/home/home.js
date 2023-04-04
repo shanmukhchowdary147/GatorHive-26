@@ -1,47 +1,57 @@
-import React, { useState, useEffect } from 'react';
-import SimpleImageSlider from 'react-simple-image-slider';
-import { Carousel } from 'react-responsive-carousel';
-import './Home.css';
+import React, { useState, useEffect } from "react";
+import SimpleImageSlider from "react-simple-image-slider";
+import { Carousel } from "react-responsive-carousel";
+import "./Home.css";
+// import EventSlider from "../../components/EventSlider/EventSlider";
 
 const Home = () => {
   // state for the carousel images
   const images = [
-    require('../../images/bg3.jpg'),
-    require('../../images/bg4.jpg'),
-    require('../../images/bg5.jpg'),
+    require("../../images/bg3.jpg"),
+    require("../../images/bg4.jpg"),
+    require("../../images/bg5.jpg"),
   ];
+
+  // const clickImage = (idx, event) => {
+  //   console.log("clicked image", idx);
+  // };
 
   // state for the card data
   const [cardData, setCardData] = useState([
     {
-      imagePath: require('../../images/bg4.jpg'),
-      name: 'Card Name 1',
-      date: '15th March, 2023',
+      imagePath: require("../../images/bg4.jpg"),
+      id: 1,
+      name: "Card Name 1",
+      date: "15th March, 2023",
     },
     {
-      imagePath: require('../../images/bg5.jpg'),
-      name: 'Card Name 2',
-      date: '14th March, 2023',
+      imagePath: require("../../images/bg5.jpg"),
+      id: 2,
+      name: "Card Name 2",
+      date: "14th March, 2023",
     },
     {
-      imagePath: require('../../images/bg3.jpg'),
-      name: 'Card Name 3',
-      date: '13th March, 2023',
+      imagePath: require("../../images/bg3.jpg"),
+      id: 3,
+      name: "Card Name 3",
+      date: "13th March, 2023",
     },
     {
-      imagePath: require('../../images/bg4.jpg'),
-      name: 'Card Name 4',
-      date: '12th March, 2023',
+      imagePath: require("../../images/bg4.jpg"),
+      id: 4,
+      name: "Card Name 4",
+      date: "12th March, 2023",
     },
     {
-      imagePath: require('../../images/bg5.jpg'),
-      name: 'Card Name 5',
-      date: '11th March, 2023',
+      imagePath: require("../../images/bg5.jpg"),
+      id: 5,
+      name: "Card Name 5",
+      date: "11th March, 2023",
     },
   ]);
 
   // state for search query
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
 
   // handle search submit
   const handleSubmit = (event) => {
@@ -52,8 +62,12 @@ const Home = () => {
     }
   };
 
-  function handleSubmitkk() {
+  function handleViewMore() {
     window.location.href = `/search?q= `;
+  }
+
+  function handleTrendingEventCardClick(eventId) {
+    window.location.href = `/event/${eventId}`;
   }
 
   // update carousel images every 5 seconds
@@ -71,6 +85,7 @@ const Home = () => {
             className="custom-slider-class"
             autoPlay={true}
             autoPlayDelay={4.0}
+            // onClick={clickImage(idx, event)}
           />
         </div>
         <div className="carousel">
@@ -108,7 +123,11 @@ const Home = () => {
       <h2 className="trending-events">Trending Events</h2>
       <div className="cards">
         {cardData.map((card, index) => (
-          <div key={index} className="card">
+          <div
+            key={index}
+            className="card"
+            onClick={() => handleTrendingEventCardClick(card.id)}
+          >
             <img src={card.imagePath} alt={`Card ${index}`} />
             <div className="card-info">
               <h3>{card.name}</h3>
@@ -118,7 +137,7 @@ const Home = () => {
         ))}
       </div>
       <div className="view-more">
-        <button onClick={handleSubmitkk}>View More</button>
+        <button onClick={handleViewMore}>View More</button>
       </div>
     </div>
   );
