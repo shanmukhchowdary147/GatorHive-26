@@ -90,6 +90,9 @@ export default (sequelize: Sequelize, dataType: typeof DataTypes) => {
     ifPlusOneAllowed: {
       type: dataType.BOOLEAN,
     },
+    posterLink: {
+      type: dataType.STRING,
+    },
   });
 
   return Event;

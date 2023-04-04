@@ -7,7 +7,6 @@ export default (sequelize: Sequelize, dataType: typeof DataTypes) => {
   const User = sequelizeExtend.extendedDefine(sequelize, collections.User, {
     addressId: {
       type: DataTypes.UUID,
-      allowNull: false,
       references: {
         model: {
           tableName: collections.Address,
@@ -16,11 +15,11 @@ export default (sequelize: Sequelize, dataType: typeof DataTypes) => {
       },
     },
 
-    firstname: {
+    firstName: {
       type: dataType.STRING(254),
       allowNull: false,
     },
-    lastname: {
+    lastName: {
       type: dataType.STRING(254),
       allowNull: false,
     },

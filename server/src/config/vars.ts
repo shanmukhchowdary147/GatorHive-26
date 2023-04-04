@@ -20,3 +20,9 @@ export const migrationsPath = path.join(__dirname, "../migrations");
 export const shouldRunMigrations = process.env.SHOULD_RUN_MIGRATIONS === "true";
 export const shouldForceSyncDb = process.env.SHOULD_FORCE_SYNC_DB === "true";
 export const shouldSyncDB = process.env.SHOULD_SYNC_DB === "true";
+export const redisConfig = {
+  host: process.env.REDIS_HOST,
+  port: process.env.REDIS_PORT,
+  URI: process.env.REDIS_URI as string,
+  password: process.env.REDIS_PASSWORD,
+};
