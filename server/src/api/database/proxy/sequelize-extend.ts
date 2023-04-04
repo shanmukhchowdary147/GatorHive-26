@@ -1,5 +1,5 @@
 import { extend } from "lodash";
-import { DataTypes, ModelAttributes, ModelOptions, Sequelize } from "sequelize";
+import Sequelize, { DataTypes, ModelAttributes, ModelOptions } from "sequelize";
 
 class SequelizeExtend {
   defaultAttributes: ModelAttributes<any>;
@@ -13,6 +13,7 @@ class SequelizeExtend {
         allowNull: false,
         primaryKey: true,
         unique: true,
+        defaultValue: Sequelize.UUIDV4,
       },
       isDeleted: {
         type: DataTypes.BOOLEAN,
@@ -24,7 +25,7 @@ class SequelizeExtend {
   }
 
   extendedDefine(
-    sequelize: Sequelize,
+    sequelize: Sequelize.Sequelize,
     modelName: string,
     attributes: ModelAttributes<any>,
     options: ModelOptions<any> = {}
