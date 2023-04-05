@@ -17,5 +17,22 @@ class UserController {
       next(error);
     }
   };
+
+  getUser  = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      logger.info("Get User Details", {
+        __filename,
+        functionName: "getUserDetails",
+      });
+      const {user} = req.body;
+      
+      const userData = await userService.getUser(user);
+      res.status(200).json({ userData });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+
 }
 export const userController = new UserController();
