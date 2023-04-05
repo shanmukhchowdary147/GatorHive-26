@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { AiFillNotification } from "react-icons/ai";
 import "./Header.css";
 
 function Header() {
@@ -14,6 +15,7 @@ function Header() {
         <a href="/">GatorHive</a>
       </div>
       <div className="header-ight-part">
+        <AiFillNotification />
         <a href="/host-event" className="host-event-btn">
           Host an Event
         </a>
