@@ -99,3 +99,7 @@
 .group-register-invisible {
   visibility: hidden;
 }
+
+.location-icon {
+  font-size: 16px;
+}
