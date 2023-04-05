@@ -2,8 +2,10 @@ import { eventRepository } from "../repositories/event.repository";
 import logger from "../common/logger/logger";
 import { map } from "lodash";
 import { studentOrgRepository } from "../repositories/studentOrg.repository";
-import { EventCategoryMap } from "../enums/enums";
-import { eventCategory } from "../customTypes";
+import { EventCategoryMap, EventCategory } from "../enums/enums";
+import { eventCategory, eventCategoryName } from "../customTypes";
+import { awsS3Client } from "../../config/awsS3";
+import { unlink } from "fs-extra";
 
 class EventService {
   getAllEvents = async () => {
@@ -38,6 +40,24 @@ class EventService {
         callerMethodName,
       });
       return eventsWithOrg;
+    } catch (error) {
+      throw error;
+    }
+  };
+  createEvent = async (filePath: any, eventData: any, userId: string) => {
+    const callerMethodName = "createEvent";
+    try {
+      logger.info("create event", {
+        __filename,
+        callerMethodName,
+      });
+      const url = awsS3Client.uploadFile(filePath);
+      eventData.hostedByUserId = userId;
+      eventData.posterLink = url;
+      const category: eventCategoryName = eventData.category;
+      eventData.category = EventCategory[category];
+      const event = await eventRepository.create(eventData);
+      await unlink(filePath);
     } catch (error) {
       throw error;
     }

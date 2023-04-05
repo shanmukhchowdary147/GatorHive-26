@@ -36,8 +36,10 @@ class UserRepository {
     );
     return user;
   };
-  
-  
+
+  async find(condition: any, options?: any) {
+    return mysqlProxy.find(collections.User, condition, options);
+  }
 }
 
 export const userRepository = new UserRepository();

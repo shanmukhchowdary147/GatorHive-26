@@ -7,3 +7,11 @@ export type signupDto = {
   phoneNumber?: string;
 };
 export type eventCategory = 0 | 1 | 2 | 3 | 4 | 5 | 6; // Define a union type for the valid category values
+export type eventCategoryName =
+  | "music"
+  | "sports"
+  | "academic"
+  | "volunteer"
+  | "social"
+  | "cultural"
+  | "other"; // Define a union type for the valid category values

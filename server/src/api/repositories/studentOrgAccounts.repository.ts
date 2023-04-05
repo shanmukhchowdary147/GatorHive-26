@@ -2,14 +2,14 @@ import logger from "../common/logger/logger";
 import { mysqlProxy } from "../database/proxy/mysql.proxy";
 import { collections } from "../enums/enums";
 
-class StudentOrgRepository {
+class StudentOrgAccountsRepository {
   update = async (
     condition: any,
     data?: any,
     transaction?: any
   ): Promise<any> => {
     await mysqlProxy.update(
-      collections.StudentOrg,
+      collections.StudentOrgAccounts,
       condition,
       data,
       transaction
@@ -24,7 +24,7 @@ class StudentOrgRepository {
       "findOne"
     );
     const studentOrg = await mysqlProxy.findOne(
-      collections.StudentOrg,
+      collections.StudentOrgAccounts,
       condition,
       options
     );
@@ -36,14 +36,14 @@ class StudentOrgRepository {
     );
     return studentOrg;
   };
-  create = async (orgName: string, transaction?: any) => {
+  create = async (data: any, transaction?: any) => {
     const studentOrg = await mysqlProxy.create(
-      collections.StudentOrg,
-      { orgName },
+      collections.StudentOrgAccounts,
+      data,
       transaction
     );
     return studentOrg;
   };
 }
 
-export const studentOrgRepository = new StudentOrgRepository();
+export const studentOrgAccountsRepository = new StudentOrgAccountsRepository();
