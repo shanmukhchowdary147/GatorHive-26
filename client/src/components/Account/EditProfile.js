@@ -128,7 +128,7 @@ function EditProfile() {
         {renderEditableField("country", country)}
         <BiEditAlt className = "inv" onClick={() => handleFieldEdit("country")} />
       </div>
-      <button>Save</button>
+      <button className="save">Save</button>
     </div>
   );
 }
