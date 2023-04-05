@@ -3,6 +3,7 @@ import bodyParser from "body-parser";
 import cors from "cors";
 import helmet from "helmet";
 import { router } from "../api/routes";
+import expressContext from "express-request-context";
 
 // export const app = express();
 
@@ -18,7 +19,7 @@ class App {
 
     this.app.use(bodyParser.json({ limit: "10mb" }));
     this.app.use(bodyParser.urlencoded({ limit: "10mb", extended: true }));
-
+    this.app.use(expressContext());
     this.app.use(helmet());
     this.app.use(cors());
 

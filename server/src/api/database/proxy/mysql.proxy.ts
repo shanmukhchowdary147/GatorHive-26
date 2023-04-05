@@ -31,7 +31,7 @@ class MysqlProxy {
       },
     });
 
-    this.collections = collections;
+    this.collections = { ...collections };
     this.models = {};
   }
 
