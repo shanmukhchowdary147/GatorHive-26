@@ -9,8 +9,8 @@ class EventController {
         __filename,
         functionName: "getAllEvents",
       });
-      const events = await eventService.getAllEvents();
-      res.status(200).json({ events });
+      const eventsWithOrg = await eventService.getAllEvents();
+      res.status(200).json(eventsWithOrg);
     } catch (error) {
       next(error);
     }
