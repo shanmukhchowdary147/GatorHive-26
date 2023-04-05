@@ -1,6 +1,6 @@
-h1 {
+.host-event h1 {
   font-size: 2rem;
-  margin-bottom: 2rem;
+  text-align: center;
 }
 
 .eventHost-form {
@@ -14,9 +14,9 @@ h1 {
   font-size: 1.2rem;
 }
 
-.eventHost-form input[type='text'],
-.eventHost-form input[type='number'],
-.eventHost-form input[type='date'],
+.eventHost-form input[type="text"],
+.eventHost-form input[type="number"],
+.eventHost-form input[type="date"],
 .eventHost-form select,
 .eventHost-form textarea {
   font-size: 1.2rem;
@@ -28,18 +28,18 @@ h1 {
   margin-bottom: 1rem;
 }
 
-.eventHost-form input[type='text']:disabled {
+.eventHost-form input[type="text"]:disabled {
   background-color: white;
 }
 .eventHost-form input {
   margin: 10px;
 }
 
-.eventHost-form input[type='checkbox'] {
+.eventHost-form input[type="checkbox"] {
   margin-right: 0.5rem;
 }
 
-.eventHost-form button[type='submit'] {
+.eventHost-form button[type="submit"] {
   background-color: #2a9d8f;
   color: white;
   font-size: 1.2rem;
@@ -48,11 +48,12 @@ h1 {
   border: none;
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
+  margin-top: 20px;
 }
 
-.eventHost-form button[type='submit']:hover {
-  background-color: #1e7c72;
-  margin: 10px;
+.eventHost-form button[type="submit"]:hover {
+  background-color: #36cfc0;
+  /* margin: 10px; */
 }
 
 .error {
@@ -67,18 +68,43 @@ h1 {
   margin-top: 0.5rem;
 }
 
-.main-cont {
+.host-main-cont {
   display: flex;
   align-items: center;
   justify-content: space-evenly;
+  width: 80%;
+  margin: 0 auto;
+  background-color: azure;
+  border: black 1px solid;
+  margin-bottom: 30px;
+  padding: 40px 0px 40px 0px;
+  border-radius: 10px;
 }
-.left-box {
+/*.host-left-box {
   /* display: flex;
-  flex-direction: column; */
-}
-.right-box {
+  flex-direction: column; }*/
+/* .host-right-box {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: left;
+} */
+
+.event-capacity {
+  display: flex;
+  /* justify-content: flex-end; */
+  /* flex-direction: column; */
+}
+
+.host-event-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.host-event-details textarea {
+  margin-left: 10px;
+}
+
+.create-event-btn {
+  width: 100%;
 }

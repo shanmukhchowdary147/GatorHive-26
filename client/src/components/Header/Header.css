@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Domine:wght@700&family=Poppins&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Domine:wght@700&family=Poppins&display=swap");
 .sticky-header {
   position: sticky;
   /* flex-direction: column; */
@@ -23,7 +23,7 @@
   color: black;
   text-decoration: none;
 }
-.right-part {
+.header-right-part {
   flex: 0 0 30%;
   display: flex;
   justify-content: space-between;
@@ -31,18 +31,24 @@
   /* flex-direction: column; */
 }
 
-.student-orgs .host-event {
-  color: #ffffff;
+.student-orgs-btn {
+  color: black;
   border-radius: 4px;
   padding: 10px 16px;
   text-decoration: none;
+}
+.host-event-btn {
+  border-radius: 4px;
+  padding: 10px 16px;
+  text-decoration: none;
+  color: black;
 }
 
 
 .profile-btn {
   background-color: transparent;
   border: none;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   cursor: pointer;
   margin-right: 50px;
   font-size: 17px;

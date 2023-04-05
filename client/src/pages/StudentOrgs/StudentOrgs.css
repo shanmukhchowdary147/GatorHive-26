@@ -1,3 +1,7 @@
+.student-orgs {
+  width: 85%;
+  margin: 0 auto;
+}
 .first-row {
   display: flex;
   justify-content: space-between;
@@ -8,8 +12,8 @@
 .org-cards {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-evenly;
-  margin: 0px 50px;
+  justify-content: flex-start;
+  /* align-items: flex-start; */
 }
 
 .org-card {
@@ -132,7 +136,7 @@
   cursor: pointer;
 }
 
-.form button[type='submit'] {
+.form button[type="submit"] {
   display: block;
   margin: 15px auto;
   align-self: center;

@@ -10,8 +10,10 @@ class EventRepository {
     await mysqlProxy.update(collections.Event, condition, data, transaction);
   };
 
-  getAllEvents = async (): Promise<any> => {
-    const events = await mysqlProxy.find(collections.Event);
+  getAllEvents = async (condition: any = {}): Promise<any> => {
+    const events = await mysqlProxy.find(collections.Event, condition, {
+      raw: true,
+    });
     return events;
   };
 }
