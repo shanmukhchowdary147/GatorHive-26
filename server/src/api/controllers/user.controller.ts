@@ -9,7 +9,9 @@ class UserController {
         __filename,
         functionName: "updateUserDetails",
       });
-      const details = await userService.updateUserDetails();
+      const {user} = req.body;
+      
+      const details = await userService.updateUserDetails(user);
       res.status(200).json({ details });
     } catch (error) {
       next(error);
