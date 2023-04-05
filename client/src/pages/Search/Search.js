@@ -201,7 +201,7 @@ function SearchPage() {
   });
 
   function handleEventCardClick(eventId) {
-    window.location.href = `/events/${eventId}`;
+    window.location.href = `/event/${eventId}`;
   }
 
   return (
