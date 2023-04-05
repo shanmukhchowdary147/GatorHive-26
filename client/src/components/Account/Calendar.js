@@ -70,18 +70,45 @@ function Home() {
   };
 
   return (
-    <table className="calendar">
-      <tbody>
-        <tr>
-          <td><button class = "buttons" onClick={handlePrev}>&lt;</button></td>
-          <td colSpan="5">{renderTitleRow()}</td>
-          <td><button class = "buttons" onClick={handleNext}>&gt;</button></td>
-        </tr>
-        {renderDayNameRow()}
-        {renderDateRows()}
-      </tbody>
-    </table>
+    <div className="calendar-main">
+      <table className="calendar">
+        <tbody>
+          <tr>
+            <td><button class="buttons" onClick={handlePrev}>&lt;</button></td>
+            <td colSpan="5">{renderTitleRow()}</td>
+            <td><button class="buttons" onClick={handleNext}>&gt;</button></td>
+          </tr>
+          {renderDayNameRow()}
+          {renderDateRows()}
+        </tbody>
+      </table>
+      <div className="event-cards-container">
+        <div className="events-card">
+          <h2>Yesterday's Events</h2>
+          <ul>
+            <li>Event name tamporary event</li>            
+            <li>Event</li>
+          </ul> 
+          </div>
+        <div className="events-card">
+          <h2>Today's Events</h2>
+          <ul>
+            <li>Event</li>
+            <li>Event</li>
+          </ul>
+        </div>
+        <div className="events-card">
+          <h2>Tomorrow's Events</h2>
+          <ul>
+            <li>Event</li>
+            <li>Event</li>
+          </ul>
+        </div>
+      </div>
+    </div>
   );
 }
 
 export default Home;
+           
+
