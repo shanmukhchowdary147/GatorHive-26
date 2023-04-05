@@ -1,5 +1,6 @@
 import { extend } from "lodash";
 import Sequelize, { DataTypes, ModelAttributes, ModelOptions } from "sequelize";
+// import { v4 as uuidv4 } from "uuid";
 
 class SequelizeExtend {
   defaultAttributes: ModelAttributes<any>;
@@ -36,6 +37,9 @@ class SequelizeExtend {
       options.indexes = [];
     }
     const model = sequelize.define(modelName, attributes, options);
+    // model.addHook("beforeCreate", (instance: any) => {
+    //   instance.id = uuidv4();
+    // });
 
     return model;
   }

@@ -6,3 +6,4 @@ export type signupDto = {
   password: string;
   phoneNumber?: string;
 };
+export type eventCategory = 0 | 1 | 2 | 3 | 4 | 5 | 6; // Define a union type for the valid category values
