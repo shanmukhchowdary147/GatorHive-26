@@ -2,6 +2,9 @@ import React, { useState, useEffect } from "react";
 import SimpleImageSlider from "react-simple-image-slider";
 import { Carousel } from "react-responsive-carousel";
 import "./Home.css";
+import { BiSearchAlt } from "react-icons/bi";
+import recommendEvents from "../Chatbot/Chatbot.js";
+import {IoChatbubbleEllipsesSharp}  from "react-icons/io5";
 // import EventSlider from "../../components/EventSlider/EventSlider";
 
 const Home = () => {
@@ -71,7 +74,10 @@ const Home = () => {
   }
 
   // update carousel images every 5 seconds
-
+  function handleChatbotClick() {
+    recommendEvents();
+  }
+  
   return (
     <div className="home">
       <div className="carousels">
@@ -114,11 +120,13 @@ const Home = () => {
       <form className="search-form" onSubmit={handleSubmit}>
         <input
           type="text"
-          placeholder="Search"
+          placeholder="Search for events........"
           value={searchQuery}
           onChange={(event) => setSearchQuery(event.target.value)}
         />
-        <button type="submit">🔍</button>
+        <button type="submit">
+          <BiSearchAlt />
+        </button>
       </form>
       <h2 className="trending-events">Trending Events</h2>
       <div className="cards">
@@ -138,6 +146,11 @@ const Home = () => {
       </div>
       <div className="view-more">
         <button onClick={handleViewMore}>View More</button>
+      </div>
+      <div className="chatbot-btn">
+        <button onClick={handleChatbotClick}>
+          <IoChatbubbleEllipsesSharp/>
+        </button>
       </div>
     </div>
   );

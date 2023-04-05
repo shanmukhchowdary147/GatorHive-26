@@ -1,55 +1,82 @@
-import React, { useState } from 'react';
-import './StudentOrgs.css';
+import React, { useState } from "react";
+import "./StudentOrgs.css";
 
 function StudentOrgs() {
-  const [cardData, setCardData] = useState([
+  const [subscribedClubs, setSubscribedClubs] = useState([6, 4]);
+  const [clubData, setClubData] = useState([
+    { id: 1, clubName: "AC Milan", imagePath: require("../../images/bg5.jpg") },
     {
-      imagePath: require('../../images/bg4.jpg'),
-      name: 'Card Name 1',
-      date: '15th March, 2023',
+      id: 2,
+      clubName: "Real Madrid",
+      imagePath: require("../../images/bg5.jpg"),
     },
     {
-      imagePath: require('../../images/bg5.jpg'),
-      name: 'Card Name 2',
-      date: '14th March, 2023',
+      id: 3,
+      clubName: "Manchester United",
+      imagePath: require("../../images/bg3.jpg"),
     },
     {
-      imagePath: require('../../images/bg3.jpg'),
-      name: 'Card Name 3',
-      date: '13th March, 2023',
+      id: 4,
+      clubName: "FC Barcelona",
+      imagePath: require("../../images/bg4.jpg"),
     },
     {
-      imagePath: require('../../images/bg4.jpg'),
-      name: 'Card Name 4',
-      date: '12th March, 2023',
+      id: 5,
+      clubName: "Liverpool",
+      imagePath: require("../../images/bg4.jpg"),
+    },
+    { id: 6, clubName: "Juventus", imagePath: require("../../images/bg4.jpg") },
+    {
+      id: 7,
+      clubName: "Bayern Munich",
+      imagePath: require("../../images/bg4.jpg"),
     },
     {
-      imagePath: require('../../images/bg5.jpg'),
-      name: 'Card Name 5',
-      date: '11th March, 2023',
+      id: 8,
+      clubName: "Paris Saint-Germain",
+      imagePath: require("../../images/bg4.jpg"),
     },
-    {
-      imagePath: require('../../images/bg3.jpg'),
-      name: 'Card Name 3',
-      date: '13th March, 2023',
-    },
-    {
-      imagePath: require('../../images/bg4.jpg'),
-      name: 'Card Name 4',
-      date: '12th March, 2023',
-    },
-    {
-      imagePath: require('../../images/bg5.jpg'),
-      name: 'Card Name 5',
-      date: '11th March, 2023',
-    },
+    { id: 9, clubName: "Chelsea", imagePath: require("../../images/bg4.jpg") },
+    { id: 10, clubName: "Arsenal", imagePath: require("../../images/bg4.jpg") },
   ]);
 
-  // hhhhhhhhhhhhhh
-  const [secondaryEmails, setSecondaryEmails] = useState(['']);
+  const [secondaryEmails, setSecondaryEmails] = useState([""]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [isFormOpen, setIsFormOpen] = useState(false);
+
+  function subscribeToClub(clubId) {
+    console.log("Subscribed to club with id", clubId);
+    setSubscribedClubs([...subscribedClubs, clubId]);
+  }
+  function unsubscribeFromClub(clubId) {
+    console.log("Unsubscribed from club with id", clubId);
+    setSubscribedClubs(subscribedClubs.filter((id) => id !== clubId));
+  }
+
+  function handleButtonClick() {
+    setIsFormOpen(true);
+  }
+
+  function handleOverlayClick(event) {
+    if (event.target.classList.contains("overlay")) {
+      setIsFormOpen(false);
+    }
+  }
+
+  const redirectToCreateOrg = () => {
+    window.location.href = "/create-org";
+  };
+
+  const handleSearchOrg = (event) => {
+    event.preventDefault();
+    const filteredClubData = clubData.filter((card) =>
+      card.clubName.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+    setClubData(filteredClubData);
+  };
 
   const handleAddEmail = () => {
-    setSecondaryEmails([...secondaryEmails, '']);
+    setSecondaryEmails([...secondaryEmails, ""]);
   };
 
   const handleRemoveEmail = (index) => {
@@ -61,27 +88,6 @@ function StudentOrgs() {
     newEmails[index] = event.target.value;
     setSecondaryEmails(newEmails);
   };
-
-  // hjjjjjjjjjj
-
-  const [searchQuery, setSearchQuery] = useState('');
-  const [isFormOpen, setIsFormOpen] = useState(false);
-
-  function handleButtonClick() {
-    setIsFormOpen(true);
-  }
-
-  function handleOverlayClick(event) {
-    if (event.target.classList.contains('overlay')) {
-      setIsFormOpen(false);
-    }
-  }
-
-  const redirectToCreateOrg = () => {
-    window.location.href = '/create-org';
-  };
-  const handleSearchOrg = () => {};
-
   return (
     <div className="student-orgs" onClick={handleOverlayClick}>
       <div className="first-row">
@@ -144,15 +150,33 @@ function StudentOrgs() {
         )}
       </div>
       <div className="org-cards">
-        {cardData.map((card, index) => (
-          <div key={index} className="org-card">
-            <img src={card.imagePath} alt={`Card ${index}`} />
-            <div className="org-card-info">
-              <h3>{card.name}</h3>
-              <button className="subscribe-button">Subscribe</button>
+        {clubData
+          .filter((card) =>
+            card.clubName.toLowerCase().includes(searchQuery.toLowerCase())
+          )
+          .map((card, index) => (
+            <div key={index} className="org-card">
+              <img src={card.imagePath} alt={`Card ${index}`} />
+              <div className="org-card-info">
+                <span>{card.clubName}</span>
+                {subscribedClubs.includes(card.id) ? (
+                  <button
+                    className="unsubscribe-button"
+                    onClick={() => unsubscribeFromClub(card.id)}
+                  >
+                    Unsubscribe
+                  </button>
+                ) : (
+                  <button
+                    className="subscribe-button"
+                    onClick={() => subscribeToClub(card.id)}
+                  >
+                    Subscribe
+                  </button>
+                )}
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
       </div>
     </div>
   );

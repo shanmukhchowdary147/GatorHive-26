@@ -1,0 +1,55 @@
+.edit-profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #f7f7f7;
+  border: 1px solid #ccc;
+  padding: 20px;
+  margin: 20px auto;
+  max-width: 650px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+.edit-profile h1 {
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 30px;
+  color: #333;
+}
+.edit-profile div {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  width: 80%;
+  justify-content: space-between;
+}
+.inv {
+  visibility: hidden;
+}
+
+.edit-profile label {
+  display: inline-block;
+  width: 100px;
+  font-weight: bold;
+  margin-right: 10px;
+  text-align: left;
+}
+
+.edit-profile input[type="text"] {
+  width: 200px;
+}
+
+.edit-profile button {
+  margin-left: 10px;
+}
+
+.save {
+  background-color: #04aa6d;
+  border: none;
+  color: white;
+  padding: 10px 32px;
+  text-align: center;
+  display: inline-block;
+  font-size: 16px;
+  margin: 20px -10px;
+  cursor: pointer;
+}
