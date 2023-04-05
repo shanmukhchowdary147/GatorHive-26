@@ -1,6 +1,12 @@
-.host-event h1 {
+.host-event-cont {
+  background-color: rgb(220, 254, 254);
+}
+
+.host-event-heading {
   font-size: 2rem;
   text-align: center;
+  margin-top: 0px;
+  padding-top: 10px;
 }
 
 .eventHost-form {
@@ -74,7 +80,7 @@
   justify-content: space-evenly;
   width: 80%;
   margin: 0 auto;
-  background-color: azure;
+  background-color: white;
   border: black 1px solid;
   margin-bottom: 30px;
   padding: 40px 0px 40px 0px;

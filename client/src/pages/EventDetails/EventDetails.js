@@ -2,6 +2,7 @@ import React from "react";
 import "./EventDetails.css";
 import { MdOutlineGroups } from "react-icons/md";
 import { CiBookmark } from "react-icons/ci";
+import { MdLocationOn } from "react-icons/md";
 import Button from "@mui/material/Button";
 
 const eventDetails = {
@@ -40,7 +41,10 @@ const EventDetails = () => {
           {eventDetails.eventAtUtc} | {eventDetails.date}
         </p>
         <p className="entry-Fee">Entry Fee: ${eventDetails.entryFee}</p>
-        <p className="event-location">Venue: {eventDetails.Location}</p>
+        <p className="event-location">
+          <MdLocationOn className="location-icon" /> Venue:{" "}
+          {eventDetails.Location}
+        </p>
       </div>
       <div className="event-details-right">
         <h1 className="event-name">{eventDetails.name}</h1>

@@ -67,6 +67,16 @@
   cursor: pointer;
 }
 
+.unsubscribe-button {
+  color: #ffffff;
+  padding: 10px;
+  border: none;
+  background-color: rgb(139, 138, 137);
+  border-radius: 4px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
 .search-orgs {
   display: flex;
   align-items: center;
