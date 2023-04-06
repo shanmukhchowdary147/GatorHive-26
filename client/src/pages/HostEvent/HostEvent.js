@@ -1,7 +1,10 @@
 import "./HostEvent.css";
 import React, { useState } from "react";
+import Axios from "axios";
+import Cookies from "js-cookie";
 
 function HostEventPage() {
+  const token = Cookies.get("token");
   const [eventName, setEventName] = useState("");
   const [eventDetails, setEventDetails] = useState("");
   const [eventLocation, setEventLocation] = useState("");
@@ -49,12 +52,12 @@ function HostEventPage() {
     return eventAtUtc;
   }
 
-  const eventAtUtc = createEventAtUtc(eventDate, timings);
+  // console.log(eventAtUtc.toUTCString()); // Display the time in UTC format
 
-  console.log(eventAtUtc.toUTCString()); // Display the time in UTC format
-
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
+
+    const eventAtUtc = createEventAtUtc(eventDate, timings);
 
     if (isOnline === true) {
       setEventLocation("");
@@ -63,9 +66,7 @@ function HostEventPage() {
     const eventData = {
       eventName: eventName,
       category: category,
-      posterLink: posterImage,
       clubName: club,
-      eventLocation: eventLocation,
       ifOfficial: theme === "official" ? true : false,
       food:
         food === "Veg"
@@ -76,8 +77,7 @@ function HostEventPage() {
           ? 2
           : null,
       eventDetails: eventDetails,
-      eventDate: eventDate,
-      eventTime: timings,
+      eventAtUtc: eventAtUtc,
       ifPetsAllowed: isPetAllowed,
       entryFee: entryFee,
       ifGuide: guideAvailable,
@@ -96,49 +96,31 @@ function HostEventPage() {
       ifFreeGoodies: isFree,
       ifRideTogether: carpooling,
     };
+    const address = {
+      roomNumber: eventLocation,
+    };
     const newEventData = new FormData();
     newEventData.append("posterLink", posterImage);
-    newEventData.append("evenData", JSON.stringify(eventData));
+    newEventData.append("eventData", JSON.stringify(eventData));
+    newEventData.append("address", JSON.stringify(address));
 
-    // console.log(newEventData);
-    console.log(JSON.parse(newEventData.get("eventData")));
-    // Here you could make an API call to submit the form data and image to a server
-    // console.log("Event Name:", eventName);
-    // console.log("Event Details:", eventDetails);
-    // console.log("Event Location:", eventLocation);
-    // console.log("Event Type:", eventType);
-    // console.log("Event Date:", eventDate);
-    // console.log("Poster Image:", posterImage);
-    // console.log("Club:", club);
-    // console.log("Entry Fee:", entryFee);
-    // console.log("Theme:", theme);
-    // console.log("Capacity:", capacity);
-    // console.log("Free Stuff:", isFree);
-    // console.log("Allow Group Registration:", allowGroupRegistration);
-    // console.log("differenly abled", isDiffAccess);
-    // console.log("Carpooling:", carpooling);
-    // console.log("Alcohol Allowed:", alcoholAllowed);
-    // console.log("Guide:", guideAvailable);
-    // console.log("Has Parking:", parkingAvailable);
-    // console.log("Pet Allowed:", isPetAllowed);
-    // console.log(
-    //   food === "Veg"
-    //     ? 0
-    //     : food === "Non-Veg"
-    //     ? 1
-    //     : food === "Non-Veg/Veg"
-    //     ? 2
-    //     : null
-    // );
-    // console.log(
-    //   eventType === "Online"
-    //     ? 0
-    //     : eventType === "Offline"
-    //     ? 1
-    //     : eventType === "Hybrid"
-    //     ? 2
-    //     : null
-    // );
+    console.log("data:", JSON.parse(newEventData.get("eventData")));
+    console.log("addres", JSON.parse(newEventData.get("address")));
+    const reponse = await Axios.post(
+      "http://localhost:3000/events/create",
+      newEventData,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    )
+      .then((response) => {
+        console.log(reponse);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   const handleImageChange = (event) => {
@@ -245,11 +227,12 @@ function HostEventPage() {
                 onChange={(e) => setCategory(e.target.value)}
               >
                 <option value="">Select Category</option>
-                <option value="Music">Music</option>
-                <option value="Sports">Sports</option>
-                <option value="Academic">Academic</option>
-                <option value="Volunteer">Volunteer</option>
-                <option value="Social">Social</option>
+                <option value="music">Music</option>
+                <option value="sports">Sports</option>
+                <option value="cultural">Cultural</option>
+                <option value="academic">Academic</option>
+                <option value="volunteer">Volunteer</option>
+                <option value="social">Social</option>
                 <option value="other">Other</option>
               </select>
             </label>
