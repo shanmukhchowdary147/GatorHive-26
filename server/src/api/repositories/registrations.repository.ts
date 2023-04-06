@@ -34,6 +34,12 @@ class RegistrationsRepository {
   async find(condition: any, options?: any) {
     return mysqlProxy.find(collections.Registrations, condition, options);
   }
+  async bulkCreate(data: any, transaction: any) {
+    logger.debug("bulkCreate", { data }, __filename, "bulkCreate");
+    await mysqlProxy.bulkCreate(collections.Registrations, data, {
+      transaction,
+    });
+  }
 }
 
 export const registrationsRepository = new RegistrationsRepository();

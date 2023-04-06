@@ -53,5 +53,23 @@ class EventController {
       next(error);
     }
   };
+  registerForAnEvent = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+      logger.info("register for an event", {
+        __filename,
+        functionName: "registerForAnEvent",
+      });
+      const userId = req.context.userId;
+      const eventId = req.params.eventId;
+      await eventService.registerForAnEvent(userId, eventId);
+      res.status(200).json({ status: "success" });
+    } catch (error) {
+      next(error);
+    }
+  };
 }
 export const eventController = new EventController();

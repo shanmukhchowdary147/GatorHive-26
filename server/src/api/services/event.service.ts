@@ -7,6 +7,10 @@ import { eventCategory, eventCategoryName } from "../customTypes";
 import { awsS3Client } from "../../config/awsS3";
 import { unlink } from "fs-extra";
 import { addressRepository } from "../repositories/address.repository";
+import { registrationsRepository } from "../repositories/registrations.repository";
+import { userRepository } from "../repositories/user.repository";
+import { Op } from "sequelize";
+import { mysqlProxy } from "../database/proxy/mysql.proxy";
 
 class EventService {
   getAllEvents = async () => {
@@ -92,6 +96,56 @@ class EventService {
       event.address = address;
       return event;
     } catch (error) {
+      throw error;
+    }
+  };
+  registerForAnEvent = async (userId: string, eventId: string) => {
+    const callerMethodName = "registerForAnEvent";
+    try {
+      logger.info("registerForAnEvent", {
+        __filename,
+        callerMethodName,
+      });
+      await registrationsRepository.create({
+        userId: userId,
+        eventId: eventId,
+        registeredAtUtc: new Date(),
+      });
+    } catch (error) {
+      throw error;
+    }
+  };
+  registerAsGroupForAnEvent = async (
+    userId: string,
+    eventId: string,
+    groupEmails: string
+  ) => {
+    const callerMethodName = "registerAsGroupForAnEvent";
+    const transaction = await mysqlProxy.createTransaction();
+    try {
+      logger.info("register as group", {
+        __filename,
+        callerMethodName,
+      });
+      const groupEmailsArray = groupEmails.split(",");
+      const usersTobeRegistered = await userRepository.find(
+        {
+          email: { [Op.in]: groupEmailsArray },
+        },
+        { attributes: ["id"], raw: true }
+      );
+      const registrations = map(usersTobeRegistered, (user) => {
+        return {
+          userId: user.id,
+          eventId: eventId,
+          registeredAtUtc: new Date(),
+        };
+      });
+      //Not checking if all the emails are in the database
+      await registrationsRepository.bulkCreate({ registrations }, transaction);
+      await transaction.commit();
+    } catch (error) {
+      await transaction.rollback();
       throw error;
     }
   };

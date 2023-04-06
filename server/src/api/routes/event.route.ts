@@ -20,5 +20,7 @@ router.route("/create").put([
   eventController.createEvent,
 ]);
 router.route("/eventDetails").get([authorize, eventController.getEventDetails]);
+router.route("/register").put([authorize]);
+router.route("/registerGroup").put([authorize]);
 
 export { router as eventRoutes };
