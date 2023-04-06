@@ -79,7 +79,7 @@ class AuthService {
       if (!(await bcrypt.compare(params.password, account.passwordHash))) {
         throw new AuthenticationError(params);
       }
-      const userId = account.userId as string;
+      const userId = account.id as string;
       const accessToken: string = authHelper.createAccessToken(userId);
       await this.storeToken(accessToken, userId);
       await userRepository.update(
