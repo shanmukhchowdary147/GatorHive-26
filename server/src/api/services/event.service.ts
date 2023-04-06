@@ -6,6 +6,7 @@ import { EventCategoryMap, EventCategory } from "../enums/enums";
 import { eventCategory, eventCategoryName } from "../customTypes";
 import { awsS3Client } from "../../config/awsS3";
 import { unlink } from "fs-extra";
+import { addressRepository } from "../repositories/address.repository";
 
 class EventService {
   getAllEvents = async () => {
@@ -58,6 +59,38 @@ class EventService {
       eventData.category = EventCategory[category];
       const event = await eventRepository.create(eventData);
       await unlink(filePath);
+    } catch (error) {
+      throw error;
+    }
+  };
+  getEventDetails = async (userId: string, eventId: string) => {
+    const callerMethodName = "getEventDetails";
+    try {
+      logger.info("get event details", {
+        __filename,
+        callerMethodName,
+      });
+      const event = await eventRepository.findOne(
+        { id: eventId },
+        { raw: true }
+      );
+      const studentOrg = await studentOrgRepository.findOne({
+        id: event.studentOrgId,
+      });
+      const category: eventCategory = event.category;
+      event.categoryName = EventCategoryMap[category];
+      event.orgName = studentOrg.orgName;
+      const registration = await eventRepository.findOne(
+        { userId: userId, eventId: eventId },
+        { raw: true }
+      );
+      event.isRegistered = registration.id ? true : false;
+      const address = addressRepository.findOne(
+        { id: event.addressId },
+        { raw: true }
+      );
+      event.address = address;
+      return event;
     } catch (error) {
       throw error;
     }

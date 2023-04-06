@@ -7,7 +7,6 @@ import { posterDir } from "../../config/vars";
 const router = Router();
 
 router.route("/").get([eventController.getAllEvents]);
-router.route("/eventDetails");
 router.route("/create").put([
   authorize,
   multer({
@@ -20,5 +19,6 @@ router.route("/create").put([
   }).single("posterLink"),
   eventController.createEvent,
 ]);
+router.route("/eventDetails").get([authorize, eventController.getEventDetails]);
 
 export { router as eventRoutes };

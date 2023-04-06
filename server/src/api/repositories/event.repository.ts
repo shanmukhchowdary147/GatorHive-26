@@ -1,3 +1,4 @@
+import logger from "../common/logger/logger";
 import { mysqlProxy } from "../database/proxy/mysql.proxy";
 import { collections } from "../enums/enums";
 
@@ -17,12 +18,28 @@ class EventRepository {
     return events;
   };
   create = async (data: any, transaction?: any) => {
-    const studentOrg = await mysqlProxy.create(
-      collections.Event,
-      data,
-      transaction
+    const event = await mysqlProxy.create(collections.Event, data, transaction);
+    return event;
+  };
+  findOne = async (condition: any, options: any = {}) => {
+    logger.debug(
+      "find one member record from db",
+      { condition },
+      __filename,
+      "findOne"
     );
-    return studentOrg;
+    const event = await mysqlProxy.findOne(
+      collections.Event,
+      condition,
+      options
+    );
+    logger.debug(
+      "got member record from db",
+      { event, condition },
+      __filename,
+      "findOne"
+    );
+    return event;
   };
 }
 

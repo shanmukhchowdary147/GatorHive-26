@@ -39,5 +39,19 @@ class EventController {
       next(error);
     }
   };
+  getEventDetails = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      logger.info("get event details", {
+        __filename,
+        functionName: "getEventDetails",
+      });
+      const userId = req.context.userId;
+      const eventId = req.params.eventId;
+      const eventDetails = await eventService.getEventDetails(userId, eventId);
+      res.status(200).json(eventDetails);
+    } catch (error) {
+      next(error);
+    }
+  };
 }
 export const eventController = new EventController();
