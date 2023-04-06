@@ -13,7 +13,7 @@ router
 
 router
   .route("/create")
-  .put([
+  .post([
     authorize,
     validate(createOrgValidation),
     studentOrgController.createOrg,

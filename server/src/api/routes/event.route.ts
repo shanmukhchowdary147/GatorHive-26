@@ -7,7 +7,7 @@ import { posterDir } from "../../config/vars";
 const router = Router();
 
 router.route("/").get([eventController.getAllEvents]);
-router.route("/create").put([
+router.route("/create").post([
   authorize,
   multer({
     storage: multer.diskStorage({
@@ -20,7 +20,7 @@ router.route("/create").put([
   eventController.createEvent,
 ]);
 router.route("/eventDetails").get([authorize, eventController.getEventDetails]);
-router.route("/register").put([authorize]);
-router.route("/registerGroup").put([authorize]);
+router.route("/register").post([authorize]);
+router.route("/registerGroup").post([authorize]);
 
 export { router as eventRoutes };
