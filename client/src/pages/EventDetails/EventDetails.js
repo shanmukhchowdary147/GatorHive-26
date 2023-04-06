@@ -10,7 +10,7 @@ import Axios from "axios";
 
 const EventDetails = () => {
   const [eventDetails, setEventDetails] = useState({});
-  const [alreadyRegistered, setAlreadyRegistered] = useState(false);
+  const [alreadyRegistered, setAlreadyRegistered] = useState(0);
   const token = Cookies.get("token");
 
   const location = useLocation();
@@ -63,12 +63,37 @@ const EventDetails = () => {
         );
         console.log(response);
         console.log("Registered to event with id");
-        setAlreadyRegistered(true);
+        if (response.data.status === "success") {
+          setAlreadyRegistered(1);
+        }
+        if (response.data.status === "failure") {
+          setAlreadyRegistered(2);
+        }
       } catch (error) {
         console.log(error);
       }
     }
   }
+
+  function registrationClassName(alreadyRegistered) {
+    if (alreadyRegistered === 0) {
+      return "register-visible";
+    } else if (alreadyRegistered === 1) {
+      return "register-invisible";
+    } else if (alreadyRegistered === 2) {
+      return "register-notvisible";
+    }
+  }
+  function registrationString(alreadyRegistered) {
+    if (alreadyRegistered === 0) {
+      return "Register";
+    } else if (alreadyRegistered === 1) {
+      return "Registered";
+    } else if (alreadyRegistered === 2) {
+      return "Already Registered";
+    }
+  }
+
   return (
     <div className="event-details-page">
       <div className="event-details-left">
@@ -158,10 +183,11 @@ const EventDetails = () => {
             endIcon={<CiBookmark />}
             onClick={registerToEvent}
             className={
-              alreadyRegistered ? "register-invisible" : "register-visible"
+              registrationClassName(alreadyRegistered)
+              // alreadyRegistered ? "register-invisible" : "register-visible"
             }
           >
-            {alreadyRegistered ? "Already Registered !!" : "Register For Event"}
+            {registrationString(alreadyRegistered)}
           </Button>
           <Button
             variant="contained"

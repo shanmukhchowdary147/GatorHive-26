@@ -148,11 +148,20 @@ class EventService {
         __filename,
         callerMethodName,
       });
+      const registration = await registrationsRepository.findOne(
+        { userId: userId, eventId: eventId },
+        { raw: true }
+      );
+      const ifRegistrationAlreadyExists = registration ? true : false;
+      if (ifRegistrationAlreadyExists) {
+        return false;
+      }
       await registrationsRepository.create({
         userId: userId,
         eventId: eventId,
         registeredAtUtc: new Date(),
       });
+      return true;
     } catch (error) {
       throw error;
     }

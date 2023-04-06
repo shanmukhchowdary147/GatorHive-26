@@ -110,3 +110,8 @@
   cursor: default !important;
   color: black !important;
 }
+.register-notvisible {
+  background-color: rgb(230, 79, 79) !important;
+  cursor: pointer !important;
+  color: white !important;
+}
