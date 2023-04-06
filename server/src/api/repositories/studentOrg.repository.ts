@@ -44,6 +44,9 @@ class StudentOrgRepository {
     );
     return studentOrg;
   };
+  async find(condition: any = {}, options?: any) {
+    return mysqlProxy.find(collections.StudentOrg, condition, options);
+  }
 }
 
 export const studentOrgRepository = new StudentOrgRepository();

@@ -19,5 +19,35 @@ class StudentOrgController {
       next(error);
     }
   };
+  getAllOrgs = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      logger.info("get all student orgs", {
+        __filename,
+        functionName: "getAllOrgs",
+      });
+      const orgs = await studentOrgService.getAllOrgs();
+      res.send(orgs).status(200);
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  getSubscribedOrgs = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+      logger.info("get subscribed orgs", {
+        __filename,
+        functionName: "getSubscribedOrgs",
+      });
+      const userId = req.context.userId;
+      const subscribedOrgs = await studentOrgService.getSubscribedOrgs(userId);
+      res.send(subscribedOrgs).status(200);
+    } catch (error) {
+      next(error);
+    }
+  };
 }
 export const studentOrgController = new StudentOrgController();
