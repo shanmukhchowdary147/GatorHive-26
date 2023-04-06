@@ -19,44 +19,126 @@ function HostEventPage() {
   const [allowGroupRegistration, setAllowGroupRegistration] = useState(false);
   const [carpooling, setCarpooling] = useState(false);
   const [alcoholAllowed, setAlcoholAllowed] = useState(false);
-
+  const [isOnline, setIsOnline] = useState(false);
   const [food, setFoodOption] = useState("");
   const [isDiffAccess, setIsDiffAccess] = useState(false);
   const [guideAvailable, setGuideAvailable] = useState(false);
   const [parkingAvailable, setParkingAvailable] = useState(false);
   const [isPetAllowed, setIsPetAllowed] = useState(false);
 
-  const onlineEvent = () => {};
-  const handleLocationChange = (event) => {
-    if (event.target.checked) {
-      setEventLocation("Online Event");
-      setIsOnline(true);
-    } else {
-      setEventLocation("");
-      setIsOnline(false);
-    }
-  };
+  // const data = (e) => {
+  //   e.preventDefault();
+  //   Axios.post("", {
+
+  //   });
+  // };
+
+  function createEventAtUtc(eventDate, timings) {
+    // Combine eventDate and timings into a single string
+    const eventDateTimeString = `${eventDate}T${timings}:00.000`;
+
+    // Create a new Date object with the combined string and current timezone
+    const eventAtCurrentTimezone = new Date(eventDateTimeString);
+
+    // Get the UTC time in ISO format
+    const eventAtUtcIso = eventAtCurrentTimezone;
+
+    // Create a new Date object with the UTC time
+    const eventAtUtc = new Date(eventAtUtcIso);
+
+    return eventAtUtc;
+  }
+
+  const eventAtUtc = createEventAtUtc(eventDate, timings);
+
+  console.log(eventAtUtc.toUTCString()); // Display the time in UTC format
 
   const handleSubmit = (event) => {
     event.preventDefault();
+
+    if (isOnline === true) {
+      setEventLocation("");
+    }
+
+    const eventData = {
+      eventName: eventName,
+      category: category,
+      posterLink: posterImage,
+      clubName: club,
+      eventLocation: eventLocation,
+      ifOfficial: theme === "official" ? true : false,
+      food:
+        food === "Veg"
+          ? 0
+          : food === "Non-Veg"
+          ? 1
+          : food === "Non-Veg/Veg"
+          ? 2
+          : null,
+      eventDetails: eventDetails,
+      eventDate: eventDate,
+      eventTime: timings,
+      ifPetsAllowed: isPetAllowed,
+      entryFee: entryFee,
+      ifGuide: guideAvailable,
+      ifDifferentlyAbledAccessibility: isDiffAccess,
+      ifParking: parkingAvailable,
+      ifAlcohol: alcoholAllowed,
+      ifRegisterAsGroup: allowGroupRegistration,
+      eventType:
+        eventType === "Online"
+          ? 0
+          : eventType === "Offline"
+          ? 1
+          : eventType === "Hybrid"
+          ? 2
+          : null,
+      ifFreeGoodies: isFree,
+      ifRideTogether: carpooling,
+    };
+    const newEventData = new FormData();
+    newEventData.append("posterLink", posterImage);
+    newEventData.append("evenData", JSON.stringify(eventData));
+
+    // console.log(newEventData);
+    console.log(JSON.parse(newEventData.get("eventData")));
     // Here you could make an API call to submit the form data and image to a server
-    console.log("Event Name:", eventName);
-    console.log("Event Details:", eventDetails);
-    console.log("Event Location:", eventLocation);
-    console.log("Is Online:", isOnline);
-    console.log("Event Date:", eventDate);
-    console.log("Poster Image:", posterImage);
-    console.log("Club:", club);
-    console.log("Entry Fee:", entryFee);
-    console.log("Theme:", theme);
-    console.log("Capacity:", capacity);
-    console.log("Free Stuff:", freeStuff);
-    console.log("Allow Group Registration:", allowGroupRegistration);
-    console.log("Carpooling:", carpooling);
-    console.log("Alcohol Allowed:", alcoholAllowed);
-    console.log("Guide:", guide);
-    console.log("Has Parking:", hasParking);
-    console.log("Pet Allowed:", petAllowed);
+    // console.log("Event Name:", eventName);
+    // console.log("Event Details:", eventDetails);
+    // console.log("Event Location:", eventLocation);
+    // console.log("Event Type:", eventType);
+    // console.log("Event Date:", eventDate);
+    // console.log("Poster Image:", posterImage);
+    // console.log("Club:", club);
+    // console.log("Entry Fee:", entryFee);
+    // console.log("Theme:", theme);
+    // console.log("Capacity:", capacity);
+    // console.log("Free Stuff:", isFree);
+    // console.log("Allow Group Registration:", allowGroupRegistration);
+    // console.log("differenly abled", isDiffAccess);
+    // console.log("Carpooling:", carpooling);
+    // console.log("Alcohol Allowed:", alcoholAllowed);
+    // console.log("Guide:", guideAvailable);
+    // console.log("Has Parking:", parkingAvailable);
+    // console.log("Pet Allowed:", isPetAllowed);
+    // console.log(
+    //   food === "Veg"
+    //     ? 0
+    //     : food === "Non-Veg"
+    //     ? 1
+    //     : food === "Non-Veg/Veg"
+    //     ? 2
+    //     : null
+    // );
+    // console.log(
+    //   eventType === "Online"
+    //     ? 0
+    //     : eventType === "Offline"
+    //     ? 1
+    //     : eventType === "Hybrid"
+    //     ? 2
+    //     : null
+    // );
   };
 
   const handleImageChange = (event) => {
@@ -64,8 +146,8 @@ function HostEventPage() {
   };
 
   return (
-    <div>
-      <h1 className="host-event">Host an Event</h1>
+    <div className="host-event-cont">
+      <h1 className="host-event-heading">Host an Event</h1>
       <form onSubmit={handleSubmit} className="eventHost-form">
         <div className="host-main-cont">
           <div className="host-left-box">
@@ -150,11 +232,12 @@ function HostEventPage() {
             <label>
               Start Time:
               <input
-                type="text"
+                type="time"
                 value={timings}
                 onChange={(e) => setTimings(e.target.value)}
               />
             </label>
+
             <label>
               Category:
               <select
@@ -201,7 +284,6 @@ function HostEventPage() {
                 <option value="">Select a Theme</option>
                 <option value="Official">Official</option>
                 <option value="Unofficial">Unofficial</option>
-                <option value="other">Other</option>
               </select>
             </label>
             <br />
@@ -280,6 +362,7 @@ function HostEventPage() {
                 type="checkbox"
                 checked={isPetAllowed}
                 onChange={() => setIsPetAllowed(!isPetAllowed)}
+                v
               />
             </label>
             <br />
