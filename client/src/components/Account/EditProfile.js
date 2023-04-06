@@ -27,6 +27,21 @@ function EditProfile() {
     if (!flag) {
       return alert("No changes made");
     }
+
+    Axios.put("/api/users/update", {
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      phone: phone,
+      password: password,
+      roomNumber: address1,
+      street: address2,
+      City: city,
+      Pin: zipCode,
+      Country: country,
+      State: state,
+    });
+
   };
 
   useEffect(() => {

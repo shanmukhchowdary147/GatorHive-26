@@ -15,5 +15,29 @@ class EventController {
       next(error);
     }
   };
+  createEvent = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      logger.info("create event", {
+        file: req.file,
+        __filename,
+        functionName: "createEvent",
+      });
+      let filePath = null;
+      if (req.file) {
+        filePath = req.file.path;
+      }
+      logger.debug("create event", {
+        filePath: filePath,
+        __filename,
+        functionName: "createEvent",
+      });
+      const userId = req.context.userId;
+      const eventData = req.body.eventData;
+      await eventService.createEvent(filePath, eventData, userId);
+      res.json({ status: "success" }).status(200);
+    } catch (error) {
+      next(error);
+    }
+  };
 }
 export const eventController = new EventController();

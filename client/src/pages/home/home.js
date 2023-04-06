@@ -5,8 +5,14 @@ import "./Home.css";
 import { BiSearchAlt } from "react-icons/bi";
 import Axios from "axios";
 import { IoChatbubbleEllipsesSharp } from "react-icons/io5";
+import recommendEvents from "../Chatbot/Chatbot.js";
+import { IoChatbubbleEllipsesSharp } from "react-icons/io5";
+import Cookies from "js-cookie";
+import { Redirect } from "react-router-dom";
+// import EventSlider from "../../components/EventSlider/EventSlider";
 
 const Home = () => {
+  console.log(Cookies.get("token"));
   // state for the carousel images
   const images = [
     require("../../images/bg3.jpg"),
@@ -99,6 +105,9 @@ const Home = () => {
   }
 
   // update carousel images every 5 seconds
+  function handleChatbotClick() {
+    recommendEvents();
+  }
 
   return (
     <div className="home">

@@ -26,3 +26,7 @@ export const redisConfig = {
   URI: process.env.REDIS_URI as string,
   password: process.env.REDIS_PASSWORD,
 };
+export const posterDir = path.join(process.cwd(), "./temp/posters");
+export const awsAccessKeyId = process.env.AWS_ACCESS_KEY_ID;
+export const awsSecretAccessKey = process.env.AWS_SECRET_ACCESS_KEY;
+export const bucketName = process.env.AWS_BUCKET_NAME;
