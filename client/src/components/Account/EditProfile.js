@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./EditProfile.css";
 import { BiEditAlt } from "react-icons/bi";
 import Axios from "axios";
@@ -27,22 +27,31 @@ function EditProfile() {
     if (!flag) {
       return alert("No changes made");
     }
-
-    Axios.put("/api/users/update", {
-      firstName: firstName,
-      lastName: lastName,
-      email: email,
-      phone: phone,
-      password: password,
-      roomNumber: address1,
-      street: address2,
-      City: city,
-      Pin: zipCode,
-      Country: country,
-      State: state,
-    });
-
   };
+
+  useEffect(() => {
+    Axios.get("http://localhost:3000/users", {
+      // params: {
+      // },
+    })
+      .then((res) => {
+        console.log(res);
+        // setFirstName(res.data.firstName);
+        // setLastName(res.data.lastName);
+        // setEmail(res.data.email);
+        // setPhone(res.data.phone);
+        // setPassword(res.data.password);
+        // setAddress1(res.data.address1);
+        // setAddress2(res.data.address2);
+        // setCity(res.data.city);
+        // setZipCode(res.data.zipCode);
+        // setCountry(res.data.country);
+        // setState(res.data.state);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   const handleFieldChange = (event) => {
     switch (editableField) {
@@ -93,6 +102,7 @@ function EditProfile() {
       default:
         break;
     }
+    event.preventDefault();
   };
 
   const renderEditableField = (fieldName, fieldValue) => {
@@ -167,8 +177,6 @@ function EditProfile() {
         Save
       </button>
     </div>
-
-    
   );
 }
 

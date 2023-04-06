@@ -3,9 +3,8 @@ import SimpleImageSlider from "react-simple-image-slider";
 import { Carousel } from "react-responsive-carousel";
 import "./Home.css";
 import { BiSearchAlt } from "react-icons/bi";
-import recommendEvents from "../Chatbot/Chatbot.js";
-import {IoChatbubbleEllipsesSharp}  from "react-icons/io5";
-// import EventSlider from "../../components/EventSlider/EventSlider";
+import Axios from "axios";
+import { IoChatbubbleEllipsesSharp } from "react-icons/io5";
 
 const Home = () => {
   // state for the carousel images
@@ -15,11 +14,37 @@ const Home = () => {
     require("../../images/bg5.jpg"),
   ];
 
-  // const clickImage = (idx, event) => {
-  //   console.log("clicked image", idx);
-  // };
 
-  // state for the card data
+  const [recommendedEvents, setRecommendedEvents] = useState([]);
+  // const [idName, setIdName] = useState("");
+  // const [title, setTitle] = useState("");
+  // const [date, setDate] = useState("");
+  // const [location, setLocation] = useState("");
+
+  useEffect(() => {
+    Axios.get("http://localhost:3000/chatbot/recommend-events")
+      .then((res) => {
+        setRecommendedEvents(res.data.events);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
+
+  const handleChatbotClick = (event) => {
+    event.preventDefault();
+    Axios.post("http://localhost:3000/chatbot/recommend-events", {
+      message: "recommend events",
+    })
+      .then((res) => {
+        setRecommendedEvents(res.data.events);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   const [cardData, setCardData] = useState([
     {
       imagePath: require("../../images/bg4.jpg"),
@@ -74,10 +99,7 @@ const Home = () => {
   }
 
   // update carousel images every 5 seconds
-  function handleChatbotClick() {
-    recommendEvents();
-  }
-  
+
   return (
     <div className="home">
       <div className="carousels">
@@ -149,9 +171,12 @@ const Home = () => {
       </div>
       <div className="chatbot-btn">
         <button onClick={handleChatbotClick}>
-          <IoChatbubbleEllipsesSharp/>
+          <IoChatbubbleEllipsesSharp />
         </button>
       </div>
+      {recommendedEvents.map((event) => (
+        <div key={event}>{event}</div>
+      ))}
     </div>
   );
 };
