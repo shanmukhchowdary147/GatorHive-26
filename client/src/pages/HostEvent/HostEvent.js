@@ -1,13 +1,7 @@
 import "./HostEvent.css";
 import React, { useState } from "react";
-import Cookies from "js-cookie";
-import { Redirect } from "react-router-dom";
 
 function HostEventPage() {
-  const token = Cookies.get("token");
-  if (!token) {
-    return <Redirect to="/login" />;
-  }
   const [eventName, setEventName] = useState("");
   const [eventDetails, setEventDetails] = useState("");
   const [eventLocation, setEventLocation] = useState("");
@@ -38,6 +32,26 @@ function HostEventPage() {
 
   //   });
   // };
+
+  function createEventAtUtc(eventDate, timings) {
+    // Combine eventDate and timings into a single string
+    const eventDateTimeString = `${eventDate}T${timings}:00.000`;
+
+    // Create a new Date object with the combined string and current timezone
+    const eventAtCurrentTimezone = new Date(eventDateTimeString);
+
+    // Get the UTC time in ISO format
+    const eventAtUtcIso = eventAtCurrentTimezone;
+
+    // Create a new Date object with the UTC time
+    const eventAtUtc = new Date(eventAtUtcIso);
+
+    return eventAtUtc;
+  }
+
+  const eventAtUtc = createEventAtUtc(eventDate, timings);
+
+  console.log(eventAtUtc.toUTCString()); // Display the time in UTC format
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -85,6 +99,7 @@ function HostEventPage() {
     const newEventData = new FormData();
     newEventData.append("posterLink", posterImage);
     newEventData.append("evenData", JSON.stringify(eventData));
+
     // console.log(newEventData);
     console.log(JSON.parse(newEventData.get("eventData")));
     // Here you could make an API call to submit the form data and image to a server
@@ -217,11 +232,12 @@ function HostEventPage() {
             <label>
               Start Time:
               <input
-                type="text"
+                type="time"
                 value={timings}
                 onChange={(e) => setTimings(e.target.value)}
               />
             </label>
+
             <label>
               Category:
               <select
