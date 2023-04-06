@@ -49,21 +49,34 @@ class EventService {
       throw error;
     }
   };
-  createEvent = async (filePath: any, eventData: any, userId: string) => {
+  createEvent = async (
+    filePath: any,
+    eventData: any,
+    userId: string,
+    addressData: any
+  ) => {
     const callerMethodName = "createEvent";
+    const transaction = await mysqlProxy.createTransaction();
     try {
       logger.info("create event", {
         __filename,
         callerMethodName,
       });
-      const url = awsS3Client.uploadFile(filePath);
+      const url = await awsS3Client.uploadFile(filePath);
       eventData.hostedByUserId = userId;
       eventData.posterLink = url;
       const category: eventCategoryName = eventData.category;
       eventData.category = EventCategory[category];
-      const event = await eventRepository.create(eventData);
+      const address = await addressRepository.create(
+        { ...addressData },
+        transaction
+      );
+      eventData.addressId = address.id;
+      const event = await eventRepository.create(eventData, transaction);
       await unlink(filePath);
+      await transaction.commit();
     } catch (error) {
+      await transaction.rollback();
       throw error;
     }
   };

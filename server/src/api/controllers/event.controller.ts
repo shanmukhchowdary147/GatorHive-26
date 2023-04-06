@@ -32,8 +32,9 @@ class EventController {
         functionName: "createEvent",
       });
       const userId = req.context.userId;
-      const eventData = req.body.eventData;
-      await eventService.createEvent(filePath, eventData, userId);
+      const eventData = JSON.parse(req.body.eventData);
+      const addressData = JSON.parse(req.body.address);
+      await eventService.createEvent(filePath, eventData, userId, addressData);
       res.json({ status: "success" }).status(200);
     } catch (error) {
       next(error);
