@@ -22,26 +22,42 @@ class UserService {
         { attributes: ["addressId"] }
       );
       //need to update the address table later on into addressline 1 and 2 instead of room bumber and street
-
-      await addressRepository.update(
-        { id: address.addressId },
-        {
-          roomNumber: user.roomNumber,
-          street: user.street,
-          City: user.City,
-          State: user.State,
-          Country: user.Country,
-          Pin: user.Pin,
-        },
-        transaction
-      );
-      const userDetails = userRepository.update(
+      if (address) {
+        user.addressId = address.id;
+        await addressRepository.update(
+          { id: address.addressId },
+          {
+            roomNumber: user.roomNumber,
+            street: user.street,
+            City: user.City,
+            State: user.State,
+            Country: user.Country,
+            Pin: user.Pin,
+          },
+          transaction
+        );
+      } else {
+        const addressDetails = await addressRepository.create(
+          {
+            roomNumber: user.roomNumber,
+            street: user.street,
+            City: user.City,
+            State: user.State,
+            Country: user.Country,
+            Pin: user.Pin,
+          },
+          transaction
+        );
+        user.addressId = addressDetails.id;
+      }
+      const userDetails = await userRepository.update(
         { id: userId },
         {
           firstName: user.firstName,
           lastName: user.lastName,
           email: user.email,
-          phone: user.phone,
+          phoneNumber: user.phoneNumber,
+          addressId: user.addressId,
           // password: user.password,
         },
         transaction
