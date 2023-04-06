@@ -62,13 +62,13 @@ function EventsAttended() {
             <div className="attended-event-details-right">
               <div className="attended-eventname-tag">
                 <h2>{event.eventName}</h2>
-                <button className="attended-event-tag">#{event.categoryName}</button>
+                <button className="attended-event-tag">
+                  #{event.categoryName}
+                </button>
               </div>
 
               <div className="attended-event-club">{event.clubName}</div>
-              <div className="attended-event-date">
-                Date: {event.eventDate} 
-              </div>
+              <div className="attended-event-date">Date: {event.eventDate}</div>
               <div className="attended-event-date">{event.eventLocation}</div>
               <div className="attended-event-details">{event.eventDetails}</div>
             </div>

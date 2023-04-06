@@ -9,30 +9,24 @@ function LoginForm() {
   const [password, setPassword] = useState("");
   const [isValid, setIsValid] = useState(false);
 
-  const passwordValidate = () => {
-    const value = password;
+  const handlePasswordChange = (event) => {
+    const value = event.target.value;
+    setPassword(value);
     const regex =
       /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,256}$/;
-    console.log("regex:", regex.test(value));
-    return regex.test(value);
-    console.log("isValid:", isValid);
+    setIsValid(regex.test(value));
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    var valid = passwordValidate();
-    if (!valid) {
-      alert("Password is not valid");
-      return;
-    }
-
+    // if(password)
     console.log(`Login form submitted: email=${email}, password=${password}`);
     const loginData = {
       email: email,
       password: password,
     };
     const responseLogin = await Axios.post(
-      "http://localhost:8000/auth/login",
+      "http://localhost:3000/auth/login",
       loginData
     );
     const token = responseLogin.data.accessToken;
@@ -59,11 +53,16 @@ function LoginForm() {
         <Form.Control
           type="password"
           value={password}
-          onChange={(event) => setPassword(event.target.value)}
+          onChange={handlePasswordChange}
           required
         />
       </Form.Group>
-      <Button type="submit">Login</Button>
+      {!isValid && (
+        <Form.Text className="text-danger">Invalid Email or Password</Form.Text>
+      )}
+      <Button type="submit" disabled={!isValid}>
+        Login
+      </Button>
       <a href="#" className="ml-2">
         Forgot Password?
       </a>
@@ -79,23 +78,26 @@ function SignupForm() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [isValid, setIsValid] = useState(false);
 
-  const passwordValidate = () => {
-    const value = password;
+  const handlePasswordChange = (event) => {
+    const value = event.target.value;
+    setPassword(value);
     const regex =
-      /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,256}$/;
-    console.log("regex:", regex.test(value));
-    return regex.test(value);
-    console.log("isValid:", isValid);
+      /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
+    setIsValid(regex.test(value));
+  };
+
+  const handleConfirmPasswordChange = (event) => {
+    setConfirmPassword(event.target.value);
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    var valid = passwordValidate();
-    if (password !== confirmPassword || !valid) {
-      console.log("isss", isValid);
-      alert("Password is not valid");
+
+    if (password !== confirmPassword) {
+      alert("Passwords do not match!");
       return;
     }
+
     const signupData = {
       firstName: firstName,
       lastName: lastName,
@@ -106,7 +108,7 @@ function SignupForm() {
 
     console.log(signupData);
     const response = await Axios.post(
-      "http://localhost:8000/auth/signup",
+      "http://localhost:3000/auth/signup",
       signupData
     );
     const token = response.data.token;
@@ -114,15 +116,11 @@ function SignupForm() {
     Cookies.set("token", token);
     // console.log("fromtoken:", Cookies.get("token"));
     window.location.href = "/";
-
-    // Cookies.set("token", response.data.token);
-
-    // window.location.href = "/";
   };
 
   return (
     <div className="login-container">
-      <Form onSubmit={handleSubmit}>
+      <Form onSubmit={handleSubmit} className="xxx">
         <h2>Sign Up</h2>
         <Form.Group controlId="firstName">
           <Form.Label>First Name:</Form.Label>
@@ -156,19 +154,31 @@ function SignupForm() {
           <Form.Control
             type="password"
             value={password}
-            onChange={(event) => setPassword(event.target.value)}
+            onChange={handlePasswordChange}
             required
           />
         </Form.Group>
+        {!isValid && (
+          <div className="password-validation">
+            <p> Minimum 8 characters </p>
+            <p> 1 capital letter, 1 small letter </p>
+            {/* <p>  </p> */}
+            <p> 1 special character, 1 number </p>
+            {/* <p> 1 special character</p> */}
+          </div>
+        )}
         <Form.Group controlId="confirmPassword">
           <Form.Label>Confirm Password:</Form.Label>
           <Form.Control
             type="password"
             value={confirmPassword}
-            onChange={(event) => setConfirmPassword(event.target.value)}
+            onChange={handleConfirmPasswordChange}
             required
           />
         </Form.Group>
+        {password !== confirmPassword && (
+          <div style={{ color: "red" }}>Passwords do not match!</div>
+        )}
         <Button type="submit">Sign Up</Button>
       </Form>
     </div>

@@ -1,5 +1,5 @@
 .search-cont {
-  background-color: rgb(220, 254, 254);
+  background-image: linear-gradient(to bottom right, #000428, #004e92);
 }
 .search-page {
   display: flex;
@@ -13,7 +13,7 @@
   position: sticky;
   padding: 10px 10px 20px 20px;
   height: 100%;
-  background-color: white;
+  background-color: rgb(228, 228, 228);
   border: rgb(114, 113, 113) 1px solid;
   border-radius: 5px;
 }

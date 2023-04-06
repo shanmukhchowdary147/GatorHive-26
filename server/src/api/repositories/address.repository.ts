@@ -1,5 +1,5 @@
 import logger from "../common/logger/logger";
-import { signupDto } from "../customTypes";
+import { addressType, signupDto } from "../customTypes";
 import { mysqlProxy } from "../database/proxy/mysql.proxy";
 import { collections } from "../enums/enums";
 
@@ -19,7 +19,11 @@ class AddressRepository {
       __filename,
       "findOne"
     );
-    const address = await mysqlProxy.findOne(collections.Address, condition, options);
+    const address = await mysqlProxy.findOne(
+      collections.Address,
+      condition,
+      options
+    );
     logger.debug(
       "got member record from db",
       { address, condition },
@@ -36,14 +40,13 @@ class AddressRepository {
     );
     return Address;
   };
-  
+
   getUser = async (condition: any = {}): Promise<any> => {
     const user = await mysqlProxy.find(collections.User, condition, {
       raw: true,
     });
     return user;
   };
-
 }
 
 export const addressRepository = new AddressRepository();

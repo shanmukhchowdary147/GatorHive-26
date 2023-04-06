@@ -15,3 +15,11 @@ export type eventCategoryName =
   | "social"
   | "cultural"
   | "other"; // Define a union type for the valid category values
+export type addressType = {
+  roomNumber: string | null;
+  street: string | null;
+  City: string | null;
+  State: string | null;
+  Country: string | null;
+  Pin: string | null;
+};

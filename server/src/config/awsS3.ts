@@ -34,7 +34,7 @@ class AwsS3Client {
   //     });
   //   });
   // };
-  uploadFile = (filePath: string) => {
+  uploadFile = async (filePath: string) => {
     const fileName = path.basename(filePath);
     const fileContent = fs.readFileSync(filePath);
     const contentType = mime.getType(filePath) || "application/octet-stream";

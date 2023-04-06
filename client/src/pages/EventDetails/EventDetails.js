@@ -1,89 +1,95 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./EventDetails.css";
 import { MdOutlineGroups } from "react-icons/md";
 import { CiBookmark } from "react-icons/ci";
 import { MdLocationOn } from "react-icons/md";
 import Button from "@mui/material/Button";
 import Cookies from "js-cookie";
-
-const eventDetails = {
-  id: 3,
-  name: "ST. Augustine Music Festival",
-  category: "other",
-  Location: "Norman Hall, UF",
-  imageUrl:
-    "https://xray.ufl.edu/wordpress/files/2023/02/research-day-450x600.png",
-  clubName: "UF NaviGators",
-  theme: "other",
-  food: 2,
-  details:
-    "The music event was an electrifying experience that left the audience spellbound. The stage was adorned with colorful lights and a sound system that was capable of filling the entire venue with music that ranged from soft, mellow melodies to foot-stomping beats that had the audience jumping out of their seats.",
-  date: "2023-04-25",
-  eventAtUtc: "12:00 PM",
-  registrations: 5,
-  ifPetsAllowed: true,
-  entryFee: 200,
-  ifGuide: true,
-  ifDifferentlyAbledAccessibility: false,
-  ifParking: true,
-  ifAlcohol: false,
-  ifRegisterAsGroup: true,
-  eventType: 2,
-  ifFreeGoodies: true,
-  ifRideTogether: true,
-};
+import { useLocation } from "react-router-dom";
+import Axios from "axios";
 
 const EventDetails = () => {
+  const [eventDetails, setEventDetails] = useState({});
+  const [alreadyRegistered, setAlreadyRegistered] = useState(false);
   const token = Cookies.get("token");
+
+  const location = useLocation();
+  const urlParams = new URLSearchParams(location.search);
+  const eventId = decodeURIComponent(urlParams.get("eventId"));
+  // console.log(http://localhost:8000/events/eventDetails?eventId=${eventId}});
+
+  // useEffect(() => {
+  //   Axios.get(`http://localhost:8000/events/eventDetails?eventId=${eventId}}`)
+  //     .then((response) => {
+  //       setEventDetails(response.data);
+  //     })
+  //     .catch((error) => {
+  //       console.error(error);
+  //     });
+  // }, [eventId]);
+
+  useEffect(() => {
+    const fetchEventDetails = async () => {
+      try {
+        const response = await Axios.get(
+          `http://localhost:8000/events/eventDetails?eventId=${eventId}`
+        );
+        setEventDetails(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchEventDetails();
+  }, [eventId]);
+
+  console.log(eventDetails);
+
   async function registerToEvent() {
     if (!token) {
       window.location.href = "/login";
     } else {
       console.log("Registered to event with id");
-      await axios
-        .post(
-          "http://localhost:3000/api/data",
+      try {
+        const response = await Axios.post(
+          `http://localhost:8000/events/register?eventId=${eventId}`,
           {
-            // request data here
+            eventId: eventDetails.id,
           },
           {
             headers: {
               Authorization: `Bearer ${token}`,
             },
           }
-        )
-        .then((response) => {
-          console.log(response);
-          console.log("Registered to event with id");
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+        );
+        console.log(response);
+        console.log("Registered to event with id");
+        setAlreadyRegistered(true);
+      } catch (error) {
+        console.log(error);
+      }
     }
   }
   return (
     <div className="event-details-page">
       <div className="event-details-left">
-        <img src={eventDetails.imageUrl} alt={eventDetails.name} />
-        <p className="event-time">
-          {eventDetails.eventAtUtc} | {eventDetails.date}
-        </p>
+        <img src={eventDetails.posterLink} alt={eventDetails.eventName} />
+        <p className="event-time">{eventDetails.eventAtUtc}</p>
         <p className="entry-Fee">Entry Fee: ${eventDetails.entryFee}</p>
         <p className="event-location">
           <MdLocationOn className="location-icon" /> Venue:{" "}
-          {eventDetails.Location}
+          {eventDetails.eventLocation}
         </p>
       </div>
       <div className="event-details-right">
-        <h1 className="event-name">{eventDetails.name}</h1>
-        <h4 className="club-name">{eventDetails.clubName}</h4>
-        <p className="event-description">{eventDetails.details}</p>
+        <h1 className="event-name">{eventDetails.eventName}</h1>
+        <h4 className="club-name">{eventDetails.orgName}</h4>
+        <p className="event-description">{eventDetails.eventDetails}</p>
         <p className="event-features">
-          Category: {eventDetails.category} | Food:{" "}
+          Category: {eventDetails.categoryName} | Food:{" "}
           {eventDetails.food === 0 && "Veg"}
           {eventDetails.food === 1 && "Non-veg"}
           {eventDetails.food === 2 && "Both Veg & Non-Veg"} | Theme:{" "}
-          {eventDetails.theme} | Event Type:{" "}
+          {eventDetails.ifOfficial ? "Official" : "Un Official"} | Event Type:{" "}
           {eventDetails.eventType === 0 && "Online"}
           {eventDetails.eventType === 1 && "Offline"}
           {eventDetails.eventType === 2 && "Both Online & Offline"}
@@ -151,8 +157,11 @@ const EventDetails = () => {
             variant="contained"
             endIcon={<CiBookmark />}
             onClick={registerToEvent}
+            className={
+              alreadyRegistered ? "register-invisible" : "register-visible"
+            }
           >
-            Register For Event
+            {alreadyRegistered ? "Already Registered !!" : "Register For Event"}
           </Button>
           <Button
             variant="contained"

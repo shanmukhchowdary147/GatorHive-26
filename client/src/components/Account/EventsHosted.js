@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import "./EventsHosted.css";
 
 function EventsHosted() {
-
   const eventsData = [
     {
       id: 1,
@@ -29,16 +28,6 @@ function EventsHosted() {
         "The music event was an electrifying experience that left the audience spellbound. The stage was adorned with colorful lights and a sound system that was capable of filling the entire venue with music that ranged from soft.",
       eventDate: "2023-04-20",
     },
-    {
-      id: 3,
-      eventName: "Yukorvan Event",
-      categoryName: "cultural",
-      posterLink: "https://via.placeholder.com/150x150",
-      clubName: "Club 3",
-      eventLocation: "UF Campus, Norman Hall",
-      eventDetails: "Event details 3",
-      eventDate: "2023-04-25",
-    },
   ];
 
   const [event, setEvents] = useState(eventsData);
@@ -63,13 +52,13 @@ function EventsHosted() {
             <div className="hosted-event-details-right">
               <div className="hosted-eventname-tag">
                 <h2>{event.eventName}</h2>
-                <button className="hosted-event-tag">#{event.categoryName}</button>
+                <button className="hosted-event-tag">
+                  #{event.categoryName}
+                </button>
               </div>
 
               <div className="hosted-event-club">{event.clubName}</div>
-              <div className="hosted-event-date">
-                Date: {event.eventDate} 
-              </div>
+              <div className="hosted-event-date">Date: {event.eventDate}</div>
               <div className="hosted-event-date">{event.eventLocation}</div>
               <div className="hosted-event-details">{event.eventDetails}</div>
             </div>

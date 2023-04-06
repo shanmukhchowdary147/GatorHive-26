@@ -32,7 +32,7 @@ function App() {
           <Route path="/search" component={Search} />
           <Route path="/host-event" component={HostEvent} />
           <Route path="/fake" component={Fake} />
-          <Route path="/event/:eventId" component={EventDetails} />
+          <Route path="/event" component={EventDetails} />
           <Route path="/student-orgs" component={StudentOrgs} />
           <Route path="/about-us" component={AboutUs} />
           <Route path="/chatbot" component={ChatBot} />

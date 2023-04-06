@@ -62,13 +62,13 @@ function UpcomingEvents() {
             <div className="upcoming-event-details-right">
               <div className="upcoming-eventname-tag">
                 <h2>{event.eventName}</h2>
-                <button className="upcoming-event-tag">#{event.categoryName}</button>
+                <button className="upcoming-event-tag">
+                  #{event.categoryName}
+                </button>
               </div>
 
               <div className="upcoming-event-club">{event.clubName}</div>
-              <div className="upcoming-event-date">
-                Date: {event.eventDate} 
-              </div>
+              <div className="upcoming-event-date">Date: {event.eventDate}</div>
               <div className="upcoming-event-date">{event.eventLocation}</div>
               <div className="upcoming-event-details">{event.eventDetails}</div>
             </div>

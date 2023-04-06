@@ -60,6 +60,89 @@ class StudentOrgService {
       throw err;
     }
   };
+
+  getAllOrgs = async () => {
+    const callerMethodName = "getAllOrgs";
+    try {
+      logger.info("get all student orgs", {
+        __filename,
+        callerMethodName,
+      });
+      const studentOrgs = await studentOrgRepository.find({}, { raw: true });
+      return studentOrgs;
+    } catch (err) {
+      throw err;
+    }
+  };
+
+  getSubscribedOrgs = async (userId: string) => {
+    const callerMethodName = "getSubscribedOrgs";
+    try {
+      logger.info("get subscribed student orgs", {
+        __filename,
+        callerMethodName,
+      });
+
+      const studentOrgAccounts = await studentOrgAccountsRepository.find(
+        { userId: userId },
+        { raw: true }
+      );
+      const registeredOrgs = studentOrgAccounts.map(
+        (studentOrgAccount: any) => studentOrgAccount.studentOrgId
+      );
+      const studentOrgSubscribed = await studentOrgRepository.find(
+        { id: { [Op.in]: registeredOrgs } },
+        { attributes: ["id"], raw: true }
+      );
+      return studentOrgSubscribed;
+    } catch (err) {
+      throw err;
+    }
+  };
+  getHostableOrgs = async (userId: string) => {
+    const callerMethodName = "getHostableOrgs";
+    try {
+      logger.info("get hostable student orgs", {
+        __filename,
+        callerMethodName,
+      });
+
+      const studentOrgAccounts = await studentOrgAccountsRepository.find(
+        {
+          userId: userId,
+          userRole: UserRole.PrimaryUser || UserRole.SecondaryUser,
+        },
+        { raw: true }
+      );
+      const hostableOrgIds = studentOrgAccounts.map(
+        (studentOrgAccount: any) => studentOrgAccount.studentOrgId
+      );
+      const hostableOrgs = await studentOrgRepository.find(
+        { id: { [Op.in]: hostableOrgIds } },
+        { raw: true }
+      );
+      return hostableOrgs;
+    } catch (err) {
+      throw err;
+    }
+  };
+
+  subscribeOrg = async (userId: string, studentOrgId: string) => {
+    const callerMethodName = "subscribeOrg";
+    try {
+      logger.info("subscribe student org", {
+        __filename,
+        callerMethodName,
+      });
+      await studentOrgAccountsRepository.create({
+        userId: userId,
+        studentOrgId: studentOrgId,
+        userRole: UserRole.Subscriber,
+      });
+    } catch (err) {
+      throw err;
+    }
+  };
 }
 
 export const studentOrgService = new StudentOrgService();
