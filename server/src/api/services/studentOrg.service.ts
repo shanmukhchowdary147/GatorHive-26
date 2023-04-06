@@ -80,6 +80,23 @@ class StudentOrgService {
     );
     return studentOrgSubscribed;
   };
+  getHostableOrgs = async (userId: string) => {
+    const studentOrgAccounts = await studentOrgAccountsRepository.find(
+      {
+        userId: userId,
+        userRole: UserRole.PrimaryUser || UserRole.SecondaryUser,
+      },
+      { raw: true }
+    );
+    const hostableOrgIds = studentOrgAccounts.map(
+      (studentOrgAccount: any) => studentOrgAccount.studentOrgId
+    );
+    const hostableOrgs = await studentOrgRepository.find(
+      { id: { [Op.in]: hostableOrgIds } },
+      { raw: true }
+    );
+    return hostableOrgs;
+  };
 }
 
 export const studentOrgService = new StudentOrgService();

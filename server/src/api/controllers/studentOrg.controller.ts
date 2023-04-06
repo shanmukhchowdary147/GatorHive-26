@@ -49,5 +49,18 @@ class StudentOrgController {
       next(error);
     }
   };
+  getHostableOrgs = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      logger.info("get hostable orgs", {
+        __filename,
+        functionName: "getHostableOrgs",
+      });
+      const userId = req.context.userId;
+      const hostableOrgs = await studentOrgService.getHostableOrgs(userId);
+      res.status(200).json(hostableOrgs);
+    } catch (error) {
+      next(error);
+    }
+  };
 }
 export const studentOrgController = new StudentOrgController();

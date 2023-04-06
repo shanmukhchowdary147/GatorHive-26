@@ -1,9 +1,9 @@
 import { eventRepository } from "../repositories/event.repository";
 import logger from "../common/logger/logger";
-import { map } from "lodash";
+import { concat, map } from "lodash";
 import { studentOrgRepository } from "../repositories/studentOrg.repository";
 import { EventCategoryMap, EventCategory } from "../enums/enums";
-import { eventCategory, eventCategoryName } from "../customTypes";
+import { addressType, eventCategory, eventCategoryName } from "../customTypes";
 import { awsS3Client } from "../../config/awsS3";
 import { unlink } from "fs-extra";
 import { addressRepository } from "../repositories/address.repository";
@@ -102,11 +102,20 @@ class EventService {
         { raw: true }
       );
       event.isRegistered = registration.id ? true : false;
-      const address = addressRepository.findOne(
+      const address = await addressRepository.findOne(
         { id: event.addressId },
         { raw: true }
       );
-      event.address = address;
+      //need to correct casing
+      const location = concat(
+        address.roomNumber,
+        address.street,
+        address.City,
+        address.State,
+        address.Country,
+        address.Pin
+      );
+      event.eventLocation = address;
       return event;
     } catch (error) {
       throw error;

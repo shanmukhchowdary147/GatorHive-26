@@ -47,7 +47,7 @@ class EventController {
         functionName: "getEventDetails",
       });
       const userId = req.context.userId;
-      const eventId = req.params.eventId;
+      const eventId = req.query.eventId as string;
       const eventDetails = await eventService.getEventDetails(userId, eventId);
       res.status(200).json(eventDetails);
     } catch (error) {

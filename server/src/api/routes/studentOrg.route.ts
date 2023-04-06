@@ -18,5 +18,8 @@ router
     validate(createOrgValidation),
     studentOrgController.createOrg,
   ]);
+router
+  .route("/hostableOrgs")
+  .get([authorize, studentOrgController.getHostableOrgs]);
 
 export { router as studentOrgRoutes };
