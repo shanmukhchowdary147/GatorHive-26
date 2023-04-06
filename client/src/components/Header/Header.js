@@ -11,6 +11,7 @@ function Header() {
   useEffect(() => {
     const token = Cookies.get("token");
     if (token) {
+      console.log("token", token);
       setProfile("profile");
     } else {
       setProfile("login");

@@ -1,14 +1,29 @@
 import { useState } from "react";
 import { Form, Button } from "react-bootstrap";
 import "./Login.css";
+import Axios from "axios";
+import Cookies from "js-cookie";
 
 function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     console.log(`Login form submitted: email=${email}, password=${password}`);
+    const loginData = {
+      email: email,
+      password: password,
+    };
+    const responseLogin = await Axios.post(
+      "http://localhost:3000/auth/login",
+      loginData
+    );
+    const token = responseLogin.data.accessToken;
+    console.log("Lprint:", token);
+    Cookies.set("token", token);
+    // console.log("fromtoken:", Cookies.get("token"));
+    window.location.href = "/";
   };
 
   return (
@@ -47,13 +62,30 @@ function SignupForm() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(
-      `Signup form submitted: firstName=${firstName}, lastName=${lastName}, email=${email}, password=${password}, confirmPassword=${confirmPassword}`
+    const signupData = {
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      password: password,
+      phoneNumber: "1234567890",
+    };
+
+    console.log(signupData);
+    const response = await Axios.post(
+      "http://localhost:3000/auth/signup",
+      signupData
     );
-    Axios.post("/auth/login/");
+    const token = response.data.token;
+    console.log("print:", token);
+    Cookies.set("token", token);
+    // console.log("fromtoken:", Cookies.get("token"));
     window.location.href = "/";
+
+    // Cookies.set("token", response.data.token);
+
+    // window.location.href = "/";
   };
 
   return (

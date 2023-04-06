@@ -1,7 +1,13 @@
 import React, { useState } from "react";
 import "./StudentOrgs.css";
+import { Redirect } from "react-router-dom";
+import Cookies from "js-cookie";
 
 function StudentOrgs() {
+  const token = Cookies.get("token");
+  if (!token) {
+    return <Redirect to="/login" />;
+  }
   const [subscribedClubs, setSubscribedClubs] = useState([6, 4]);
   const [clubData, setClubData] = useState([
     { id: 1, clubName: "AC Milan", imagePath: require("../../images/bg5.jpg") },
