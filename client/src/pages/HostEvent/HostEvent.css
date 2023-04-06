@@ -1,5 +1,5 @@
 .host-event-cont {
-  background-color: rgb(220, 254, 254);
+  background-image: linear-gradient(to bottom right, #000428, #004e92);
 }
 
 .host-event-heading {
@@ -7,6 +7,8 @@
   text-align: center;
   margin-top: 0px;
   padding-top: 10px;
+  color: #f0f0f0;
+  font-weight: bold;
 }
 
 .eventHost-form {
