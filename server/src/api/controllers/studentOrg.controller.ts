@@ -62,5 +62,20 @@ class StudentOrgController {
       next(error);
     }
   };
+
+  subscribeOrg = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      logger.info("subscribe org", {
+        __filename,
+        functionName: "subscribeOrg",
+      });
+      const userId = req.context.userId;
+      const orgId = req.query.orgId as string;
+      await studentOrgService.subscribeOrg(userId, orgId);
+      res.send({ status: "Success" }).status(200);
+    } catch (error) {
+      next(error);
+    }
+  };
 }
 export const studentOrgController = new StudentOrgController();

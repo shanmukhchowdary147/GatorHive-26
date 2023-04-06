@@ -126,6 +126,23 @@ class StudentOrgService {
       throw err;
     }
   };
+
+  subscribeOrg = async (userId: string, studentOrgId: string) => {
+    const callerMethodName = "subscribeOrg";
+    try {
+      logger.info("subscribe student org", {
+        __filename,
+        callerMethodName,
+      });
+      await studentOrgAccountsRepository.create({
+        userId: userId,
+        studentOrgId: studentOrgId,
+        userRole: UserRole.Subscriber,
+      });
+    } catch (err) {
+      throw err;
+    }
+  };
 }
 
 export const studentOrgService = new StudentOrgService();

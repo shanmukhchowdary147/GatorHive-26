@@ -19,7 +19,7 @@ router.route("/create").post([
   }).single("posterLink"),
   eventController.createEvent,
 ]);
-router.route("/eventDetails").get([authorize, eventController.getEventDetails]);
+router.route("/eventDetails").get([eventController.getEventDetails]);
 router.route("/register").post([authorize, eventController.registerForAnEvent]);
 // router.route("/registerGroup").post([authorize, eventController.registerAsGroupForAnEvent]);
 

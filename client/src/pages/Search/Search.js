@@ -1,93 +1,42 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import "./Search.css";
 import { Button } from "react-bootstrap";
+import Axios from "axios";
 
 function SearchPage() {
-  const eventsData = [
-    {
-      id: 1,
-      eventName: "Foosball Event",
-      categoryName: "sports",
-      posterLink: require("./p9.jpg"),
-      clubName: "UF Sports CLub",
-      eventLocation: "UF Campus, Norman Hall",
-      ifOfficial: true,
-      food: 0,
-      eventDetails:
-        "The music event was an electrifying experience that left the audience spellbound. The stage was adorned with colorful lights and a sound system that was capable of filling the entire venue with music that ranged from soft.",
-      eventDate: "2023-04-15",
-      eventTime: "12:00:00",
-      registrations: 10,
-      ifPetsAllowed: true,
-      entryFee: 0,
-      ifGuide: true,
-      ifDifferentlyAbledAccessibility: true,
-      ifParking: true,
-      ifAlcohol: false,
-      ifRegisterAsGroup: true,
-      eventType: 0,
-      ifFreeGoodies: true,
-      ifRideTogether: true,
-    },
-
-    {
-      id: 2,
-      eventName: "Research Celebration",
-      categoryName: "academic",
-      posterLink:
-        "https://xray.ufl.edu/wordpress/files/2023/02/research-day-450x600.png",
-      clubName: "Gators Research Club",
-      eventLocation: "UF Campus, Norman Hall",
-      ifOfficial: false,
-      food: 1,
-      eventDetails:
-        "The music event was an electrifying experience that left the audience spellbound. The stage was adorned with colorful lights and a sound system that was capable of filling the entire venue with music that ranged from soft.",
-      eventDate: "2023-04-20",
-      eventTime: "12:00:00",
-      registrations: 100,
-      ifPetsAllowed: false,
-      entryFee: 100,
-      ifGuide: false,
-      ifDifferentlyAbledAccessibility: true,
-      ifParking: false,
-      ifAlcohol: true,
-      ifRegisterAsGroup: false,
-      eventType: 1,
-      ifFreeGoodies: false,
-      ifRideTogether: false,
-    },
-    {
-      id: 3,
-      eventName: "Yukorvan Event",
-      categoryName: "cultural",
-      posterLink: "https://via.placeholder.com/150x150",
-      clubName: "Club 3",
-      eventLocation: "UF Campus, Norman Hall",
-      ifOfficial: false,
-      food: 2,
-      eventDetails: "Event details 3",
-      eventDate: "2023-04-25",
-      eventTime: "12:00:00",
-      registrations: 50,
-      ifPetsAllowed: true,
-      entryFee: 200,
-      ifGuide: true,
-      ifDifferentlyAbledAccessibility: false,
-      ifParking: true,
-      ifAlcohol: false,
-      ifRegisterAsGroup: true,
-      eventType: 2,
-      ifFreeGoodies: true,
-      ifRideTogether: true,
-    },
-  ];
-
   const location = useLocation();
   const urlParams = new URLSearchParams(location.search);
   const searchText = decodeURIComponent(urlParams.get("q"));
+  const [events, setEvents] = useState([]);
 
-  const [events, setEvents] = useState(eventsData);
+  // useEffect(() => {
+  //   Axios.get(`http://localhost:8000/events/`)
+  //     .then((response) => {
+  //       setEvents(Object.values(response.data));
+  //     })
+  //     .catch((error) => {
+  //       console.error(error);
+  //     });
+  // }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [response] = await Promise.all([
+          Axios.get(`http://localhost:8000/events/`),
+        ]);
+        setEvents(Object.values(response.data));
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchData();
+  }, []);
+
+  // console.log("op", events);
+  // console.log(Object.values(eventsData));
+
   const [searchQuery, setSearchQuery] = useState(searchText);
   const [sortOption, setSortOption] = useState("");
   const [filterOptions, setFilterOptions] = useState({
@@ -168,12 +117,12 @@ function SearchPage() {
     } = filterOptions;
     return (
       (event.eventName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        event.clubName.toLowerCase().includes(searchQuery.toLowerCase())) &&
+        event.orgName.toLowerCase().includes(searchQuery.toLowerCase())) &&
       (!veg || event.food === 0) &&
       (!nonVeg || event.food === 1) &&
       (!bothVegNonVeg || event.food === 2) &&
-      (!official || event.ifOfficial === true) &&
-      (!unofficial || event.ifOfficial === false) &&
+      (!official || event.ifOfficial === 1) &&
+      (!unofficial || event.ifOfficial === 0) &&
       (!music || event.categoryName === "music") &&
       (!sports || event.categoryName === "sports") &&
       (!cultural || event.categoryName === "cultural") &&
@@ -181,20 +130,20 @@ function SearchPage() {
       (!volunteer || event.categoryName === "volunteer") &&
       (!social || event.categoryName === "social") &&
       (!other || event.categoryName === "other") &&
-      (!ifPetsAllowed || event.ifPetsAllowed === true) &&
+      (!ifPetsAllowed || event.ifPetsAllowed === 1) &&
       (!paid || event.entryFee > 0) &&
       (!unPaid || event.entryFee === 0) &&
-      (!ifGuide || event.ifGuide === true) &&
+      (!ifGuide || event.ifGuide === 1) &&
       (!ifDifferentlyAbledAccessibility ||
-        event.ifDifferentlyAbledAccessibility === true) &&
-      (!ifParking || event.ifParking === true) &&
-      (!ifAlcohol || event.ifAlcohol === true) &&
-      (!ifRegisterAsGroup || event.ifRegisterAsGroup === true) &&
+        event.ifDifferentlyAbledAccessibility === 1) &&
+      (!ifParking || event.ifParking === 1) &&
+      (!ifAlcohol || event.ifAlcohol === 1) &&
+      (!ifRegisterAsGroup || event.ifRegisterAsGroup === 1) &&
       (!online || event.eventType === 0) &&
       (!offline || event.eventType === 1) &&
       (!hybrid || event.eventType === 2) &&
-      (!ifFreeGoodies || event.ifFreeGoodies === true) &&
-      (!ifRideTogether || event.ifRideTogether === true)
+      (!ifFreeGoodies || event.ifFreeGoodies === 1) &&
+      (!ifRideTogether || event.ifRideTogether === 1)
     );
   });
 
@@ -211,7 +160,8 @@ function SearchPage() {
   });
 
   function handleEventCardClick(eventId) {
-    window.location.href = `/event/${eventId}`;
+    window.location.href = `/event?eventId=${encodeURIComponent(eventId)}`;
+    // `/search?q=${encodeURIComponent(searchQuery)}`
   }
 
   return (
@@ -490,7 +440,7 @@ function SearchPage() {
                   <Button className="event-tag">#{event.categoryName}</Button>
                 </div>
 
-                <div className="event-club">{event.clubName}</div>
+                <div className="event-club">{event.orgName}</div>
                 <div className="event-date">${event.entryFee}</div>
                 <div className="event-date">
                   Date: {event.eventDate} | {event.eventTime}

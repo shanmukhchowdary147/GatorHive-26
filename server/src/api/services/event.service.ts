@@ -93,7 +93,7 @@ class EventService {
       throw error;
     }
   };
-  getEventDetails = async (userId: string, eventId: string) => {
+  getEventDetails = async (eventId: string) => {
     const callerMethodName = "getEventDetails";
     try {
       logger.info("get event details", {
@@ -115,11 +115,11 @@ class EventService {
       const category: eventCategory = event.category;
       event.categoryName = EventCategoryMap[category];
       event.orgName = studentOrg.orgName;
-      const registration = await registrationsRepository.findOne(
-        { userId: userId, eventId: eventId },
-        { raw: true }
-      );
-      event.isRegistered = registration ? true : false;
+      // const registration = await registrationsRepository.findOne(
+      //   { userId: userId, eventId: eventId },
+      //   { raw: true }
+      // );
+      // event.isRegistered = registration ? true : false;
       const address = await addressRepository.findOne(
         { id: event.addressId },
         { raw: true }

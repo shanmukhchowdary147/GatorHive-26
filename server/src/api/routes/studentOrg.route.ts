@@ -21,5 +21,6 @@ router
 router
   .route("/hostableOrgs")
   .get([authorize, studentOrgController.getHostableOrgs]);
+router.route("/subscribe").put([authorize, studentOrgController.subscribeOrg]);
 
 export { router as studentOrgRoutes };
