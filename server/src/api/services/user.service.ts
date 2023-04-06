@@ -19,11 +19,12 @@ class UserService {
       });
       const address = await userRepository.findOne(
         { id: userId },
-        { attributes: ["addressId"] }
+        { raw: true }
       );
       //need to update the address table later on into addressline 1 and 2 instead of room bumber and street
-      if (address) {
-        user.addressId = address.id;
+      let addressId = null;
+      if (address.addressId != null) {
+        addressId = address.addressId;
         await addressRepository.update(
           { id: address.addressId },
           {
@@ -48,7 +49,7 @@ class UserService {
           },
           transaction
         );
-        user.addressId = addressDetails.id;
+        addressId = addressDetails.id;
       }
       const userDetails = await userRepository.update(
         { id: userId },
@@ -57,7 +58,7 @@ class UserService {
           lastName: user.lastName,
           email: user.email,
           phoneNumber: user.phoneNumber,
-          addressId: user.addressId,
+          addressId: addressId,
           // password: user.password,
         },
         transaction
