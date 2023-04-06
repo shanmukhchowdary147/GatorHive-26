@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import "./EditProfile.css";
 import { BiEditAlt } from "react-icons/bi";
 import Axios from "axios";
-
 import Cookies from "js-cookie";
 
 function EditProfile() {

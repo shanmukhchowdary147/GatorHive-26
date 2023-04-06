@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import Axios from "axios";
 import Cookies from "js-cookie";
 import { Redirect } from "react-router-dom";
-
+import axiosRetry from "axios-retry";
 function HostEventPage() {
   const token = Cookies.get("token");
   if (!token) {
@@ -99,6 +99,7 @@ function HostEventPage() {
           : null,
       ifFreeGoodies: isFree,
       ifRideTogether: carpooling,
+      studentOrgId: "bcebb416-16ac-42fe-a578-3ede5f486233",
     };
     const address = {
       roomNumber: eventLocation,
@@ -110,17 +111,23 @@ function HostEventPage() {
 
     console.log("data:", JSON.parse(newEventData.get("eventData")));
     console.log("addres", JSON.parse(newEventData.get("address")));
-    const reponse = await Axios.post(
-      "http://localhost:8000/events/create",
-      newEventData,
-      {
+    const axiosInstance = Axios.create({
+      baseURL: "http://localhost:8000",
+    });
+
+    axiosRetry(axiosInstance, {
+      retries: 3,
+      retryDelay: axiosRetry.exponentialDelay,
+    });
+
+    const response = await axiosInstance
+      .post("/events/create", newEventData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      }
-    )
+      })
       .then((response) => {
-        console.log(reponse);
+        console.log(response);
       })
       .catch((error) => {
         console.log(error);
