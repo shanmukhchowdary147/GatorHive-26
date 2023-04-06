@@ -60,6 +60,26 @@ class StudentOrgService {
       throw err;
     }
   };
+
+  getAllOrgs = async () => {
+    const studentOrgs = await studentOrgRepository.find({}, { raw: true });
+    return studentOrgs;
+  };
+
+  getSubscribedOrgs = async (userId: string) => {
+    const studentOrgAccounts = await studentOrgAccountsRepository.find(
+      { userId: userId },
+      { raw: true }
+    );
+    const registeredOrgs = studentOrgAccounts.map(
+      (studentOrgAccount: any) => studentOrgAccount.studentOrgId
+    );
+    const studentOrgSubscribed = await studentOrgRepository.find(
+      { id: { [Op.in]: registeredOrgs } },
+      { attributes: ["id"], raw: true }
+    );
+    return studentOrgSubscribed;
+  };
 }
 
 export const studentOrgService = new StudentOrgService();

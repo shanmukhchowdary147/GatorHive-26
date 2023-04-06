@@ -16,7 +16,7 @@ function LoginForm() {
       password: password,
     };
     const responseLogin = await Axios.post(
-      "http://localhost:3000/auth/login",
+      "http://localhost:8000/auth/login",
       loginData
     );
     const token = responseLogin.data.accessToken;
@@ -74,7 +74,7 @@ function SignupForm() {
 
     console.log(signupData);
     const response = await Axios.post(
-      "http://localhost:3000/auth/signup",
+      "http://localhost:8000/auth/signup",
       signupData
     );
     const token = response.data.token;

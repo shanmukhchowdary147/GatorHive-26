@@ -6,9 +6,14 @@ import { createOrgValidation } from "../common/validations/studentOrg.validation
 
 const router = Router();
 
+router.route("/").get([authorize, studentOrgController.getAllOrgs]);
+router
+  .route("/subscribed")
+  .get([authorize, studentOrgController.getSubscribedOrgs]);
+
 router
   .route("/create")
-  .put([
+  .post([
     authorize,
     validate(createOrgValidation),
     studentOrgController.createOrg,
