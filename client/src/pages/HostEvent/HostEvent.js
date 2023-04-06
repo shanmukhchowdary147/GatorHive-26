@@ -114,8 +114,13 @@ function HostEventPage() {
           Authorization: `Bearer ${token}`,
         },
       }
-    );
-    console.log(reponse);
+    )
+      .then((response) => {
+        console.log(reponse);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   const handleImageChange = (event) => {
