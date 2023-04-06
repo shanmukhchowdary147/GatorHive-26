@@ -13,13 +13,15 @@ function LoginForm() {
     const value = password;
     const regex =
       /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,256}$/;
-    setIsValid(regex.test(value));
+    console.log("regex:", regex.test(value));
+    return regex.test(value);
+    console.log("isValid:", isValid);
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    passwordValidate();
-    if (password !== confirmPassword || !isValid) {
+    var valid = passwordValidate();
+    if (!valid) {
       alert("Password is not valid");
       return;
     }
@@ -81,13 +83,16 @@ function SignupForm() {
     const value = password;
     const regex =
       /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,256}$/;
-    setIsValid(regex.test(value));
+    console.log("regex:", regex.test(value));
+    return regex.test(value);
+    console.log("isValid:", isValid);
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    passwordValidate();
-    if (password !== confirmPassword || !isValid) {
+    var valid = passwordValidate();
+    if (password !== confirmPassword || !valid) {
+      console.log("isss", isValid);
       alert("Password is not valid");
       return;
     }

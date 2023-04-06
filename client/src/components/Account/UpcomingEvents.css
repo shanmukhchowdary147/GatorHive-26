@@ -1,0 +1,85 @@
+.upcoming-event-list {
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+  margin-left: 20px;
+}
+
+.upcoming-event-card {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border-radius: 5px;
+  box-shadow: 2px 2px 2px rgba(73, 71, 71, 0.1);
+  margin-bottom: 20px;
+  border: rgb(114, 113, 113) 1px solid;
+  padding: 10px;
+  background-color: white;
+  cursor: pointer;
+}
+
+.upcoming-event-image img {
+  max-width: 250px;
+  max-height: 380px;
+  object-fit: contain;
+}
+
+.upcoming-event-name {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.upcoming-event-club {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.upcoming-event-theme {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.upcoming-event-food {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.upcoming-event-details-right {
+  font-size: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 10px;
+}
+
+.upcoming-event-date {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.upcoming-event-registrations {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.upcoming-event-tag {
+  background-color: rgb(17, 178, 125);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 5px;
+  margin-bottom: 10px;
+  height: 30px;
+}
+
+.upcoming-eventname-tag {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.upcoming-eventname-tag h2 {
+  margin: 0px;
+  margin-bottom: 30px;
+}
