@@ -1,10 +1,10 @@
-import { useState } from 'react';
-import { Form, Button } from 'react-bootstrap';
-import './Login.css';
+import { useState } from "react";
+import { Form, Button } from "react-bootstrap";
+import "./Login.css";
 
 function LoginForm() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -41,17 +41,19 @@ function LoginForm() {
 }
 
 function SignupForm() {
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   const handleSubmit = (event) => {
     event.preventDefault();
     console.log(
       `Signup form submitted: firstName=${firstName}, lastName=${lastName}, email=${email}, password=${password}, confirmPassword=${confirmPassword}`
     );
+    Axios.post("/auth/login/");
+    window.location.href = "/";
   };
 
   return (
