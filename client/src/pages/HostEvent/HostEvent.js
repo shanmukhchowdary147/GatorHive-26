@@ -1,5 +1,5 @@
 import "./HostEvent.css";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Axios from "axios";
 import Cookies from "js-cookie";
 import { Redirect } from "react-router-dom";
@@ -32,6 +32,8 @@ function HostEventPage() {
   const [guideAvailable, setGuideAvailable] = useState(false);
   const [parkingAvailable, setParkingAvailable] = useState(false);
   const [isPetAllowed, setIsPetAllowed] = useState(false);
+  const [hostableClub, setHostableClub] = useState("");
+  const [hostableClubs, setHostableClubs] = useState([]);
 
   // const data = (e) => {
   //   e.preventDefault();
@@ -99,7 +101,7 @@ function HostEventPage() {
           : null,
       ifFreeGoodies: isFree,
       ifRideTogether: carpooling,
-      studentOrgId: "bcebb416-16ac-42fe-a578-3ede5f486233",
+      studentOrgId: hostableClub,
     };
     const address = {
       roomNumber: eventLocation,
@@ -137,6 +139,33 @@ function HostEventPage() {
   const handleImageChange = (event) => {
     setPosterImage(event.target.files[0]);
   };
+
+  useEffect(() => {
+    const fetchHostableClubs = async () => {
+      try {
+        const response = await Axios.get(
+          "http://localhost:8000/studentOrg/hostableOrgs",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        console.log("hostable", response.data);
+        setHostableClubs(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchHostableClubs();
+  }, []);
+
+  const hostableClubOptions = hostableClubs.map((hostableClub) => (
+    <option key={hostableClub.id} value={hostableClub.id}>
+      {hostableClub.orgName}
+    </option>
+  ));
 
   return (
     <div className="host-event-cont">
@@ -262,11 +291,12 @@ function HostEventPage() {
             <br />
             <label>
               Club Name:
-              <select value={club} onChange={(e) => setClub(e.target.value)}>
+              <select
+                value={hostableClub}
+                onChange={(e) => setHostableClub(e.target.value)}
+              >
                 <option value="">Select a Club</option>
-                <option value="club1">Club 1</option>
-                <option value="club2">Club 2</option>
-                <option value="club3">Club 3</option>
+                {hostableClubOptions}
               </select>
             </label>
             <br />

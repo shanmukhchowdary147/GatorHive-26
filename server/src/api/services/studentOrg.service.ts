@@ -110,7 +110,7 @@ class StudentOrgService {
       const studentOrgAccounts = await studentOrgAccountsRepository.find(
         {
           userId: userId,
-          userRole: UserRole.PrimaryUser || UserRole.SecondaryUser,
+          userRole: { [Op.in]: [UserRole.PrimaryUser, UserRole.SecondaryUser] },
         },
         { raw: true }
       );

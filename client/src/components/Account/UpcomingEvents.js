@@ -41,6 +41,11 @@ function UpcomingEvents() {
         Authorization: `Bearer ${token}`,
       },
     }).then((response) => {
+      const filteredEvents = response.data.filter((event) => {
+        const eventDate = new Date(event.eventAtUtc);
+        const today = new Date();
+        return eventDate >= today;
+      });
       setEvents(response.data);
     });
   }, []);
@@ -51,6 +56,17 @@ function UpcomingEvents() {
 
   function handleEventCardClick(eventId) {
     window.location.href = `/event?eventId=${encodeURIComponent(eventId)}`;
+  }
+  function convertUtcToLocal(eventDate) {
+    const utcDate = new Date(eventDate);
+    const etTime = utcDate.toLocaleTimeString("en-US", {
+      timeZone: "America/New_York",
+    });
+    const [time, meridiem] = etTime.split(" ");
+    const date = utcDate.toLocaleDateString("en-US", {
+      timeZone: "America/New_York",
+    });
+    return `${date} ${time} ${meridiem}`;
   }
 
   return (
@@ -76,7 +92,7 @@ function UpcomingEvents() {
 
               <div className="upcoming-event-club">{event.orgName}</div>
               <div className="upcoming-event-date">
-                Date: {event.eventAtUtc}
+                Date: {convertUtcToLocal(event.eventAtUtc)}
               </div>
               <div className="upcoming-event-date">{event.eventLocation}</div>
               <div className="upcoming-event-details">{event.eventDetails}</div>
