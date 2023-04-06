@@ -6,6 +6,7 @@ import { BiSearchAlt } from "react-icons/bi";
 import recommendEvents from "../Chatbot/Chatbot.js";
 import { IoChatbubbleEllipsesSharp } from "react-icons/io5";
 import Cookies from "js-cookie";
+import Axios from "axios";
 import { Redirect } from "react-router-dom";
 // import EventSlider from "../../components/EventSlider/EventSlider";
 
@@ -23,38 +24,52 @@ const Home = () => {
   // };
 
   // state for the card data
-  const [cardData, setCardData] = useState([
-    {
-      imagePath: require("../../images/bg4.jpg"),
-      id: 1,
-      name: "Card Name 1",
-      date: "15th March, 2023",
-    },
-    {
-      imagePath: require("../../images/bg5.jpg"),
-      id: 2,
-      name: "Card Name 2",
-      date: "14th March, 2023",
-    },
-    {
-      imagePath: require("../../images/bg3.jpg"),
-      id: 3,
-      name: "Card Name 3",
-      date: "13th March, 2023",
-    },
-    {
-      imagePath: require("../../images/bg4.jpg"),
-      id: 4,
-      name: "Card Name 4",
-      date: "12th March, 2023",
-    },
-    {
-      imagePath: require("../../images/bg5.jpg"),
-      id: 5,
-      name: "Card Name 5",
-      date: "11th March, 2023",
-    },
-  ]);
+  const [cardData, setCardData] = useState([]);
+  //   {
+  //     imagePath: require("../../images/bg4.jpg"),
+  //     id: 1,
+  //     name: "Card Name 1",
+  //     date: "15th March, 2023",
+  //   },
+  //   {
+  //     imagePath: require("../../images/bg5.jpg"),
+  //     id: 2,
+  //     name: "Card Name 2",
+  //     date: "14th March, 2023",
+  //   },
+  //   {
+  //     imagePath: require("../../images/bg3.jpg"),
+  //     id: 3,
+  //     name: "Card Name 3",
+  //     date: "13th March, 2023",
+  //   },
+  //   {
+  //     imagePath: require("../../images/bg4.jpg"),
+  //     id: 4,
+  //     name: "Card Name 4",
+  //     date: "12th March, 2023",
+  //   },
+  //   {
+  //     imagePath: require("../../images/bg5.jpg"),
+  //     id: 5,
+  //     name: "Card Name 5",
+  //     date: "11th March, 2023",
+  //   },
+  // ]);
+
+  useEffect(() => {
+    const getPopularEvents = async () => {
+      try {
+        const response = await Axios.get(
+          "http://localhost:8000/events/getPopularEvents"
+        );
+        setCardData(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    getPopularEvents();
+  }, []);
 
   // state for search query
   const [searchQuery, setSearchQuery] = useState("");
@@ -73,7 +88,7 @@ const Home = () => {
   }
 
   function handleTrendingEventCardClick(eventId) {
-    window.location.href = `/event/${eventId}`;
+    window.location.href = `/event?eventId=${encodeURIComponent(eventId)}`;
   }
 
   // update carousel images every 5 seconds
@@ -136,13 +151,13 @@ const Home = () => {
         {cardData.map((card, index) => (
           <div
             key={index}
-            className="card"
+            className="popular-card"
             onClick={() => handleTrendingEventCardClick(card.id)}
           >
-            <img src={card.imagePath} alt={`Card ${index}`} />
+            <img src={card.posterLink} alt={`Card ${index}`} />
             <div className="card-info">
-              <h3>{card.name}</h3>
-              <p>{card.date}</p>
+              <h3>{card.eventName}</h3>
+              <p>{card.eventAtUtc}</p>
             </div>
           </div>
         ))}

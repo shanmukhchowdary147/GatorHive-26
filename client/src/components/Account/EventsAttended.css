@@ -1,65 +1,85 @@
-.event-list {
+.attended-event-list {
   display: flex;
   flex-direction: column;
   width: 70%;
+  margin-left: 20px;
 }
 
-.event-card {
+.attended-event-card {
   display: flex;
   flex-direction: row;
   align-items: center;
   border-radius: 5px;
-  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1);
+  box-shadow: 2px 2px 2px rgba(73, 71, 71, 0.1);
   margin-bottom: 20px;
-}
-
-.event-image {
-  width: 30%;
+  border: rgb(114, 113, 113) 1px solid;
   padding: 10px;
+  background-color: white;
+  cursor: pointer;
 }
 
-.event-image img {
-  width: 100%;
-  height: auto;
+.attended-event-image img {
+  max-width: 250px;
+  max-height: 380px;
+  object-fit: contain;
 }
 
-.event-details {
-  width: 70%;
-  padding: 10px;
-}
-
-.event-name {
+.attended-event-name {
   font-size: 24px;
   font-weight: bold;
   margin-bottom: 10px;
 }
 
-.event-club {
+.attended-event-club {
   font-size: 18px;
   margin-bottom: 10px;
 }
 
-.event-theme {
+.attended-event-theme {
   font-size: 16px;
   margin-bottom: 10px;
 }
 
-.event-food {
+.attended-event-food {
   font-size: 16px;
   margin-bottom: 10px;
 }
 
-.event-details {
+.attended-event-details-right {
+  font-size: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 10px;
+}
+
+.attended-event-date {
   font-size: 16px;
   margin-bottom: 10px;
 }
 
-.event-date {
-  font-size: 16px;
-  margin-bottom: 10px;
-}
-
-.event-registrations {
+.attended-event-registrations {
   font-size: 16px;
   font-weight: bold;
+}
+
+.attended-event-tag {
+  background-color: rgb(17, 178, 125);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 5px;
+  margin-bottom: 10px;
+  height: 30px;
+}
+
+.attended-eventname-tag {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.attended-eventname-tag h2 {
+  margin: 0px;
+  margin-bottom: 30px;
 }

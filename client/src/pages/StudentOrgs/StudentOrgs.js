@@ -85,6 +85,7 @@ function StudentOrgs() {
       try {
         const response = await Axios.put(
           `http://localhost:8000/studentOrg/subscribe?orgId=${clubId}`,
+          {},
           {
             headers: {
               Authorization: `Bearer ${token}`,

@@ -1,9 +1,35 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./EditProfile.css";
 import { BiEditAlt } from "react-icons/bi";
 import Axios from "axios";
 
+import Cookies from "js-cookie";
+
 function EditProfile() {
+  const token = Cookies.get("token");
+  useEffect(() => {
+    Axios.get("http://localhost:8000/users/userDetails", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }).then((response) => {
+      console.log(response.data);
+      setFirstName(response.data.firstName);
+      setLastName(response.data.lastName);
+      setEmail(response.data.email);
+      setPhone(response.data.phoneNumber);
+      setPassword("**********");
+      if (response.data.addressId !== null) {
+        setAddress1(response.data.roomNumber);
+        setAddress2(response.data.street);
+        setCity(response.data.City);
+        setZipCode(response.data.Pin);
+        setCountry(response.data.Country);
+        setState(response.data.State);
+      }
+    });
+  }, []);
+
   const [flag, setFlag] = useState(false);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -28,18 +54,27 @@ function EditProfile() {
       return alert("No changes made");
     }
 
-    Axios.put("/api/users/update", {
-      firstName: firstName,
-      lastName: lastName,
-      email: email,
-      phone: phone,
-      password: password,
-      roomNumber: address1,
-      street: address2,
-      City: city,
-      Pin: zipCode,
-      Country: country,
-      State: state,
+    Axios.put(
+      "http://localhost:8000/users/editProfile",
+      {
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        phoneNumber: phone,
+        roomNumber: address1,
+        street: address2,
+        City: city,
+        Pin: zipCode,
+        Country: country,
+        State: state,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    ).then((response) => {
+      console.log(response);
     });
   };
 
@@ -130,7 +165,6 @@ function EditProfile() {
       <div>
         <label>Password:</label>
         {renderEditableField("password", password)}
-        <BiEditAlt onClick={() => handleFieldEdit("password")} />
       </div>
       <div>
         <label>Address 1:</label>

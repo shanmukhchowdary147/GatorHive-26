@@ -42,7 +42,7 @@ class UserService {
           lastName: user.lastName,
           email: user.email,
           phone: user.phone,
-          password: user.password,
+          // password: user.password,
         },
         transaction
       );

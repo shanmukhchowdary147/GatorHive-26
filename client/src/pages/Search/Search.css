@@ -1,6 +1,5 @@
 .search-cont {
-  color: white;
-  background-color: rgb(26, 26, 26);
+  background-image: linear-gradient(to bottom right, #000428, #004e92);
 }
 .search-page {
   display: flex;
@@ -14,9 +13,7 @@
   position: sticky;
   padding: 10px 10px 20px 20px;
   height: 100%;
-  /* background-color: white;
-   */
-  background-color: rgb(26, 26, 26);
+  background-color: rgb(228, 228, 228);
   border: rgb(114, 113, 113) 1px solid;
   border-radius: 5px;
 }
@@ -25,17 +22,12 @@
   width: 90%;
   padding: 8px;
   border-radius: 5px;
-  background-color: rgb(26, 26, 26);
-  color: white;
   /* box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.1); */
   font-size: 16px;
-  border: rgb(114, 113, 113) 1px solid;
   margin-bottom: 20px;
 }
 
 .sort-options select {
-  background-color: rgb(26, 26, 26);
-  color: white;
   margin-left: 10px;
   font-size: 16px;
 }
@@ -82,8 +74,7 @@
   margin-bottom: 20px;
   border: rgb(114, 113, 113) 1px solid;
   padding: 10px;
-  /* background-color: white; */
-  background-color: rgb(26, 26, 26);
+  background-color: white;
   cursor: pointer;
   /* border-radius: 10px; */
 }

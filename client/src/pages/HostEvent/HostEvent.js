@@ -2,9 +2,13 @@ import "./HostEvent.css";
 import React, { useState } from "react";
 import Axios from "axios";
 import Cookies from "js-cookie";
+import { Redirect } from "react-router-dom";
 
 function HostEventPage() {
   const token = Cookies.get("token");
+  if (!token) {
+    return <Redirect to="/login" />;
+  }
   const [eventName, setEventName] = useState("");
   const [eventDetails, setEventDetails] = useState("");
   const [eventLocation, setEventLocation] = useState("");

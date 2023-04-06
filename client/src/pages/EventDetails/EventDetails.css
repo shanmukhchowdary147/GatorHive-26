@@ -15,8 +15,9 @@
 }
 
 .event-details-left img {
-  width: 80%;
-  height: auto;
+  max-width: 90%;
+  max-height: 430px;
+  object-fit: contain;
   margin-bottom: 10px;
 }
 
