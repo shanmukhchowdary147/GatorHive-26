@@ -1,93 +1,42 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import "./Search.css";
 import { Button } from "react-bootstrap";
+import Axios from "axios";
 
 function SearchPage() {
-  const eventsData = [
-    {
-      id: 1,
-      eventName: "Foosball Event",
-      categoryName: "sports",
-      posterLink: require("./p9.jpg"),
-      orgName: "UF Sports CLub",
-      eventLocation: "UF Campus, Norman Hall",
-      ifOfficial: 1,
-      food: 0,
-      eventDetails:
-        "The music event was an electrifying experience that left the audience spellbound. The stage was adorned with colorful lights and a sound system that was capable of filling the entire venue with music that ranged from soft.",
-      eventDate: "2023-04-15",
-      eventTime: "12:00:00",
-      registrations: 10,
-      ifPetsAllowed: 1,
-      entryFee: 0,
-      ifGuide: 1,
-      ifDifferentlyAbledAccessibility: 1,
-      ifParking: 1,
-      ifAlcohol: 0,
-      ifRegisterAsGroup: 1,
-      eventType: 0,
-      ifFreeGoodies: 1,
-      ifRideTogether: 1,
-    },
-
-    {
-      id: 2,
-      eventName: "Research Celebration",
-      categoryName: "academic",
-      posterLink:
-        "https://gatorhive.s3.us-east-2.amazonaws.com/eventPosters/1680753395037--p9.jpg",
-      orgName: "Gators Research Club",
-      eventLocation: "UF Campus, Norman Hall",
-      ifOfficial: 0,
-      food: 1,
-      eventDetails:
-        "The music event was an electrifying experience that left the audience spellbound. The stage was adorned with colorful lights and a sound system that was capable of filling the entire venue with music that ranged from soft.",
-      eventDate: "2023-04-20",
-      eventTime: "12:00:00",
-      registrations: 100,
-      ifPetsAllowed: 0,
-      entryFee: 100,
-      ifGuide: 0,
-      ifDifferentlyAbledAccessibility: 1,
-      ifParking: 0,
-      ifAlcohol: 1,
-      ifRegisterAsGroup: 0,
-      eventType: 1,
-      ifFreeGoodies: 0,
-      ifRideTogether: 0,
-    },
-    {
-      id: 3,
-      eventName: "Yukorvan Event",
-      categoryName: "cultural",
-      posterLink: "https://via.placeholder.com/150x150",
-      orgName: "Club 3",
-      eventLocation: "UF Campus, Norman Hall",
-      ifOfficial: 0,
-      food: 2,
-      eventDetails: "Event details 3",
-      eventDate: "2023-04-25",
-      eventTime: "12:00:00",
-      registrations: 50,
-      ifPetsAllowed: 1,
-      entryFee: 200,
-      ifGuide: 1,
-      ifDifferentlyAbledAccessibility: 0,
-      ifParking: 1,
-      ifAlcohol: 0,
-      ifRegisterAsGroup: 1,
-      eventType: 2,
-      ifFreeGoodies: 1,
-      ifRideTogether: 1,
-    },
-  ];
-
   const location = useLocation();
   const urlParams = new URLSearchParams(location.search);
   const searchText = decodeURIComponent(urlParams.get("q"));
+  const [events, setEvents] = useState([]);
 
-  const [events, setEvents] = useState(eventsData);
+  // useEffect(() => {
+  //   Axios.get(`http://localhost:8000/events/`)
+  //     .then((response) => {
+  //       setEvents(Object.values(response.data));
+  //     })
+  //     .catch((error) => {
+  //       console.error(error);
+  //     });
+  // }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [response] = await Promise.all([
+          Axios.get(`http://localhost:8000/events/`),
+        ]);
+        setEvents(Object.values(response.data));
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchData();
+  }, []);
+
+  // console.log("op", events);
+  // console.log(Object.values(eventsData));
+
   const [searchQuery, setSearchQuery] = useState(searchText);
   const [sortOption, setSortOption] = useState("");
   const [filterOptions, setFilterOptions] = useState({

@@ -8,74 +8,65 @@ import Cookies from "js-cookie";
 import { useLocation } from "react-router-dom";
 import Axios from "axios";
 
-const eventDetails = {
-  id: 3,
-  eventName: "ST. Augustine Music Festival",
-  categoryName: "other",
-  eventLocation: "Norman Hall, UF",
-  posterLink:
-    "https://xray.ufl.edu/wordpress/files/2023/02/research-day-450x600.png",
-  clubName: "UF NaviGators",
-  ifOfficial: 1,
-  food: 2,
-  eventDetails:
-    "The music event was an electrifying experience that left the audience spellbound. The stage was adorned with colorful lights and a sound system that was capable of filling the entire venue with music that ranged from soft, mellow melodies to foot-stomping beats that had the audience jumping out of their seats.",
-  eventAtUtc: "2023-04-25",
-  registrations: 5,
-  ifPetsAllowed: 1,
-  entryFee: 200,
-  ifGuide: 1,
-  ifDifferentlyAbledAccessibility: 0,
-  ifParking: 1,
-  ifAlcohol: 0,
-  ifRegisterAsGroup: 1,
-  eventType: 2,
-  ifFreeGoodies: 1,
-  ifRideTogether: 1,
-};
-
 const EventDetails = () => {
   const [eventDetails, setEventDetails] = useState({});
+  const [alreadyRegistered, setAlreadyRegistered] = useState(false);
   const token = Cookies.get("token");
 
   const location = useLocation();
   const urlParams = new URLSearchParams(location.search);
   const eventId = decodeURIComponent(urlParams.get("eventId"));
-  // console.log(eventId);
+  // console.log(http://localhost:8000/events/eventDetails?eventId=${eventId}});
+
+  // useEffect(() => {
+  //   Axios.get(`http://localhost:8000/events/eventDetails?eventId=${eventId}}`)
+  //     .then((response) => {
+  //       setEventDetails(response.data);
+  //     })
+  //     .catch((error) => {
+  //       console.error(error);
+  //     });
+  // }, [eventId]);
 
   useEffect(() => {
-    Axios.get(`http://localhost:8000/events/eventDetails?eventId=${eventId}}`)
-      .then((response) => {
+    const fetchEventDetails = async () => {
+      try {
+        const response = await Axios.get(
+          `http://localhost:8000/events/eventDetails?eventId=${eventId}`
+        );
         setEventDetails(response.data);
-      })
-      .catch((error) => {
+      } catch (error) {
         console.error(error);
-      });
-  }, []);
+      }
+    };
+    fetchEventDetails();
+  }, [eventId]);
+
+  console.log(eventDetails);
 
   async function registerToEvent() {
     if (!token) {
       window.location.href = "/login";
     } else {
       console.log("Registered to event with id");
-      await Axios.post(
-        `http://localhost:8000/events/register?eventId=${eventDetails.id}`,
-        {
-          eventId: eventDetails.id,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
+      try {
+        const response = await Axios.post(
+          `http://localhost:8000/events/register?eventId=${eventId}`,
+          {
+            eventId: eventDetails.id,
           },
-        }
-      )
-        .then((response) => {
-          console.log(response);
-          console.log("Registered to event with id");
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        console.log(response);
+        console.log("Registered to event with id");
+        setAlreadyRegistered(true);
+      } catch (error) {
+        console.log(error);
+      }
     }
   }
   return (
@@ -91,8 +82,8 @@ const EventDetails = () => {
       </div>
       <div className="event-details-right">
         <h1 className="event-name">{eventDetails.eventName}</h1>
-        <h4 className="club-name">{eventDetails.clubName}</h4>
-        <p className="event-description">{eventDetails.details}</p>
+        <h4 className="club-name">{eventDetails.orgName}</h4>
+        <p className="event-description">{eventDetails.eventDetails}</p>
         <p className="event-features">
           Category: {eventDetails.categoryName} | Food:{" "}
           {eventDetails.food === 0 && "Veg"}
@@ -166,8 +157,11 @@ const EventDetails = () => {
             variant="contained"
             endIcon={<CiBookmark />}
             onClick={registerToEvent}
+            className={
+              alreadyRegistered ? "register-invisible" : "register-visible"
+            }
           >
-            Register For Event
+            {alreadyRegistered ? "Already Registered !!" : "Register For Event"}
           </Button>
           <Button
             variant="contained"

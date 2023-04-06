@@ -107,7 +107,7 @@ function HostEventPage() {
     console.log("data:", JSON.parse(newEventData.get("eventData")));
     console.log("addres", JSON.parse(newEventData.get("address")));
     const reponse = await Axios.post(
-      "http://localhost:800/events/create",
+      "http://localhost:8000/events/create",
       newEventData,
       {
         headers: {

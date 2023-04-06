@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./StudentOrgs.css";
 import { Redirect } from "react-router-dom";
 import Cookies from "js-cookie";
@@ -9,44 +9,69 @@ function StudentOrgs() {
   if (!token) {
     return <Redirect to="/login" />;
   }
-  const [clubName, setClubName] = useState("");
-  const [subscribedClubs, setSubscribedClubs] = useState([6, 4]);
-  const [clubData, setClubData] = useState([
-    { id: 1, clubName: "AC Milan", imagePath: require("../../images/bg5.jpg") },
-    {
-      id: 2,
-      clubName: "Real Madrid",
-      imagePath: require("../../images/bg5.jpg"),
-    },
-    {
-      id: 3,
-      clubName: "Manchester United",
-      imagePath: require("../../images/bg3.jpg"),
-    },
-    {
-      id: 4,
-      clubName: "FC Barcelona",
-      imagePath: require("../../images/bg4.jpg"),
-    },
-    {
-      id: 5,
-      clubName: "Liverpool",
-      imagePath: require("../../images/bg4.jpg"),
-    },
-    { id: 6, clubName: "Juventus", imagePath: require("../../images/bg4.jpg") },
-    {
-      id: 7,
-      clubName: "Bayern Munich",
-      imagePath: require("../../images/bg4.jpg"),
-    },
-    {
-      id: 8,
-      clubName: "Paris Saint-Germain",
-      imagePath: require("../../images/bg4.jpg"),
-    },
-    { id: 9, clubName: "Chelsea", imagePath: require("../../images/bg4.jpg") },
-    { id: 10, clubName: "Arsenal", imagePath: require("../../images/bg4.jpg") },
-  ]);
+  const [orgName, setClubName] = useState("");
+  const [subscribedClubs, setSubscribedClubs] = useState([]);
+  const [clubData, setClubData] = useState([]);
+  const [clubDataOrg, setClubDataOrg] = useState([]);
+
+  const imagePaths = [
+    require("../../images/bg4.jpg"),
+    require("../../images/bg5.jpg"),
+    require("../../images/bg3.jpg"),
+  ];
+
+  function randomImagePath() {
+    return imagePaths[Math.floor(Math.random() * imagePaths.length)];
+  }
+
+  useEffect(() => {
+    const getSubscribedClubs = async () => {
+      try {
+        const response = await Axios.get(
+          `http://localhost:8000/studentOrg/subscribed`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        setSubscribedClubs(response.data.map((obj) => obj.id)); // extract the id values
+        console.log(subscribedClubs);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    getSubscribedClubs();
+  }, []);
+
+  useEffect(() => {
+    const getAllStudentOrgs = async () => {
+      try {
+        const response = await Axios.get(`http://localhost:8000/studentOrg/`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setClubDataOrg(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    getAllStudentOrgs();
+  }, []);
+
+  useEffect(() => {
+    setClubData(
+      clubDataOrg.map((obj) => {
+        return {
+          ...obj,
+          imagePath: randomImagePath(),
+        };
+      })
+    );
+  }, [clubDataOrg]);
+
+  // console.log(clubData);
 
   const [secondaryEmails, setSecondaryEmails] = useState([""]);
   const [searchQuery, setSearchQuery] = useState("");
@@ -54,6 +79,23 @@ function StudentOrgs() {
 
   function subscribeToClub(clubId) {
     console.log("Subscribed to club with id", clubId);
+    console.log(clubId);
+    // console.log(`http://localhost:8000/studentOrg/subscribe?orgId=${clubId}`);
+    const subscribeToClub = async () => {
+      try {
+        const response = await Axios.put(
+          `http://localhost:8000/studentOrg/subscribe?orgId=${clubId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    subscribeToClub();
     setSubscribedClubs([...subscribedClubs, clubId]);
   }
   function unsubscribeFromClub(clubId) {
@@ -75,24 +117,18 @@ function StudentOrgs() {
     e.preventDefault();
     const secondaryEmailInStrings = secondaryEmails.join(",");
     const newOrgData = {
-      clubName: clubName,
-      secondaryEmails: secondaryEmailInStrings,
+      clubName: orgName,
+      secondaryEmail: secondaryEmailInStrings,
     };
     console.log(newOrgData);
     setIsFormOpen(false);
     setSecondaryEmails([""]);
 
-    await Axios.post(
-      `http://localhost:8000/org/create`,
-      {
-        eventId: eventDetails.eventId,
+    await Axios.post(`http://localhost:8000/studentOrg/create`, newOrgData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
       },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    )
+    })
       .then((response) => {
         console.log(response);
         console.log("Registered to event with id");
@@ -105,7 +141,7 @@ function StudentOrgs() {
   const handleSearchOrg = (event) => {
     event.preventDefault();
     const filteredClubData = clubData.filter((card) =>
-      card.clubName.toLowerCase().includes(searchQuery.toLowerCase())
+      card.orgName.toLowerCase().includes(searchQuery.toLowerCase())
     );
     setClubData(filteredClubData);
   };
@@ -192,13 +228,13 @@ function StudentOrgs() {
       <div className="org-cards">
         {clubData
           .filter((card) =>
-            card.clubName.toLowerCase().includes(searchQuery.toLowerCase())
+            card.orgName.toLowerCase().includes(searchQuery.toLowerCase())
           )
           .map((card, index) => (
             <div key={index} className="org-card">
               <img src={card.imagePath} alt={`Card ${index}`} />
               <div className="org-card-info">
-                <span>{card.clubName}</span>
+                <span>{card.orgName}</span>
                 {subscribedClubs.includes(card.id) ? (
                   <button
                     className="unsubscribe-button"

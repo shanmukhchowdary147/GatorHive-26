@@ -103,3 +103,9 @@
 .location-icon {
   font-size: 16px;
 }
+
+.register-invisible {
+  background-color: wheat !important;
+  cursor: default !important;
+  color: black !important;
+}
