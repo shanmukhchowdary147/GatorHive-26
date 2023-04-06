@@ -48,12 +48,13 @@
   font-size: 14px;
 }
 
-.create-org {
+.create-org-btn {
   color: #ffffff;
   padding: 10px;
   border: none;
   background-color: #007bff;
   border-radius: 4px;
+  cursor: pointer;
   text-decoration: none;
 }
 

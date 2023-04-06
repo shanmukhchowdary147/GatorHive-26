@@ -79,3 +79,16 @@
 .login-box a:hover {
   text-decoration: underline;
 }
+
+.password-validation {
+  width: 100%;
+  color: rgb(127, 3, 3);
+  font-size: 14px;
+  float: right;
+  margin-bottom: 10px;
+}
+
+.password-validation p {
+  text-align: end;
+  margin: 0px;
+}

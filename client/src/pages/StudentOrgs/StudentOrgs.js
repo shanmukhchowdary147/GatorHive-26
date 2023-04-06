@@ -2,12 +2,14 @@ import React, { useState } from "react";
 import "./StudentOrgs.css";
 import { Redirect } from "react-router-dom";
 import Cookies from "js-cookie";
+import Axios from "axios";
 
 function StudentOrgs() {
   const token = Cookies.get("token");
   if (!token) {
     return <Redirect to="/login" />;
   }
+  const [clubName, setClubName] = useState("");
   const [subscribedClubs, setSubscribedClubs] = useState([6, 4]);
   const [clubData, setClubData] = useState([
     { id: 1, clubName: "AC Milan", imagePath: require("../../images/bg5.jpg") },
@@ -69,9 +71,36 @@ function StudentOrgs() {
     }
   }
 
-  const redirectToCreateOrg = () => {
-    window.location.href = "/create-org";
-  };
+  async function createNewOrg(e) {
+    e.preventDefault();
+    const secondaryEmailInStrings = secondaryEmails.join(",");
+    const newOrgData = {
+      clubName: clubName,
+      secondaryEmails: secondaryEmailInStrings,
+    };
+    console.log(newOrgData);
+    setIsFormOpen(false);
+    setSecondaryEmails([""]);
+
+    await Axios.post(
+      `http://localhost:8000/org/create`,
+      {
+        eventId: eventDetails.eventId,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    )
+      .then((response) => {
+        console.log(response);
+        console.log("Registered to event with id");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
 
   const handleSearchOrg = (event) => {
     event.preventDefault();
@@ -106,7 +135,7 @@ function StudentOrgs() {
             onChange={(event) => setSearchQuery(event.target.value)}
           />
         </form>
-        <button className="create-org" onClick={handleButtonClick}>
+        <button className="create-org-btn" onClick={handleButtonClick}>
           Create an Organization
         </button>
         {isFormOpen && (
@@ -116,9 +145,14 @@ function StudentOrgs() {
                 <h2>Create Organization</h2>
                 <button onClick={() => setIsFormOpen(false)}>X</button>
               </div>
-              <form className="create-orgs-form">
+              <form className="create-orgs-form" onSubmit={createNewOrg}>
                 <label>Organization Name:</label>
-                <input type="text" required />
+                <input
+                  type="text"
+                  required
+                  onChange={(e) => setClubName(e.target.value)}
+                  placeholder="Enter Club Name"
+                />
                 <br />
                 {secondaryEmails.map((email, index) => (
                   <div key={index}>

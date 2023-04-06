@@ -10,25 +10,25 @@ function SearchPage() {
       eventName: "Foosball Event",
       categoryName: "sports",
       posterLink: require("./p9.jpg"),
-      clubName: "UF Sports CLub",
+      orgName: "UF Sports CLub",
       eventLocation: "UF Campus, Norman Hall",
-      ifOfficial: true,
+      ifOfficial: 1,
       food: 0,
       eventDetails:
         "The music event was an electrifying experience that left the audience spellbound. The stage was adorned with colorful lights and a sound system that was capable of filling the entire venue with music that ranged from soft.",
       eventDate: "2023-04-15",
       eventTime: "12:00:00",
       registrations: 10,
-      ifPetsAllowed: true,
+      ifPetsAllowed: 1,
       entryFee: 0,
-      ifGuide: true,
-      ifDifferentlyAbledAccessibility: true,
-      ifParking: true,
-      ifAlcohol: false,
-      ifRegisterAsGroup: true,
+      ifGuide: 1,
+      ifDifferentlyAbledAccessibility: 1,
+      ifParking: 1,
+      ifAlcohol: 0,
+      ifRegisterAsGroup: 1,
       eventType: 0,
-      ifFreeGoodies: true,
-      ifRideTogether: true,
+      ifFreeGoodies: 1,
+      ifRideTogether: 1,
     },
 
     {
@@ -36,50 +36,50 @@ function SearchPage() {
       eventName: "Research Celebration",
       categoryName: "academic",
       posterLink:
-        "https://xray.ufl.edu/wordpress/files/2023/02/research-day-450x600.png",
-      clubName: "Gators Research Club",
+        "https://gatorhive.s3.us-east-2.amazonaws.com/eventPosters/1680753395037--p9.jpg",
+      orgName: "Gators Research Club",
       eventLocation: "UF Campus, Norman Hall",
-      ifOfficial: false,
+      ifOfficial: 0,
       food: 1,
       eventDetails:
         "The music event was an electrifying experience that left the audience spellbound. The stage was adorned with colorful lights and a sound system that was capable of filling the entire venue with music that ranged from soft.",
       eventDate: "2023-04-20",
       eventTime: "12:00:00",
       registrations: 100,
-      ifPetsAllowed: false,
+      ifPetsAllowed: 0,
       entryFee: 100,
-      ifGuide: false,
-      ifDifferentlyAbledAccessibility: true,
-      ifParking: false,
-      ifAlcohol: true,
-      ifRegisterAsGroup: false,
+      ifGuide: 0,
+      ifDifferentlyAbledAccessibility: 1,
+      ifParking: 0,
+      ifAlcohol: 1,
+      ifRegisterAsGroup: 0,
       eventType: 1,
-      ifFreeGoodies: false,
-      ifRideTogether: false,
+      ifFreeGoodies: 0,
+      ifRideTogether: 0,
     },
     {
       id: 3,
       eventName: "Yukorvan Event",
       categoryName: "cultural",
       posterLink: "https://via.placeholder.com/150x150",
-      clubName: "Club 3",
+      orgName: "Club 3",
       eventLocation: "UF Campus, Norman Hall",
-      ifOfficial: false,
+      ifOfficial: 0,
       food: 2,
       eventDetails: "Event details 3",
       eventDate: "2023-04-25",
       eventTime: "12:00:00",
       registrations: 50,
-      ifPetsAllowed: true,
+      ifPetsAllowed: 1,
       entryFee: 200,
-      ifGuide: true,
-      ifDifferentlyAbledAccessibility: false,
-      ifParking: true,
-      ifAlcohol: false,
-      ifRegisterAsGroup: true,
+      ifGuide: 1,
+      ifDifferentlyAbledAccessibility: 0,
+      ifParking: 1,
+      ifAlcohol: 0,
+      ifRegisterAsGroup: 1,
       eventType: 2,
-      ifFreeGoodies: true,
-      ifRideTogether: true,
+      ifFreeGoodies: 1,
+      ifRideTogether: 1,
     },
   ];
 
@@ -168,12 +168,12 @@ function SearchPage() {
     } = filterOptions;
     return (
       (event.eventName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        event.clubName.toLowerCase().includes(searchQuery.toLowerCase())) &&
+        event.orgName.toLowerCase().includes(searchQuery.toLowerCase())) &&
       (!veg || event.food === 0) &&
       (!nonVeg || event.food === 1) &&
       (!bothVegNonVeg || event.food === 2) &&
-      (!official || event.ifOfficial === true) &&
-      (!unofficial || event.ifOfficial === false) &&
+      (!official || event.ifOfficial === 1) &&
+      (!unofficial || event.ifOfficial === 0) &&
       (!music || event.categoryName === "music") &&
       (!sports || event.categoryName === "sports") &&
       (!cultural || event.categoryName === "cultural") &&
@@ -181,20 +181,20 @@ function SearchPage() {
       (!volunteer || event.categoryName === "volunteer") &&
       (!social || event.categoryName === "social") &&
       (!other || event.categoryName === "other") &&
-      (!ifPetsAllowed || event.ifPetsAllowed === true) &&
+      (!ifPetsAllowed || event.ifPetsAllowed === 1) &&
       (!paid || event.entryFee > 0) &&
       (!unPaid || event.entryFee === 0) &&
-      (!ifGuide || event.ifGuide === true) &&
+      (!ifGuide || event.ifGuide === 1) &&
       (!ifDifferentlyAbledAccessibility ||
-        event.ifDifferentlyAbledAccessibility === true) &&
-      (!ifParking || event.ifParking === true) &&
-      (!ifAlcohol || event.ifAlcohol === true) &&
-      (!ifRegisterAsGroup || event.ifRegisterAsGroup === true) &&
+        event.ifDifferentlyAbledAccessibility === 1) &&
+      (!ifParking || event.ifParking === 1) &&
+      (!ifAlcohol || event.ifAlcohol === 1) &&
+      (!ifRegisterAsGroup || event.ifRegisterAsGroup === 1) &&
       (!online || event.eventType === 0) &&
       (!offline || event.eventType === 1) &&
       (!hybrid || event.eventType === 2) &&
-      (!ifFreeGoodies || event.ifFreeGoodies === true) &&
-      (!ifRideTogether || event.ifRideTogether === true)
+      (!ifFreeGoodies || event.ifFreeGoodies === 1) &&
+      (!ifRideTogether || event.ifRideTogether === 1)
     );
   });
 
@@ -211,7 +211,8 @@ function SearchPage() {
   });
 
   function handleEventCardClick(eventId) {
-    window.location.href = `/event/${eventId}`;
+    window.location.href = `/event?eventId=${encodeURIComponent(eventId)}`;
+    // `/search?q=${encodeURIComponent(searchQuery)}`
   }
 
   return (
@@ -490,7 +491,7 @@ function SearchPage() {
                   <Button className="event-tag">#{event.categoryName}</Button>
                 </div>
 
-                <div className="event-club">{event.clubName}</div>
+                <div className="event-club">{event.orgName}</div>
                 <div className="event-date">${event.entryFee}</div>
                 <div className="event-date">
                   Date: {event.eventDate} | {event.eventTime}
