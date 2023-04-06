@@ -99,6 +99,7 @@ function HostEventPage() {
           : null,
       ifFreeGoodies: isFree,
       ifRideTogether: carpooling,
+      studentOrgId: "a5873880-5861-414b-9840-4bc283471ab2",
     };
     const address = {
       roomNumber: eventLocation,

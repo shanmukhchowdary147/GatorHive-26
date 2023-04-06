@@ -6,7 +6,6 @@ import { BiSearchAlt } from "react-icons/bi";
 import Axios from "axios";
 import { IoChatbubbleEllipsesSharp } from "react-icons/io5";
 import Cookies from "js-cookie";
-import Axios from "axios";
 import { Redirect } from "react-router-dom";
 
 const Home = () => {

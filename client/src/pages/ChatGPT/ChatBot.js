@@ -1,24 +1,26 @@
-import React, { useState } from 'react';
-import Axios from 'axios';
-import './ChatBot.css';
+import React, { useState } from "react";
+import Axios from "axios";
+import "./ChatBot.css";
 
 function ChatBot() {
-  const [input, setInput] = useState('');
-  const [output, setOutput] = useState('');
+  const [input, setInput] = useState("");
+  const [output, setOutput] = useState("");
 
   const handleInput = (event) => {
     setInput(event.target.value);
-  }
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await Axios.post('http://localhost:3000/message', { message: input });
+      const response = await Axios.post("http://localhost:8000/message", {
+        message: input,
+      });
       setOutput(response.data.message);
     } catch (error) {
       console.error(error);
     }
-  }
+  };
 
   return (
     <div className="chatbot-container">
@@ -31,13 +33,17 @@ function ChatBot() {
           onChange={handleInput}
           placeholder="Type your message here"
         />
-        <button className="chatbot-submit" type="submit">Send</button>
+        <button className="chatbot-submit" type="submit">
+          Send
+        </button>
       </form>
       <div className="chatbot-output">
         <p>{output}</p>
       </div>
       <div>
-        <p>Powered by <a href="https://openai.com/blog/openai-api/">OpenAI</a></p>
+        <p>
+          Powered by <a href="https://openai.com/blog/openai-api/">OpenAI</a>
+        </p>
       </div>
     </div>
   );
