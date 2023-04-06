@@ -5,11 +5,8 @@ import "./Home.css";
 import { BiSearchAlt } from "react-icons/bi";
 import Axios from "axios";
 import { IoChatbubbleEllipsesSharp } from "react-icons/io5";
-import recommendEvents from "../Chatbot/Chatbot.js";
-import { IoChatbubbleEllipsesSharp } from "react-icons/io5";
 import Cookies from "js-cookie";
 import { Redirect } from "react-router-dom";
-// import EventSlider from "../../components/EventSlider/EventSlider";
 
 const Home = () => {
   console.log(Cookies.get("token"));
@@ -21,34 +18,9 @@ const Home = () => {
   ];
 
 
-  const [recommendedEvents, setRecommendedEvents] = useState([]);
-  // const [idName, setIdName] = useState("");
-  // const [title, setTitle] = useState("");
-  // const [date, setDate] = useState("");
-  // const [location, setLocation] = useState("");
 
-  useEffect(() => {
-    Axios.get("http://localhost:3000/chatbot/recommend-events")
-      .then((res) => {
-        setRecommendedEvents(res.data.events);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
-
-
-  const handleChatbotClick = (event) => {
-    event.preventDefault();
-    Axios.post("http://localhost:3000/chatbot/recommend-events", {
-      message: "recommend events",
-    })
-      .then((res) => {
-        setRecommendedEvents(res.data.events);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+  function handleChatbotClick (){
+    window.location.href = `/Chatbot`;
   };
 
   const [cardData, setCardData] = useState([
@@ -105,9 +77,6 @@ const Home = () => {
   }
 
   // update carousel images every 5 seconds
-  function handleChatbotClick() {
-    recommendEvents();
-  }
 
   return (
     <div className="home">
@@ -183,9 +152,6 @@ const Home = () => {
           <IoChatbubbleEllipsesSharp />
         </button>
       </div>
-      {recommendedEvents.map((event) => (
-        <div key={event}>{event}</div>
-      ))}
     </div>
   );
 };

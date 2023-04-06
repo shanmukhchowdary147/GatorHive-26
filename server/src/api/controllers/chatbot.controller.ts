@@ -1,31 +1,33 @@
-import { Request, Response } from 'express';
-import Axios from "axios";
+import { NextFunction, Request, Response } from "express";
+import { Configuration, OpenAIApi } from "openai";
 
 class ChatBotController {
-
-
-  getChatGptRecommendations = async (req: Request, res: Response) => {
-    const userMessage = req.body.message;
+  config: Configuration;
+  openai: OpenAIApi;
+  constructor(){
+    this.config = new Configuration({
+      apiKey: process.env.CHATGPT_API_KEY
+    });
+    this.openai = new OpenAIApi(this.config);
+  }
+  generateResponse = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
     try {
-      // Call the ChatGPT API to generate recommended events based on user's input
-      const response = await Axios.post('https://api.openai.com/v1/engines/davinci-codex/completions', {
-        prompt: `Recommend events based on the user's input: ${userMessage}`,
-        max_tokens: 100,
-        n: 1,
-        stop: '.'
-      }, {
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${process.env.CHATGPT_API_KEY}`
-        }
+      const userMessage = req.body.message;
+      const prompt = `User: ${userMessage}\nBot:`;
+      const response = await this.openai.createCompletion({
+        model: "text-davinci-003", 
+        prompt: prompt,
+        max_tokens: 2048,
+        temperature: 0.5, // adjust the "creativity" of the response
       });
-
-      const recommendedEvents = response.data.choices[0].text;
-
-      return res.status(200).json(recommendedEvents);
+      const message = response.data.choices[0].text;
+      res.json({ message: message });
     } catch (error) {
-      console.error(error);
-      return res.status(500).json({ message: 'Error generating recommended events' });
+      next(error);
     }
   };
 }
