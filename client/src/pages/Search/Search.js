@@ -86,7 +86,67 @@ function SearchPage() {
     });
   };
 
-  // Function to filter events based on search query and filter options
+  //Function to filter events based on search query and filter options
+  // const filteredEvents = events.filter((event) => {
+  //   const {
+  //     veg,
+  //     nonVeg,
+  //     bothVegNonVeg,
+  //     official,
+  //     unofficial,
+  //     music,
+  //     sports,
+  //     cultural,
+  //     academic,
+  //     volunteer,
+  //     social,
+  //     other,
+  //     ifPetsAllowed,
+  //     paid,
+  //     unPaid,
+  //     ifGuide,
+  //     ifDifferentlyAbledAccessibility,
+  //     ifParking,
+  //     ifAlcohol,
+  //     ifRegisterAsGroup,
+  //     online,
+  //     offline,
+  //     hybrid,
+  //     ifFreeGoodies,
+  //     ifRideTogether,
+  //   } = filterOptions;
+  //   return (
+  //     (event.eventName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+  //       event.orgName.toLowerCase().includes(searchQuery.toLowerCase())) &&
+  //     (!veg || event.food === 0) &&
+  //     (!nonVeg || event.food === 1) &&
+  //     (!bothVegNonVeg || event.food === 2) &&
+  //     (!official || event.ifOfficial === 1) &&
+  //     (!unofficial || event.ifOfficial === 0) &&
+  //     (!music || event.categoryName === "music") &&
+  //     (!sports || event.categoryName === "sports") &&
+  //     (!cultural || event.categoryName === "cultural") &&
+  //     (!academic || event.categoryName === "academic") &&
+  //     (!volunteer || event.categoryName === "volunteer") &&
+  //     (!social || event.categoryName === "social") &&
+  //     (!other || event.categoryName === "other") &&
+  //     (!ifPetsAllowed || event.ifPetsAllowed === 1) &&
+  //     (!paid || event.entryFee > 0) &&
+  //     (!unPaid || event.entryFee === 0) &&
+  //     (!ifGuide || event.ifGuide === 1) &&
+  //     (!ifDifferentlyAbledAccessibility ||
+  //       event.ifDifferentlyAbledAccessibility === 1) &&
+  //     (!ifParking || event.ifParking === 1) &&
+  //     (!ifAlcohol || event.ifAlcohol === 1) &&
+  //     (!ifRegisterAsGroup || event.ifRegisterAsGroup === 1) &&
+  //     (!online || event.eventType === 0) &&
+  //     (!offline || event.eventType === 1) &&
+  //     (!hybrid || event.eventType === 2) &&
+  //     (!ifFreeGoodies || event.ifFreeGoodies === 1) &&
+  //     (!ifRideTogether || event.ifRideTogether === 1)
+  //   );
+  // });
+
   const filteredEvents = events.filter((event) => {
     const {
       veg,
@@ -115,33 +175,52 @@ function SearchPage() {
       ifFreeGoodies,
       ifRideTogether,
     } = filterOptions;
+
+    const food = event.food;
+    const categoryName = event.categoryName;
+    const entryFee = event.entryFee;
+    const eventType = event.eventType;
+
     return (
-      (event.eventName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        event.orgName.toLowerCase().includes(searchQuery.toLowerCase())) &&
-      (!veg || event.food === 0) &&
-      (!nonVeg || event.food === 1) &&
-      (!bothVegNonVeg || event.food === 2) &&
-      (!official || event.ifOfficial === 1) &&
-      (!unofficial || event.ifOfficial === 0) &&
-      (!music || event.categoryName === "music") &&
-      (!sports || event.categoryName === "sports") &&
-      (!cultural || event.categoryName === "cultural") &&
-      (!academic || event.categoryName === "academic") &&
-      (!volunteer || event.categoryName === "volunteer") &&
-      (!social || event.categoryName === "social") &&
-      (!other || event.categoryName === "other") &&
+      ((event.eventName &&
+        event.eventName.toLowerCase().includes(searchQuery.toLowerCase())) ||
+        (event.orgName &&
+          event.orgName.toLowerCase().includes(searchQuery.toLowerCase()))) &&
+      ((!veg && !nonVeg && !bothVegNonVeg) ||
+        (veg && food === 0) ||
+        (nonVeg && food === 1) ||
+        (bothVegNonVeg && food === 2)) &&
+      ((!official && !unofficial) ||
+        (official && event.ifOfficial === 1) ||
+        (unofficial && event.ifOfficial === 0)) &&
+      ((!music &&
+        !sports &&
+        !cultural &&
+        !academic &&
+        !volunteer &&
+        !social &&
+        !other) ||
+        (music && categoryName === "music") ||
+        (sports && categoryName === "sports") ||
+        (cultural && categoryName === "cultural") ||
+        (academic && categoryName === "academic") ||
+        (volunteer && categoryName === "volunteer") ||
+        (social && categoryName === "social") ||
+        (other && categoryName === "other")) &&
       (!ifPetsAllowed || event.ifPetsAllowed === 1) &&
-      (!paid || event.entryFee > 0) &&
-      (!unPaid || event.entryFee === 0) &&
+      ((!paid && !unPaid) ||
+        (paid && entryFee > 0) ||
+        (unPaid && entryFee === 0)) &&
       (!ifGuide || event.ifGuide === 1) &&
       (!ifDifferentlyAbledAccessibility ||
         event.ifDifferentlyAbledAccessibility === 1) &&
       (!ifParking || event.ifParking === 1) &&
       (!ifAlcohol || event.ifAlcohol === 1) &&
       (!ifRegisterAsGroup || event.ifRegisterAsGroup === 1) &&
-      (!online || event.eventType === 0) &&
-      (!offline || event.eventType === 1) &&
-      (!hybrid || event.eventType === 2) &&
+      ((!online && !offline && !hybrid) ||
+        (online && eventType === 0) ||
+        (offline && eventType === 1) ||
+        (hybrid && eventType === 2)) &&
       (!ifFreeGoodies || event.ifFreeGoodies === 1) &&
       (!ifRideTogether || event.ifRideTogether === 1)
     );
@@ -215,15 +294,7 @@ function SearchPage() {
                 />
                 Both Veg/Non-Veg
               </label>
-              <label>
-                <input
-                  type="checkbox"
-                  name="ifAlcohol"
-                  checked={filterOptions.ifAlcohol}
-                  onChange={handleFilterChange}
-                />
-                Alcohol
-              </label>
+
               <h4>Theme:</h4>
               <label>
                 <input
@@ -245,6 +316,7 @@ function SearchPage() {
               </label>
 
               <h4>Availability:</h4>
+
               <label>
                 <input
                   type="checkbox"
@@ -271,6 +343,15 @@ function SearchPage() {
                   onChange={handleFilterChange}
                 />
                 Differently Abled Accessibility
+              </label>
+              <label>
+                <input
+                  type="checkbox"
+                  name="ifAlcohol"
+                  checked={filterOptions.ifAlcohol}
+                  onChange={handleFilterChange}
+                />
+                Alcohol
               </label>
               <label>
                 <input

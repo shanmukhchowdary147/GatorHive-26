@@ -44,11 +44,13 @@ class EventService {
           //   address.Pin
           // );
           const category: eventCategory = event.category;
+          const registrations = await this.getRegistrationsCount(event.id);
           return {
             ...event,
             categoryName: EventCategoryMap[category],
             orgName: studentOrg.orgName,
             eventLocation: address.roomNumber,
+            registrations: registrations,
           };
         })
       );
