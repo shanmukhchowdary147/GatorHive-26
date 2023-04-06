@@ -16,6 +16,14 @@ class EventRepository {
     });
     return events;
   };
+  create = async (data: any, transaction?: any) => {
+    const studentOrg = await mysqlProxy.create(
+      collections.Event,
+      data,
+      transaction
+    );
+    return studentOrg;
+  };
 }
 
 export const eventRepository = new EventRepository();

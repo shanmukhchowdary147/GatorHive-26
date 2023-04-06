@@ -8,13 +8,13 @@ export const collections = {
 };
 
 export const EventCategory = {
-  Music: 0,
-  Sports: 1,
-  Academic: 2,
-  Volunteer: 3,
-  Social: 4,
-  Cultural: 5,
-  Other: 6,
+  music: 0,
+  sports: 1,
+  academic: 2,
+  volunteer: 3,
+  social: 4,
+  cultural: 5,
+  other: 6,
 };
 export const EventCategoryMap = {
   0: "music",
