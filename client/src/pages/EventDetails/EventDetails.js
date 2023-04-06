@@ -4,6 +4,7 @@ import { MdOutlineGroups } from "react-icons/md";
 import { CiBookmark } from "react-icons/ci";
 import { MdLocationOn } from "react-icons/md";
 import Button from "@mui/material/Button";
+import Cookies from "js-cookie";
 
 const eventDetails = {
   id: 3,
@@ -33,6 +34,33 @@ const eventDetails = {
 };
 
 const EventDetails = () => {
+  const token = Cookies.get("token");
+  async function registerToEvent() {
+    if (!token) {
+      window.location.href = "/login";
+    } else {
+      console.log("Registered to event with id");
+      await axios
+        .post(
+          "http://localhost:3000/api/data",
+          {
+            // request data here
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
+        .then((response) => {
+          console.log(response);
+          console.log("Registered to event with id");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }
   return (
     <div className="event-details-page">
       <div className="event-details-left">
@@ -119,7 +147,11 @@ const EventDetails = () => {
           </li>
         </ul>
         <div className="registration-buttons">
-          <Button variant="contained" endIcon={<CiBookmark />}>
+          <Button
+            variant="contained"
+            endIcon={<CiBookmark />}
+            onClick={registerToEvent}
+          >
             Register For Event
           </Button>
           <Button

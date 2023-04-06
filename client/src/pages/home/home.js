@@ -4,10 +4,13 @@ import { Carousel } from "react-responsive-carousel";
 import "./Home.css";
 import { BiSearchAlt } from "react-icons/bi";
 import recommendEvents from "../Chatbot/Chatbot.js";
-import {IoChatbubbleEllipsesSharp}  from "react-icons/io5";
+import { IoChatbubbleEllipsesSharp } from "react-icons/io5";
+import Cookies from "js-cookie";
+import { Redirect } from "react-router-dom";
 // import EventSlider from "../../components/EventSlider/EventSlider";
 
 const Home = () => {
+  console.log(Cookies.get("token"));
   // state for the carousel images
   const images = [
     require("../../images/bg3.jpg"),
@@ -77,7 +80,7 @@ const Home = () => {
   function handleChatbotClick() {
     recommendEvents();
   }
-  
+
   return (
     <div className="home">
       <div className="carousels">
@@ -149,7 +152,7 @@ const Home = () => {
       </div>
       <div className="chatbot-btn">
         <button onClick={handleChatbotClick}>
-          <IoChatbubbleEllipsesSharp/>
+          <IoChatbubbleEllipsesSharp />
         </button>
       </div>
     </div>

@@ -41,7 +41,6 @@ function EditProfile() {
       Country: country,
       State: state,
     });
-
   };
 
   const handleFieldChange = (event) => {
@@ -167,8 +166,6 @@ function EditProfile() {
         Save
       </button>
     </div>
-
-    
   );
 }
 
