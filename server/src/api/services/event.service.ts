@@ -1,9 +1,9 @@
 import { eventRepository } from "../repositories/event.repository";
 import logger from "../common/logger/logger";
-import { map } from "lodash";
+import { concat, map } from "lodash";
 import { studentOrgRepository } from "../repositories/studentOrg.repository";
 import { EventCategoryMap, EventCategory } from "../enums/enums";
-import { eventCategory, eventCategoryName } from "../customTypes";
+import { addressType, eventCategory, eventCategoryName } from "../customTypes";
 import { awsS3Client } from "../../config/awsS3";
 import { unlink } from "fs-extra";
 import { addressRepository } from "../repositories/address.repository";
@@ -31,11 +31,24 @@ class EventService {
           const studentOrg = await studentOrgRepository.findOne({
             id: event.studentOrgId,
           });
+          const address = await addressRepository.findOne(
+            { id: event.addressId },
+            { raw: true }
+          );
+          // const location = concat(
+          //   address.roomNumber,
+          //   address.street,
+          //   address.City,
+          //   address.State,
+          //   address.Country,
+          //   address.Pin
+          // );
           const category: eventCategory = event.category;
           return {
             ...event,
             categoryName: EventCategoryMap[category],
             orgName: studentOrg.orgName,
+            eventLocation: address.roomNumber,
           };
         })
       );
@@ -94,19 +107,34 @@ class EventService {
       const studentOrg = await studentOrgRepository.findOne({
         id: event.studentOrgId,
       });
+      logger.debug("student org details", {
+        data: { studentOrg },
+        __filename,
+        callerMethodName,
+      });
       const category: eventCategory = event.category;
       event.categoryName = EventCategoryMap[category];
       event.orgName = studentOrg.orgName;
-      const registration = await eventRepository.findOne(
+      const registration = await registrationsRepository.findOne(
         { userId: userId, eventId: eventId },
         { raw: true }
       );
-      event.isRegistered = registration.id ? true : false;
-      const address = addressRepository.findOne(
+      event.isRegistered = registration ? true : false;
+      const address = await addressRepository.findOne(
         { id: event.addressId },
         { raw: true }
       );
-      event.address = address;
+      //need to correct casing
+      // const location = concat(
+      // address.roomNumber,
+      // address.street,
+      // address.City,
+      // address.State,
+      // address.Country,
+      // address.Pin
+      // );
+      //Keeping it as room number for now
+      event.eventLocation = address.roomNumber;
       return event;
     } catch (error) {
       throw error;
@@ -116,6 +144,7 @@ class EventService {
     const callerMethodName = "registerForAnEvent";
     try {
       logger.info("registerForAnEvent", {
+        data: { user: userId, event: eventId },
         __filename,
         callerMethodName,
       });
@@ -154,11 +183,57 @@ class EventService {
           registeredAtUtc: new Date(),
         };
       });
+      registrations.push({
+        userId: userId,
+        eventId: eventId,
+        registeredAtUtc: new Date(),
+      });
       //Not checking if all the emails are in the database
       await registrationsRepository.bulkCreate({ registrations }, transaction);
       await transaction.commit();
     } catch (error) {
       await transaction.rollback();
+      throw error;
+    }
+  };
+
+  getRegistrationsCount = async (eventId: string) => {
+    const callerMethodName = "getRegistrationsCount";
+    try {
+      logger.info("getRegisteredEventsCount", {
+        __filename,
+        callerMethodName,
+      });
+      const registrations = await registrationsRepository.find(
+        {
+          eventId: eventId,
+        },
+        { raw: true }
+      );
+      const count = registrations.length;
+      return count;
+    } catch (error) {
+      throw error;
+    }
+  };
+  getPopularEvents = async () => {
+    const callerMethodName = "getPopularEvents";
+    try {
+      const events = await this.getAllEvents();
+      const eventsWithCount = await Promise.all(
+        events.map(async (event) => {
+          //registration is registrations count
+          const registrations = await this.getRegistrationsCount(event.id);
+          return { ...event, registrations };
+        })
+      );
+      eventsWithCount.sort((a, b) => b.registrations - a.registrations);
+      // Get the top 5 events by count if exists
+      const sliceNumber =
+        eventsWithCount.length >= 5 ? 5 : eventsWithCount.length;
+      const topEvents = eventsWithCount.slice(0, sliceNumber);
+      return topEvents;
+    } catch (error) {
       throw error;
     }
   };

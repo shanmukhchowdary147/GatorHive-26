@@ -47,7 +47,7 @@ class EventController {
         functionName: "getEventDetails",
       });
       const userId = req.context.userId;
-      const eventId = req.params.eventId;
+      const eventId = req.query.eventId as string;
       const eventDetails = await eventService.getEventDetails(userId, eventId);
       res.status(200).json(eventDetails);
     } catch (error) {
@@ -65,9 +65,49 @@ class EventController {
         functionName: "registerForAnEvent",
       });
       const userId = req.context.userId;
-      const eventId = req.params.eventId;
+      const eventId = req.query.eventId as string;
       await eventService.registerForAnEvent(userId, eventId);
       res.status(200).json({ status: "success" });
+    } catch (error) {
+      next(error);
+    }
+  };
+  registerAsGroupForAnEvent = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+      logger.info("register for an event", {
+        __filename,
+        functionName: "registerForAnEvent",
+      });
+      const userId = req.context.userId;
+      const eventId = req.query.eventId as string;
+      await eventService.registerAsGroupForAnEvent(
+        userId,
+        eventId,
+        req.body.groupEmails
+      );
+      res.status(200).json({ status: "success" });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  getPopularEvents = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+      logger.info("getPopularEvents", {
+        __filename,
+        functionName: "getPopularEvents",
+      });
+
+      const popularEvents = await eventService.getPopularEvents();
+      res.status(200).json(popularEvents);
     } catch (error) {
       next(error);
     }

@@ -41,6 +41,9 @@ class EventRepository {
     );
     return event;
   };
+  async find(condition: any, options?: any) {
+    return mysqlProxy.find(collections.Event, condition, options);
+  }
 }
 
 export const eventRepository = new EventRepository();
