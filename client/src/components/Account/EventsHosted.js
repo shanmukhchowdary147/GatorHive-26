@@ -47,7 +47,17 @@ function EventsHosted() {
   function handleEventCardClick(eventId) {
     window.location.href = `/event?eventId=${encodeURIComponent(eventId)}`;
   }
-
+  function convertUtcToLocal(eventDate) {
+    const utcDate = new Date(eventDate);
+    const etTime = utcDate.toLocaleTimeString("en-US", {
+      timeZone: "America/New_York",
+    });
+    const [time, meridiem] = etTime.split(" ");
+    const date = utcDate.toLocaleDateString("en-US", {
+      timeZone: "America/New_York",
+    });
+    return `${date} ${time} ${meridiem}`;
+  }
   return (
     <div className="App">
       <h1>Events Hosted</h1>
@@ -70,7 +80,9 @@ function EventsHosted() {
               </div>
 
               <div className="hosted-event-club">{event.orgName}</div>
-              <div className="hosted-event-date">Date: {event.eventAtUtc}</div>
+              <div className="hosted-event-date">
+                Date: {convertUtcToLocal(event.eventAtUtc)}
+              </div>
               <div className="hosted-event-date">{event.eventLocation}</div>
               <div className="hosted-event-details">{event.eventDetails}</div>
             </div>

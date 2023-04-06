@@ -51,12 +51,28 @@ function EventsAttended() {
         Authorization: `Bearer ${token}`,
       },
     }).then((response) => {
-      setEvents(response.data);
+      const filteredEvents = response.data.filter((event) => {
+        const eventDate = new Date(event.eventAtUtc);
+        const today = new Date();
+        return eventDate < today;
+      });
+      setEvents(filteredEvents);
     });
   }, []);
 
   function handleEventCardClick(eventId) {
     window.location.href = `/event?eventId=${encodeURIComponent(eventId)}`;
+  }
+  function convertUtcToLocal(eventDate) {
+    const utcDate = new Date(eventDate);
+    const etTime = utcDate.toLocaleTimeString("en-US", {
+      timeZone: "America/New_York",
+    });
+    const [time, meridiem] = etTime.split(" ");
+    const date = utcDate.toLocaleDateString("en-US", {
+      timeZone: "America/New_York",
+    });
+    return `${date} ${time} ${meridiem}`;
   }
 
   return (
@@ -82,7 +98,7 @@ function EventsAttended() {
 
               <div className="attended-event-club">{event.orgName}</div>
               <div className="attended-event-date">
-                Date: {event.eventAtUtc}
+                Date: {convertUtcToLocal(event.eventAtUtc)}
               </div>
               <div className="attended-event-date">{event.eventLocation}</div>
               <div className="attended-event-details">{event.eventDetails}</div>
