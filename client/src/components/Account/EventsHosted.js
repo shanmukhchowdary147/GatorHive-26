@@ -9,7 +9,7 @@ function EventsHosted() {
   const [event, setEvents] = useState([]);
 
   useEffect(() => {
-    Axios.get("http://localhost:8000/users/hostedEvents", {
+    Axios.get(`${process.env.REACT_APP_BASE_URL}/users/hostedEvents`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

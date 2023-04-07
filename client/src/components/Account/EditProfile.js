@@ -7,7 +7,7 @@ import Cookies from "js-cookie";
 function EditProfile() {
   const token = Cookies.get("token");
   useEffect(() => {
-    Axios.get("http://localhost:8000/users/userDetails", {
+    Axios.get(`${process.env.REACT_APP_BASE_URL}/users/userDetails`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -54,7 +54,7 @@ function EditProfile() {
     }
 
     Axios.put(
-      "http://localhost:8000/users/editProfile",
+      `${process.env.REACT_APP_BASE_URL}/users/editProfile`,
       {
         firstName: firstName,
         lastName: lastName,

@@ -32,7 +32,7 @@ function LoginForm() {
       password: password,
     };
     const responseLogin = await Axios.post(
-      "http://localhost:8000/auth/login",
+      `${process.env.REACT_APP_BASE_URL}/auth/login`,
       loginData
     );
     const token = responseLogin.data.accessToken;
@@ -106,7 +106,7 @@ function SignupForm() {
 
     console.log(signupData);
     const response = await Axios.post(
-      "http://localhost:8000/auth/signup",
+      `${process.env.REACT_APP_BASE_URL}/auth/signup`,
       signupData
     );
     const token = response.data.token;

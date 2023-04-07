@@ -108,7 +108,7 @@ function HostEventPage() {
     console.log("data:", JSON.parse(newEventData.get("eventData")));
     console.log("addres", JSON.parse(newEventData.get("address")));
     const axiosInstance = Axios.create({
-      baseURL: "http://localhost:8000",
+      baseURL: `${process.env.REACT_APP_BASE_URL}`,
     });
 
     axiosRetry(axiosInstance, {
@@ -139,7 +139,7 @@ function HostEventPage() {
     const fetchHostableClubs = async () => {
       try {
         const response = await Axios.get(
-          "http://localhost:8000/studentOrg/hostableOrgs",
+          `${process.env.REACT_APP_BASE_URL}/studentOrg/hostableOrgs`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

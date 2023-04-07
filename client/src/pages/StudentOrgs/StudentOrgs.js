@@ -28,7 +28,7 @@ function StudentOrgs() {
     const getSubscribedClubs = async () => {
       try {
         const response = await Axios.get(
-          `http://localhost:8000/studentOrg/subscribed`,
+          `${process.env.REACT_APP_BASE_URL}/studentOrg/subscribed`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -47,11 +47,14 @@ function StudentOrgs() {
   useEffect(() => {
     const getAllStudentOrgs = async () => {
       try {
-        const response = await Axios.get(`http://localhost:8000/studentOrg/`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const response = await Axios.get(
+          `${process.env.REACT_APP_BASE_URL}/studentOrg/`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
         setClubDataOrg(response.data);
       } catch (error) {
         console.error(error);
@@ -84,7 +87,7 @@ function StudentOrgs() {
     const subscribeToClub = async () => {
       try {
         const response = await Axios.put(
-          `http://localhost:8000/studentOrg/subscribe?orgId=${clubId}`,
+          `${process.env.REACT_APP_BASE_URL}/studentOrg/subscribe?orgId=${clubId}`,
           {},
           {
             headers: {
@@ -125,11 +128,15 @@ function StudentOrgs() {
     setIsFormOpen(false);
     setSecondaryEmails([""]);
 
-    await Axios.post(`http://localhost:8000/studentOrg/create`, newOrgData, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
+    await Axios.post(
+      `${process.env.REACT_APP_BASE_URL}/studentOrg/create`,
+      newOrgData,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    )
       .then((response) => {
         console.log(response);
         console.log("Registered to event with id");

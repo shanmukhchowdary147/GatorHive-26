@@ -24,7 +24,7 @@ function SearchPage() {
     const fetchData = async () => {
       try {
         const [response] = await Promise.all([
-          Axios.get(`http://localhost:8000/events/`),
+          Axios.get(`${process.env.REACT_APP_BASE_URL}/events/`),
         ]);
         setEvents(Object.values(response.data));
       } catch (error) {

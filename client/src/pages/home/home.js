@@ -25,7 +25,7 @@ const Home = () => {
     const getPopularEvents = async () => {
       try {
         const response = await Axios.get(
-          "http://localhost:8000/events/getPopularEvents"
+          `${process.env.REACT_APP_BASE_URL}/events/getPopularEvents`
         );
         setCardData(response.data);
       } catch (error) {
