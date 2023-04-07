@@ -6,10 +6,10 @@ export const signupValidation = {
     password: Joi.string().regex(passwordRegex).required(),
     email: Joi.string().email().required(),
     firstName: Joi.string()
-      .pattern(/^[a-zA-Z]+$/, { name: "alphabets" })
+      .pattern(/^[a-zA-Z ]+$/, { name: "alphabets with spaces" })
       .required(),
     lastName: Joi.string()
-      .pattern(/^[a-zA-Z]+$/, { name: "alphabets" })
+      .pattern(/^[a-zA-Z ]+$/, { name: "alphabets with spaces" })
       .required(),
     phoneNumber: Joi.string().min(5).max(32),
   }),
