@@ -27,7 +27,7 @@ const EventDetails = () => {
     const fetchEventDetails = async () => {
       try {
         const response = await Axios.get(
-          `http://localhost:8000/events/eventDetails?eventId=${eventId}`
+          `${process.env.REACT_APP_BASE_URL}/events/eventDetails?eventId=${eventId}`
         );
         setEventDetails(response.data);
       } catch (error) {
@@ -46,7 +46,7 @@ const EventDetails = () => {
       console.log("Registered to event with id");
       try {
         const response = await Axios.post(
-          `http://localhost:8000/events/register?eventId=${eventId}`,
+          `${process.env.REACT_APP_BASE_URL}/events/register?eventId=${eventId}`,
           {
             eventId: eventDetails.id,
           },
@@ -130,7 +130,7 @@ const EventDetails = () => {
     setGroupEmails([""]);
 
     await Axios.post(
-      `http://localhost:8000/events/registerGroup?eventId=${eventDetails.id}`,
+      `${process.env.REACT_APP_BASE_URL}/events/registerGroup?eventId=${eventDetails.id}`,
       groupData,
       {
         headers: {
