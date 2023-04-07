@@ -54,21 +54,12 @@ function UpcomingEvents() {
           >
             <div className="upcoming-event-image">
               <img src={event.posterLink} alt={event.eventName} />
-            </div>
-            <div className="upcoming-event-details-right">
-              <div className="upcoming-eventname-tag">
-                <h2>{event.eventName}</h2>
-                <button className="upcoming-event-tag">
-                  #{event.categoryName}
-                </button>
+              <div className="xxzz">
+                <div>{event.eventName}</div>
+                <div className="upcoming-event-date">
+                  Date: {convertUtcToLocal(event.eventAtUtc)}
+                </div>
               </div>
-
-              <div className="upcoming-event-club">{event.orgName}</div>
-              <div className="upcoming-event-date">
-                Date: {convertUtcToLocal(event.eventAtUtc)}
-              </div>
-              <div className="upcoming-event-date">{event.eventLocation}</div>
-              <div className="upcoming-event-details">{event.eventDetails}</div>
             </div>
           </div>
         ))}
