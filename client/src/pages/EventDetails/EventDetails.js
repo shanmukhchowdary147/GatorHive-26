@@ -11,6 +11,9 @@ import Axios from "axios";
 const EventDetails = () => {
   const [eventDetails, setEventDetails] = useState({});
   const [alreadyRegistered, setAlreadyRegistered] = useState(0);
+  const [alreadyGroupRegistered, setAlreadyGroupRegistered] = useState(0);
+  const [grpRegisterDone, setGrpRegisterDone] = useState(false);
+
   const token = Cookies.get("token");
 
   const [groupEmails, setGroupEmails] = useState([""]);
@@ -55,6 +58,7 @@ const EventDetails = () => {
         );
         console.log(response);
         console.log("Registered to event with id");
+        setGrpRegisterDone(true);
         if (response.data.status === "success") {
           setAlreadyRegistered(1);
         }
@@ -85,7 +89,15 @@ const EventDetails = () => {
       return "Already Registered";
     }
   }
-
+  function registrationGroupString(alreadyRegistered) {
+    if (alreadyRegistered === 0) {
+      return "Register as Group";
+    } else if (alreadyRegistered === 1) {
+      return "Registered Group";
+    } else if (alreadyRegistered === 2) {
+      return "Already Registered";
+    }
+  }
   function convertUtcToLocal(eventDate) {
     const utcDate = new Date(eventDate);
     const etTime = utcDate.toLocaleTimeString("en-US", {
@@ -117,22 +129,30 @@ const EventDetails = () => {
     setIsFormOpen(false);
     setGroupEmails([""]);
 
-    // await Axios.post(
-    //   `http://localhost:8000/events/registerGroup?eventId=${eventDetails.id}`,
-    //   groupData,
-    //   {
-    //     headers: {
-    //       Authorization: `Bearer ${token}`,
-    //     },
-    //   }
-    // )
-    //   .then((response) => {
-    //     console.log(response);
-    //     console.log("Registered to event with id");
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
+    await Axios.post(
+      `http://localhost:8000/events/registerGroup?eventId=${eventDetails.id}`,
+      groupData,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    )
+      .then((response) => {
+        console.log(response);
+        console.log("Registered group to event with id");
+        setGrpRegisterDone(true);
+        if (response.data.status === "success") {
+          setAlreadyGroupRegistered(1);
+        }
+        if (response.data.status === "failure") {
+          setAlreadyGroupRegistered(2);
+        }
+        console.log("Registered to event with id");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
     console.log("group registered", groupData, eventDetails.id);
   }
 
@@ -251,13 +271,9 @@ const EventDetails = () => {
             variant="contained"
             endIcon={<MdOutlineGroups />}
             onClick={openCreateOrgForm}
-            className={
-              eventDetails.ifRegisterAsGroup
-                ? "group-register-visible"
-                : "group-register-invisible"
-            }
+            className={registrationClassName(alreadyGroupRegistered)}
           >
-            Register As Group
+            {registrationGroupString(alreadyGroupRegistered)}
           </Button>
         </div>
         <div>
@@ -301,7 +317,11 @@ const EventDetails = () => {
                       Add email
                     </button>
                   </div>
-                  <button type="submit" className="grp-register-btn">
+                  <button
+                    type="submit"
+                    className="grp-register-btn"
+                    disabled={grpRegisterDone}
+                  >
                     Register As Group
                   </button>
                 </form>
