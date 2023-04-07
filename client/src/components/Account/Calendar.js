@@ -14,6 +14,7 @@ function Home() {
   const [yesterdayEvents, setYesterdayEvents] = useState([]);
   const [todayEvents, setTodayEvents] = useState([]);
   const [tomorrowEvents, setTomorrowEvents] = useState([]);
+  const [calenderEvents, setCalenderEvents] = useState([]);
 
   useEffect(() => {
     Axios.get(`${process.env.REACT_APP_BASE_URL}/users/registeredEvents`, {
@@ -49,6 +50,23 @@ function Home() {
 
     setYesterdayEvents(filteredEventsYest);
 
+    //shourya code
+
+    const eventWithCalenderDates = events.map((event) => {
+      const eventDate = new Date(event.eventAtUtc);
+      const eventCalenderDate = new Date(
+        eventDate.toLocaleDateString("en-US", {
+          timeZone: "America/New_York",
+        })
+      );
+      return {
+        id: event.id,
+        date: eventCalenderDate,
+      };
+    });
+    setCalenderEvents(eventWithCalenderDates);
+
+    //shourya code
     const filteredEventsTod = events.filter((event) => {
       const eventDate = new Date(event.eventAtUtc);
       const today = new Date();
@@ -112,24 +130,37 @@ function Home() {
       <td className="calendar-dayname">Sat</td>
     </tr>
   );
-
   const renderDateRows = () => {
     const rows = [];
     let cells = [];
+    const today = new Date();
     for (let i = 0; i < firstDayOfMonth; i++) {
       cells.push(<td key={`empty-${i}`}></td>);
     }
     for (let i = 1; i <= daysInMonth; i++) {
       const id = `${year}-${month + 1}-${i}`;
+      const currentDate = new Date(year, month, i);
+      const isCurrentDate =
+        currentDate.getDate() === today.getDate() &&
+        currentDate.getMonth() === today.getMonth() &&
+        currentDate.getFullYear() === today.getFullYear();
+      const isEventDate = calenderEvents.some((calenderEvent) => {
+        const eventDate = new Date(calenderEvent.date);
+        return (
+          eventDate.getDate() === i &&
+          eventDate.getMonth() === month &&
+          eventDate.getFullYear() === year
+        );
+      });
       cells.push(
         <td
           key={id}
           id={id}
           className={
-            i === currentDate.getDate() &&
-            month === currentDate.getMonth() &&
-            year === currentDate.getFullYear()
+            isCurrentDate
               ? "calendar-date current-date"
+              : isEventDate
+              ? "calendar-date event-date"
               : "calendar-date"
           }
         >
@@ -246,6 +277,7 @@ function Home() {
         </div>
       </div>
     </div>
+    
   );
 }
 
