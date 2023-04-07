@@ -3,7 +3,6 @@ import SimpleImageSlider from "react-simple-image-slider";
 import { Carousel } from "react-responsive-carousel";
 import "./Home.css";
 import { BiSearchAlt } from "react-icons/bi";
-import recommendEvents from "../Chatbot/Chatbot.js";
 import { IoChatbubbleEllipsesSharp } from "react-icons/io5";
 import Cookies from "js-cookie";
 import Axios from "axios";
@@ -57,7 +56,7 @@ const Home = () => {
 
   // update carousel images every 5 seconds
   function handleChatbotClick() {
-    recommendEvents();
+    window.location.href = `/chatbot`;
   }
 
   function convertUtcToLocal(eventDate) {
