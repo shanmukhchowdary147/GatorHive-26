@@ -143,7 +143,7 @@ function EditProfile() {
       <h1>Edit Profile</h1>
       <div>
         <label>First Name:</label>
-        <a>{renderEditableField("firstName", firstName)} </a>
+        {renderEditableField("firstName", firstName)}
         <BiEditAlt onClick={() => handleFieldEdit("firstName")} />
       </div>
       <div>
@@ -160,10 +160,6 @@ function EditProfile() {
         <label>Phone:</label>
         {renderEditableField("phone", phone)}
         <BiEditAlt onClick={() => handleFieldEdit("phone")} />
-      </div>
-      <div>
-        <label>Password:</label>
-        {renderEditableField("password", password)}
       </div>
       <div>
         <label>Address 1:</label>

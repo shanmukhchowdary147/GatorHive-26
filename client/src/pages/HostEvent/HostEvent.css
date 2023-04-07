@@ -116,3 +116,9 @@
 .create-event-btn {
   width: 100%;
 }
+
+.event-already-created {
+  width: 100%;
+  background-color: antiquewhite !important;
+  color: black !important;
+}

@@ -5,33 +5,6 @@ import "./UpcomingEvents.css";
 
 function UpcomingEvents() {
   const token = Cookies.get("token");
-  // const eventsData = [
-  //   {
-  //     id: 1,
-  //     eventName: "Football Event",
-  //     categoryName: "sports",
-  //     posterLink:
-  //       "https://xray.ufl.edu/wordpress/files/2023/02/research-day-450x600.png",
-  //     clubName: "UF Sports CLub",
-  //     eventLocation: "UF Campus, Norman Hall",
-  //     eventDetails:
-  //       "The music event was an electrifying experience that left the audience spellbound. The stage was adorned with colorful lights and a sound system that was capable of filling the entire venue with music that ranged from soft.",
-  //     eventDate: "2023-04-15",
-  //   },
-
-  //   {
-  //     id: 2,
-  //     eventName: "Research Celebration",
-  //     categoryName: "academic",
-  //     posterLink:
-  //       "https://xray.ufl.edu/wordpress/files/2023/02/research-day-450x600.png",
-  //     clubName: "Gators Research Club",
-  //     eventLocation: "UF Campus, Norman Hall",
-  //     eventDetails:
-  //       "The music event was an electrifying experience that left the audience spellbound. The stage was adorned with colorful lights and a sound system that was capable of filling the entire venue with music that ranged from soft.",
-  //     eventDate: "2023-04-20",
-  //   },
-  // ];
 
   const [event, setEvents] = useState([]);
 
@@ -46,7 +19,7 @@ function UpcomingEvents() {
         const today = new Date();
         return eventDate >= today;
       });
-      setEvents(response.data);
+      setEvents(filteredEvents);
     });
   }, []);
 

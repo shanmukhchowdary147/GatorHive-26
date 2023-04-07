@@ -164,6 +164,18 @@ function SearchPage() {
     // `/search?q=${encodeURIComponent(searchQuery)}`
   }
 
+  function convertUtcToLocal(eventDate) {
+    const utcDate = new Date(eventDate);
+    const etTime = utcDate.toLocaleTimeString("en-US", {
+      timeZone: "America/New_York",
+    });
+    const [time, meridiem] = etTime.split(" ");
+    const date = utcDate.toLocaleDateString("en-US", {
+      timeZone: "America/New_York",
+    });
+    return `${date} ${time} ${meridiem}`;
+  }
+
   return (
     <div className="search-cont">
       <div className="search-page">
@@ -443,7 +455,7 @@ function SearchPage() {
                 <div className="event-club">{event.orgName}</div>
                 <div className="event-date">${event.entryFee}</div>
                 <div className="event-date">
-                  Date: {event.eventDate} | {event.eventTime}
+                  Date: {convertUtcToLocal(event.eventAtUtc)}
                 </div>
                 <div className="event-date">{event.eventLocation}</div>
                 <div className="event-details">{event.eventDetails}</div>
