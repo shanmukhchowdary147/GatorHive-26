@@ -1,8 +1,7 @@
 .attended-event-list {
   display: flex;
-  flex-direction: column;
-  width: 70%;
   margin-left: 20px;
+  width: 100%;
 }
 
 .attended-event-card {
@@ -16,10 +15,13 @@
   padding: 10px;
   background-color: white;
   cursor: pointer;
+  max-width: 250px;
+  overflow: hidden;
+  margin: 10px;
 }
 
 .attended-event-image img {
-  max-width: 250px;
+  width: 100%;
   max-height: 380px;
   object-fit: contain;
 }

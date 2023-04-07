@@ -85,23 +85,14 @@ function EventsAttended() {
             key={event.id}
             onClick={() => handleEventCardClick(event.id)}
           >
-            <div className="attended-event-image">
+            <div className="upcoming-event-image">
               <img src={event.posterLink} alt={event.eventName} />
-            </div>
-            <div className="attended-event-details-right">
-              <div className="attended-eventname-tag">
-                <h2>{event.eventName}</h2>
-                <button className="attended-event-tag">
-                  #{event.categoryName}
-                </button>
+              <div className="xxzz">
+                <div>{event.eventName}</div>
+                <div className="upcoming-event-date">
+                  Date: {convertUtcToLocal(event.eventAtUtc)}
+                </div>
               </div>
-
-              <div className="attended-event-club">{event.orgName}</div>
-              <div className="attended-event-date">
-                Date: {convertUtcToLocal(event.eventAtUtc)}
-              </div>
-              <div className="attended-event-date">{event.eventLocation}</div>
-              <div className="attended-event-details">{event.eventDetails}</div>
             </div>
           </div>
         ))}
