@@ -34,13 +34,7 @@ function HostEventPage() {
   const [isPetAllowed, setIsPetAllowed] = useState(false);
   const [hostableClub, setHostableClub] = useState("");
   const [hostableClubs, setHostableClubs] = useState([]);
-
-  // const data = (e) => {
-  //   e.preventDefault();
-  //   Axios.post("", {
-
-  //   });
-  // };
+  const [eventCreated, setEventCreated] = useState(false);
 
   function createEventAtUtc(eventDate, timings) {
     // Combine eventDate and timings into a single string
@@ -129,6 +123,7 @@ function HostEventPage() {
         },
       })
       .then((response) => {
+        setEventCreated(true);
         console.log(response);
       })
       .catch((error) => {
@@ -162,7 +157,7 @@ function HostEventPage() {
   }, []);
 
   const hostableClubOptions = hostableClubs.map((hostableClub) => (
-    <option key={hostableClub.id} value={hostableClub.id}>
+    <option key={hostableClub.id} value={hostableClub.id} required>
       {hostableClub.orgName}
     </option>
   ));
@@ -220,6 +215,7 @@ function HostEventPage() {
                 type="date"
                 value={eventDate}
                 onChange={(e) => setEventDate(e.target.value)}
+                required
               />
             </label>
             <br />
@@ -257,6 +253,7 @@ function HostEventPage() {
                 type="time"
                 value={timings}
                 onChange={(e) => setTimings(e.target.value)}
+                required
               />
             </label>
 
@@ -286,6 +283,7 @@ function HostEventPage() {
                 type="file"
                 accept="image/*"
                 onChange={handleImageChange}
+                required
               />
             </label>
             <br />
@@ -295,7 +293,6 @@ function HostEventPage() {
                 value={hostableClub}
                 onChange={(e) => setHostableClub(e.target.value)}
               >
-                <option value="">Select a Club</option>
                 {hostableClubOptions}
               </select>
             </label>
@@ -398,8 +395,14 @@ function HostEventPage() {
                 onChange={() => setIsFree(!isFree)}
               />
             </label>
-            <button type="submit" className="create-event-btn">
-              Create Event
+            <button
+              type="submit"
+              className={
+                !eventCreated ? "create-event-btn" : "event-already-created"
+              }
+              disabled={eventCreated}
+            >
+              {!eventCreated ? "Create Event" : "Event Succesfully Created !!"}
             </button>
           </div>
         </div>
