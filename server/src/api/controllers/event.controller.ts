@@ -90,11 +90,14 @@ class EventController {
       });
       const userId = req.context.userId;
       const eventId = req.query.eventId as string;
-      await eventService.registerAsGroupForAnEvent(
+      const ifAbleToRegister = await eventService.registerAsGroupForAnEvent(
         userId,
         eventId,
         req.body.groupEmails
       );
+      if (!ifAbleToRegister) {
+        res.status(200).json({ status: "failure" });
+      }
       res.status(200).json({ status: "success" });
     } catch (error) {
       next(error);

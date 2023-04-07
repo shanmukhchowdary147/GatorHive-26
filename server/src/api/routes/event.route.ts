@@ -22,6 +22,8 @@ router.route("/create").post([
 router.route("/eventDetails").get([eventController.getEventDetails]);
 router.route("/register").post([authorize, eventController.registerForAnEvent]);
 router.route("/getPopularEvents").get([eventController.getPopularEvents]);
-// router.route("/registerGroup").post([authorize, eventController.registerAsGroupForAnEvent]);
+router
+  .route("/registerGroup")
+  .post([authorize, eventController.registerAsGroupForAnEvent]);
 
 export { router as eventRoutes };

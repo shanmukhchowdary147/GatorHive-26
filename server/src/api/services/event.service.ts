@@ -180,6 +180,15 @@ class EventService {
         __filename,
         callerMethodName,
       });
+      const registration = await registrationsRepository.findOne(
+        { userId: userId, eventId: eventId },
+        { raw: true }
+      );
+      const ifRegistrationAlreadyExists = registration ? true : false;
+      if (ifRegistrationAlreadyExists) {
+        transaction.commit();
+        return false;
+      }
       const groupEmailsArray = groupEmails.split(",");
       const usersTobeRegistered = await userRepository.find(
         {
@@ -202,6 +211,7 @@ class EventService {
       //Not checking if all the emails are in the database
       await registrationsRepository.bulkCreate({ registrations }, transaction);
       await transaction.commit();
+      return true;
     } catch (error) {
       await transaction.rollback();
       throw error;

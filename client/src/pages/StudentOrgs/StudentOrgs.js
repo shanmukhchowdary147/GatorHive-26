@@ -137,6 +137,7 @@ function StudentOrgs() {
       .catch((error) => {
         console.log(error);
       });
+    window.location.reload();
   }
 
   const handleSearchOrg = (event) => {
