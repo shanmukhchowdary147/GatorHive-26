@@ -115,3 +115,31 @@
   cursor: pointer !important;
   color: white !important;
 }
+
+.group-register-form input {
+  width: 70%;
+  padding: 6px;
+  margin-left: 10px;
+  margin-bottom: 14px;
+  border: 1px solid #050505;
+  border-radius: 5px;
+}
+
+.email-add {
+  width: 86%;
+}
+
+.email-add button {
+  float: right;
+}
+
+.grp-register-btn {
+  color: #ffffff !important;
+  padding: 6px 8px !important;
+  display: inline !important;
+  border: none !important;
+  background-color: #007bff !important;
+  border-radius: 4px !important;
+  cursor: pointer !important;
+  text-decoration: none !important;
+}

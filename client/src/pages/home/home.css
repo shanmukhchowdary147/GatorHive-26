@@ -60,6 +60,7 @@
 .popular-card {
   width: calc(20% - 10px);
   margin-bottom: 20px;
+  margin: 3px;
   border: 1px solid #ddd;
   border-radius: 5px;
   overflow: hidden;

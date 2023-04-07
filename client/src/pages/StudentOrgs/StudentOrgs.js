@@ -104,7 +104,7 @@ function StudentOrgs() {
     setSubscribedClubs(subscribedClubs.filter((id) => id !== clubId));
   }
 
-  function handleButtonClick() {
+  function openCreateOrgForm() {
     setIsFormOpen(true);
   }
 
@@ -173,7 +173,7 @@ function StudentOrgs() {
             onChange={(event) => setSearchQuery(event.target.value)}
           />
         </form>
-        <button className="create-org-btn" onClick={handleButtonClick}>
+        <button className="create-org-btn" onClick={openCreateOrgForm}>
           Create an Organization
         </button>
         {isFormOpen && (

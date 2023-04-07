@@ -13,20 +13,12 @@ const EventDetails = () => {
   const [alreadyRegistered, setAlreadyRegistered] = useState(0);
   const token = Cookies.get("token");
 
+  const [groupEmails, setGroupEmails] = useState([""]);
+  const [isFormOpen, setIsFormOpen] = useState(false);
+
   const location = useLocation();
   const urlParams = new URLSearchParams(location.search);
   const eventId = decodeURIComponent(urlParams.get("eventId"));
-  // console.log(http://localhost:8000/events/eventDetails?eventId=${eventId}});
-
-  // useEffect(() => {
-  //   Axios.get(`http://localhost:8000/events/eventDetails?eventId=${eventId}}`)
-  //     .then((response) => {
-  //       setEventDetails(response.data);
-  //     })
-  //     .catch((error) => {
-  //       console.error(error);
-  //     });
-  // }, [eventId]);
 
   useEffect(() => {
     const fetchEventDetails = async () => {
@@ -94,11 +86,77 @@ const EventDetails = () => {
     }
   }
 
+  function convertUtcToLocal(eventDate) {
+    const utcDate = new Date(eventDate);
+    const etTime = utcDate.toLocaleTimeString("en-US", {
+      timeZone: "America/New_York",
+    });
+    const [time, meridiem] = etTime.split(" ");
+    const date = utcDate.toLocaleDateString("en-US", {
+      timeZone: "America/New_York",
+    });
+    return `${date} ${time} ${meridiem}`;
+  }
+
+  function openCreateOrgForm() {
+    setIsFormOpen(true);
+  }
+
+  function handleOverlayClick(event) {
+    if (event.target.classList.contains("overlay")) {
+      setIsFormOpen(false);
+    }
+  }
+
+  async function registerAsGroup(e) {
+    e.preventDefault();
+    const groupEmailsInStrings = groupEmails.join(",");
+    const groupData = {
+      groupEmails: groupEmailsInStrings,
+    };
+    setIsFormOpen(false);
+    setGroupEmails([""]);
+
+    // await Axios.post(
+    //   `http://localhost:8000/events/registerGroup?eventId=${eventDetails.id}`,
+    //   groupData,
+    //   {
+    //     headers: {
+    //       Authorization: `Bearer ${token}`,
+    //     },
+    //   }
+    // )
+    //   .then((response) => {
+    //     console.log(response);
+    //     console.log("Registered to event with id");
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
+    console.log("group registered", groupData, eventDetails.id);
+  }
+
+  const handleAddEmail = () => {
+    setGroupEmails([...groupEmails, ""]);
+  };
+
+  const handleRemoveEmail = (index) => {
+    setGroupEmails(groupEmails.filter((email, i) => i !== index));
+  };
+
+  const handleEmailChange = (index, event) => {
+    const newEmails = [...groupEmails];
+    newEmails[index] = event.target.value;
+    setGroupEmails(newEmails);
+  };
+
   return (
-    <div className="event-details-page">
+    <div className="event-details-page" onClick={handleOverlayClick}>
       <div className="event-details-left">
         <img src={eventDetails.posterLink} alt={eventDetails.eventName} />
-        <p className="event-time">{eventDetails.eventAtUtc}</p>
+        <p className="event-time">
+          {convertUtcToLocal(eventDetails.eventAtUtc)}
+        </p>
         <p className="entry-Fee">Entry Fee: ${eventDetails.entryFee}</p>
         <p className="event-location">
           <MdLocationOn className="location-icon" /> Venue:{" "}
@@ -192,6 +250,7 @@ const EventDetails = () => {
           <Button
             variant="contained"
             endIcon={<MdOutlineGroups />}
+            onClick={openCreateOrgForm}
             className={
               eventDetails.ifRegisterAsGroup
                 ? "group-register-visible"
@@ -200,6 +259,55 @@ const EventDetails = () => {
           >
             Register As Group
           </Button>
+        </div>
+        <div>
+          {isFormOpen && (
+            <div className="overlay">
+              <div className="form">
+                <div className="header">
+                  <h3>Enter Your Group Details</h3>
+                  <button onClick={() => setIsFormOpen(false)}>X</button>
+                </div>
+                <form
+                  className="group-register-form"
+                  onSubmit={registerAsGroup}
+                >
+                  {groupEmails.map((email, index) => (
+                    <div key={index}>
+                      <label>Email ID:</label>
+                      <input
+                        type="text"
+                        value={email}
+                        placeholder="Enter Email ID of your companion"
+                        onChange={(event) => handleEmailChange(index, event)}
+                      />
+                      {index > 0 && (
+                        <button
+                          type="button"
+                          onClick={() => handleRemoveEmail(index)}
+                          className="remove-email"
+                        >
+                          -
+                        </button>
+                      )}
+                    </div>
+                  ))}
+                  <div className="email-add">
+                    <button
+                      type="button"
+                      onClick={handleAddEmail}
+                      className="add-email"
+                    >
+                      Add email
+                    </button>
+                  </div>
+                  <button type="submit" className="grp-register-btn">
+                    Register As Group
+                  </button>
+                </form>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>

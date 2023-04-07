@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { AiFillNotification } from "react-icons/ai";
-import CampaignIcon from "@mui/icons-material/Campaign";
+// import CampaignIcon from "@mui/icons-material/Campaign";
 import "./Header.css";
 import Cookies from "js-cookie";
 
@@ -28,7 +28,6 @@ function Header() {
         <a href="/">GatorHive</a>
       </div>
       <div className="header-ight-part">
-        <CampaignIcon />
         <a href="/host-event" className="host-event-btn">
           Host an Event
         </a>
@@ -43,7 +42,7 @@ function Header() {
                 <a href="/account/home">My profile</a>
                 <a href="/account/edit">Edit Profile</a>
                 <a href="/account/upcoming">Upcoming Events</a>
-                <a href="/account/attended">Events Registered</a>
+                <a href="/account/attended">Events Attended</a>
                 <a href="/account/hosted">Events Hosted</a>
               </div>
             )}

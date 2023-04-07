@@ -19,43 +19,7 @@ const Home = () => {
     require("../../images/bg5.jpg"),
   ];
 
-  // const clickImage = (idx, event) => {
-  //   console.log("clicked image", idx);
-  // };
-
-  // state for the card data
   const [cardData, setCardData] = useState([]);
-  //   {
-  //     imagePath: require("../../images/bg4.jpg"),
-  //     id: 1,
-  //     name: "Card Name 1",
-  //     date: "15th March, 2023",
-  //   },
-  //   {
-  //     imagePath: require("../../images/bg5.jpg"),
-  //     id: 2,
-  //     name: "Card Name 2",
-  //     date: "14th March, 2023",
-  //   },
-  //   {
-  //     imagePath: require("../../images/bg3.jpg"),
-  //     id: 3,
-  //     name: "Card Name 3",
-  //     date: "13th March, 2023",
-  //   },
-  //   {
-  //     imagePath: require("../../images/bg4.jpg"),
-  //     id: 4,
-  //     name: "Card Name 4",
-  //     date: "12th March, 2023",
-  //   },
-  //   {
-  //     imagePath: require("../../images/bg5.jpg"),
-  //     id: 5,
-  //     name: "Card Name 5",
-  //     date: "11th March, 2023",
-  //   },
-  // ]);
 
   useEffect(() => {
     const getPopularEvents = async () => {
@@ -94,6 +58,18 @@ const Home = () => {
   // update carousel images every 5 seconds
   function handleChatbotClick() {
     recommendEvents();
+  }
+
+  function convertUtcToLocal(eventDate) {
+    const utcDate = new Date(eventDate);
+    const etTime = utcDate.toLocaleTimeString("en-US", {
+      timeZone: "America/New_York",
+    });
+    const [time, meridiem] = etTime.split(" ");
+    const date = utcDate.toLocaleDateString("en-US", {
+      timeZone: "America/New_York",
+    });
+    return `${date} ${time} ${meridiem}`;
   }
 
   return (
@@ -157,7 +133,7 @@ const Home = () => {
             <img src={card.posterLink} alt={`Card ${index}`} />
             <div className="card-info">
               <h3>{card.eventName}</h3>
-              <p>{card.eventAtUtc}</p>
+              <p>{convertUtcToLocal(card.eventAtUtc)}</p>
             </div>
           </div>
         ))}
