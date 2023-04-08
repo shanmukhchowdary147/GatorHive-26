@@ -37,7 +37,7 @@ function HostEventPage() {
   const [hostableClub, setHostableClub] = useState("");
   const [hostableClubs, setHostableClubs] = useState([]);
   const [eventCreated, setEventCreated] = useState(false);
-  const [errorMessage, setErrorMessage] = useState();
+  const [errorMessage, setErrorMessage] = useState(null);
 
   function createEventAtUtc(eventDate, timings) {
     // Combine eventDate and timings into a single string
@@ -58,84 +58,93 @@ function HostEventPage() {
   // console.log(eventAtUtc.toUTCString()); // Display the time in UTC format
 
   const handleSubmit = async (event) => {
-    if (!hostableClub) {
-      return;
-    }
-    event.preventDefault();
+    if (hostableClub === "" || hostableClub === "empty") {
+      event.preventDefault();
+      setErrorMessage(
+        <p style={{ color: "red" }}>
+          *Select an org, or else go create an org in student org page
+        </p>
+      );
+      console.log("error", "top");
+    } else {
+      event.preventDefault();
+      setErrorMessage(null);
+      const eventAtUtc = createEventAtUtc(eventDate, timings);
 
-    const eventAtUtc = createEventAtUtc(eventDate, timings);
+      if (isOnline === true) {
+        setEventLocation("");
+      }
 
-    if (isOnline === true) {
-      setEventLocation("");
-    }
+      const eventData = {
+        eventName: eventName,
+        category: category,
+        clubName: club,
+        ifOfficial: theme === "official" ? true : false,
+        food:
+          food === "Veg"
+            ? 0
+            : food === "Non-Veg"
+            ? 1
+            : food === "Non-Veg/Veg"
+            ? 2
+            : null,
+        eventDetails: eventDetails,
+        eventAtUtc: eventAtUtc,
+        ifPetsAllowed: isPetAllowed,
+        entryFee: entryFee,
+        ifGuide: guideAvailable,
+        ifDifferentlyAbledAccessibility: isDiffAccess,
+        ifParking: parkingAvailable,
+        ifAlcohol: alcoholAllowed,
+        ifRegisterAsGroup: allowGroupRegistration,
+        eventType:
+          eventType === "Online"
+            ? 0
+            : eventType === "Offline"
+            ? 1
+            : eventType === "Hybrid"
+            ? 2
+            : null,
+        ifFreeGoodies: isFree,
+        ifRideTogether: carpooling,
+        studentOrgId: hostableClub,
+      };
+      const address = {
+        roomNumber: eventLocation,
+      };
+      const newEventData = new FormData();
+      newEventData.append("posterLink", posterImage);
+      newEventData.append("eventData", JSON.stringify(eventData));
+      newEventData.append("address", JSON.stringify(address));
 
-    const eventData = {
-      eventName: eventName,
-      category: category,
-      clubName: club,
-      ifOfficial: theme === "official" ? true : false,
-      food:
-        food === "Veg"
-          ? 0
-          : food === "Non-Veg"
-          ? 1
-          : food === "Non-Veg/Veg"
-          ? 2
-          : null,
-      eventDetails: eventDetails,
-      eventAtUtc: eventAtUtc,
-      ifPetsAllowed: isPetAllowed,
-      entryFee: entryFee,
-      ifGuide: guideAvailable,
-      ifDifferentlyAbledAccessibility: isDiffAccess,
-      ifParking: parkingAvailable,
-      ifAlcohol: alcoholAllowed,
-      ifRegisterAsGroup: allowGroupRegistration,
-      eventType:
-        eventType === "Online"
-          ? 0
-          : eventType === "Offline"
-          ? 1
-          : eventType === "Hybrid"
-          ? 2
-          : null,
-      ifFreeGoodies: isFree,
-      ifRideTogether: carpooling,
-      studentOrgId: hostableClub,
-    };
-    const address = {
-      roomNumber: eventLocation,
-    };
-    const newEventData = new FormData();
-    newEventData.append("posterLink", posterImage);
-    newEventData.append("eventData", JSON.stringify(eventData));
-    newEventData.append("address", JSON.stringify(address));
-
-    console.log("data:", JSON.parse(newEventData.get("eventData")));
-    console.log("addres", JSON.parse(newEventData.get("address")));
-    const axiosInstance = Axios.create({
-      baseURL: `${process.env.REACT_APP_BASE_URL}`,
-    });
-
-    axiosRetry(axiosInstance, {
-      retries: 3,
-      retryDelay: axiosRetry.exponentialDelay,
-    });
-
-    const response = await axiosInstance
-      .post("/events/create", newEventData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((response) => {
-        setEventCreated(true);
-        console.log(response);
-      })
-      .catch((error) => {
-        console.log(error);
+      console.log("data:", JSON.parse(newEventData.get("eventData")));
+      console.log("addres", JSON.parse(newEventData.get("address")));
+      const axiosInstance = Axios.create({
+        baseURL: `${process.env.REACT_APP_BASE_URL}`,
       });
+
+      axiosRetry(axiosInstance, {
+        retries: 3,
+        retryDelay: axiosRetry.exponentialDelay,
+      });
+
+      const response = await axiosInstance
+        .post("/events/create", newEventData, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((response) => {
+          setEventCreated(true);
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   };
+
+  // ----submit end---->
 
   const handleImageChange = (event) => {
     setPosterImage(event.target.files[0]);
@@ -154,14 +163,6 @@ function HostEventPage() {
         );
         console.log("hostable", response.data);
         setHostableClubs(response.data);
-        if (Array.isArray(hostableClubs) && hostableClubs.length === 0) {
-          setErrorMessage(
-            <p style={{ color: "red" }}>
-              *Go create an org in student org page to create an event
-            </p>
-          );
-          console.log("error", errorMessage);
-        }
       } catch (error) {
         console.error(error);
       }
@@ -169,6 +170,23 @@ function HostEventPage() {
 
     fetchHostableClubs();
   }, []);
+
+  useEffect(() => {
+    if (
+      Array.isArray(hostableClubs) &&
+      hostableClubs.length === 0 &&
+      errorMessage !== null
+    ) {
+      setErrorMessage(
+        <p style={{ color: "red" }}>
+          *Select an org, or else go create an org in student org page
+        </p>
+      );
+      console.log("error", errorMessage ? "yes" : "no");
+    } else {
+      setErrorMessage(null);
+    }
+  }, [hostableClubs]);
 
   const hostableClubOptions = hostableClubs.map((hostableClub) => (
     <option key={hostableClub.id} value={hostableClub.id} required>
@@ -307,7 +325,9 @@ function HostEventPage() {
                 <select
                   value={hostableClub}
                   onChange={(e) => setHostableClub(e.target.value)}
+                  required
                 >
+                  <option value="empty">Select a Club</option>
                   {hostableClubOptions}
                 </select>
               </label>
