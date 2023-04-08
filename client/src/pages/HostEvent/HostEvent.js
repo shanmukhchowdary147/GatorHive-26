@@ -4,6 +4,8 @@ import Axios from "axios";
 import Cookies from "js-cookie";
 import { Redirect } from "react-router-dom";
 import axiosRetry from "axios-retry";
+import Footer from "../../components/Footer/Footer";
+
 function HostEventPage() {
   const token = Cookies.get("token");
   if (!token) {
@@ -35,6 +37,7 @@ function HostEventPage() {
   const [hostableClub, setHostableClub] = useState("");
   const [hostableClubs, setHostableClubs] = useState([]);
   const [eventCreated, setEventCreated] = useState(false);
+  const [errorMessage, setErrorMessage] = useState();
 
   function createEventAtUtc(eventDate, timings) {
     // Combine eventDate and timings into a single string
@@ -55,6 +58,9 @@ function HostEventPage() {
   // console.log(eventAtUtc.toUTCString()); // Display the time in UTC format
 
   const handleSubmit = async (event) => {
+    if (!hostableClub) {
+      return;
+    }
     event.preventDefault();
 
     const eventAtUtc = createEventAtUtc(eventDate, timings);
@@ -148,6 +154,14 @@ function HostEventPage() {
         );
         console.log("hostable", response.data);
         setHostableClubs(response.data);
+        if (Array.isArray(hostableClubs) && hostableClubs.length === 0) {
+          setErrorMessage(
+            <p style={{ color: "red" }}>
+              *Go create an org in student org page to create an event
+            </p>
+          );
+          console.log("error", errorMessage);
+        }
       } catch (error) {
         console.error(error);
       }
@@ -163,250 +177,258 @@ function HostEventPage() {
   ));
 
   return (
-    <div className="host-event-cont">
-      <h1 className="host-event-heading">Host an Event</h1>
-      <form onSubmit={handleSubmit} className="eventHost-form">
-        <div className="host-main-cont">
-          <div className="host-left-box">
-            <label>
-              Event Name:
-              <input
-                type="text"
-                value={eventName}
-                onChange={(e) => setEventName(e.target.value)}
-              />
-            </label>
-            <br />
-            <label>
-              <div className="host-event-details">
-                Event Details:
-                <textarea
-                  value={eventDetails}
-                  onChange={(e) => setEventDetails(e.target.value)}
+    <div className="host-event-main">
+      <div className="host-event-cont">
+        <h1 className="host-event-heading">Host an Event</h1>
+        <form onSubmit={handleSubmit} className="eventHost-form">
+          <div className="host-main-cont">
+            <div className="host-left-box">
+              <label>
+                Event Name:
+                <input
+                  type="text"
+                  value={eventName}
+                  onChange={(e) => setEventName(e.target.value)}
                 />
-              </div>
-            </label>
-            <br />
-            <label>
-              Event Location:
-              <input
-                type="text"
-                value={eventLocation}
-                onChange={(e) => setEventLocation(e.target.value)}
-                disabled={eventType === "Online"}
-              />
-            </label>
-            <label>
-              Event type:
-              <select
-                value={eventType}
-                onChange={(e) => setEventType(e.target.value)}
-              >
-                <option value="">Select</option>
-                <option value="Offline">Offline</option>
-                <option value="Online">Online</option>
-                <option value="Hybrid">Hybrid</option>
-              </select>
-            </label>
-            <br />
-            <label>
-              Event Date:
-              <input
-                type="date"
-                value={eventDate}
-                onChange={(e) => setEventDate(e.target.value)}
-                required
-              />
-            </label>
-            <br />
-            <label>
-              Entry Fee:
-              <input
-                type="number"
-                value={entryFee}
-                placeholder="$"
-                onChange={(e) => setEntryFee(e.target.value)}
-              />
-            </label>
-            <br />
-            <label className="event-capacity">
-              Capacity:
-              <input
-                type="number"
-                value={capacity}
-                onChange={(e) => setCapacity(e.target.value)}
-                min="0"
-              />
-              <div>
+              </label>
+              <br />
+              <label>
+                <div className="host-event-details">
+                  Event Details:
+                  <textarea
+                    value={eventDetails}
+                    onChange={(e) => setEventDetails(e.target.value)}
+                  />
+                </div>
+              </label>
+              <br />
+              <label>
+                Event Location:
+                <input
+                  type="text"
+                  value={eventLocation}
+                  onChange={(e) => setEventLocation(e.target.value)}
+                  disabled={eventType === "Online"}
+                />
+              </label>
+              <label>
+                Event type:
+                <select
+                  value={eventType}
+                  onChange={(e) => setEventType(e.target.value)}
+                >
+                  <option value="">Select</option>
+                  <option value="Offline">Offline</option>
+                  <option value="Online">Online</option>
+                  <option value="Hybrid">Hybrid</option>
+                </select>
+              </label>
+              <br />
+              <label>
+                Event Date:
+                <input
+                  type="date"
+                  value={eventDate}
+                  onChange={(e) => setEventDate(e.target.value)}
+                  required
+                />
+              </label>
+              <br />
+              <label>
+                Entry Fee:
+                <input
+                  type="number"
+                  value={entryFee}
+                  placeholder="$"
+                  onChange={(e) => setEntryFee(e.target.value)}
+                />
+              </label>
+              <br />
+              <label className="event-capacity">
+                Capacity:
+                <input
+                  type="number"
+                  value={capacity}
+                  onChange={(e) => setCapacity(e.target.value)}
+                  min="0"
+                />
+                <div>
+                  <input
+                    type="checkbox"
+                    checked={!capacity}
+                    onChange={() => setCapacity("")}
+                  />{" "}
+                  Unlimited
+                </div>
+              </label>
+              <br />
+              <label>
+                Start Time:
+                <input
+                  type="time"
+                  value={timings}
+                  onChange={(e) => setTimings(e.target.value)}
+                  required
+                />
+              </label>
+
+              <label>
+                Category:
+                <select
+                  value={category}
+                  onChange={(e) => setCategory(e.target.value)}
+                >
+                  <option value="">Select Category</option>
+                  <option value="music">Music</option>
+                  <option value="sports">Sports</option>
+                  <option value="cultural">Cultural</option>
+                  <option value="academic">Academic</option>
+                  <option value="volunteer">Volunteer</option>
+                  <option value="social">Social</option>
+                  <option value="other">Other</option>
+                </select>
+              </label>
+              <br />
+            </div>
+
+            <div className="host-right-box">
+              <label>
+                Poster Image:
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageChange}
+                  required
+                />
+              </label>
+              <br />
+              <label>
+                Org Name:
+                <select
+                  value={hostableClub}
+                  onChange={(e) => setHostableClub(e.target.value)}
+                >
+                  {hostableClubOptions}
+                </select>
+              </label>
+              {/* <br /> */}
+              {errorMessage}
+              <br />
+              <label>
+                Theme:
+                <select
+                  value={theme}
+                  onChange={(e) => setTheme(e.target.value)}
+                >
+                  <option value="">Select a Theme</option>
+                  <option value="Official">Official</option>
+                  <option value="Unofficial">Unofficial</option>
+                </select>
+              </label>
+              <br />
+              <label>
+                Food:
+                <select
+                  value={food}
+                  onChange={(e) => setFoodOption(e.target.value)}
+                >
+                  <option value="">Select Food Options</option>
+                  <option value="Veg">Veg</option>
+                  <option value="Non-Veg">Non-Veg</option>
+                  <option value="Non-Veg/Veg">Both Veg/Non-Veg</option>
+                </select>
+              </label>
+              <br />
+              <label>
+                Allow Register as Group:
                 <input
                   type="checkbox"
-                  checked={!capacity}
-                  onChange={() => setCapacity("")}
-                />{" "}
-                Unlimited
-              </div>
-            </label>
-            <br />
-            <label>
-              Start Time:
-              <input
-                type="time"
-                value={timings}
-                onChange={(e) => setTimings(e.target.value)}
-                required
-              />
-            </label>
-
-            <label>
-              Category:
-              <select
-                value={category}
-                onChange={(e) => setCategory(e.target.value)}
-              >
-                <option value="">Select Category</option>
-                <option value="music">Music</option>
-                <option value="sports">Sports</option>
-                <option value="cultural">Cultural</option>
-                <option value="academic">Academic</option>
-                <option value="volunteer">Volunteer</option>
-                <option value="social">Social</option>
-                <option value="other">Other</option>
-              </select>
-            </label>
-            <br />
-          </div>
-
-          <div className="host-right-box">
-            <label>
-              Poster Image:
-              <input
-                type="file"
-                accept="image/*"
-                onChange={handleImageChange}
-                required
-              />
-            </label>
-            <br />
-            <label>
-              Club Name:
-              <select
-                value={hostableClub}
-                onChange={(e) => setHostableClub(e.target.value)}
-              >
-                {hostableClubOptions}
-              </select>
-            </label>
-            <br />
-
-            <br />
-            <label>
-              Theme:
-              <select value={theme} onChange={(e) => setTheme(e.target.value)}>
-                <option value="">Select a Theme</option>
-                <option value="Official">Official</option>
-                <option value="Unofficial">Unofficial</option>
-              </select>
-            </label>
-            <br />
-            <label>
-              Food:
-              <select
-                value={food}
-                onChange={(e) => setFoodOption(e.target.value)}
-              >
-                <option value="">Select Food Options</option>
-                <option value="Veg">Veg</option>
-                <option value="Non-Veg">Non-Veg</option>
-                <option value="Non-Veg/Veg">Both Veg/Non-Veg</option>
-              </select>
-            </label>
-            <br />
-            <label>
-              Allow Register as Group:
-              <input
-                type="checkbox"
-                checked={allowGroupRegistration}
-                onChange={() =>
-                  setAllowGroupRegistration(!allowGroupRegistration)
+                  checked={allowGroupRegistration}
+                  onChange={() =>
+                    setAllowGroupRegistration(!allowGroupRegistration)
+                  }
+                />
+              </label>
+              <br />
+              <label>
+                Ridetogether:
+                <input
+                  type="checkbox"
+                  checked={carpooling}
+                  onChange={() => setCarpooling(!carpooling)}
+                />
+              </label>
+              <br />
+              <label>
+                Guide Available:
+                <input
+                  type="checkbox"
+                  checked={guideAvailable}
+                  onChange={() => setGuideAvailable(!guideAvailable)}
+                />
+              </label>
+              <br />
+              <label>
+                Parking Available:
+                <input
+                  type="checkbox"
+                  checked={parkingAvailable}
+                  onChange={() => setParkingAvailable(!parkingAvailable)}
+                />
+              </label>
+              <br />
+              <label>
+                Alcohol Allowed:
+                <input
+                  type="checkbox"
+                  checked={alcoholAllowed}
+                  onChange={() => setAlcoholAllowed(!alcoholAllowed)}
+                />
+              </label>
+              <br />
+              <label>
+                Differently Abled Accesibility:
+                <input
+                  type="checkbox"
+                  checked={isDiffAccess}
+                  onChange={() => setIsDiffAccess(!isDiffAccess)}
+                />
+              </label>
+              <br />
+              <label>
+                Pet Allowed:
+                <input
+                  type="checkbox"
+                  checked={isPetAllowed}
+                  onChange={() => setIsPetAllowed(!isPetAllowed)}
+                  v
+                />
+              </label>
+              <br />
+              <label>
+                Free Goodies:
+                <input
+                  type="checkbox"
+                  checked={isFree}
+                  onChange={() => setIsFree(!isFree)}
+                />
+              </label>
+              <button
+                type="submit"
+                className={
+                  !eventCreated ? "create-event-btn" : "event-already-created"
                 }
-              />
-            </label>
-            <br />
-            <label>
-              Ridetogether:
-              <input
-                type="checkbox"
-                checked={carpooling}
-                onChange={() => setCarpooling(!carpooling)}
-              />
-            </label>
-            <br />
-            <label>
-              Guide Available:
-              <input
-                type="checkbox"
-                checked={guideAvailable}
-                onChange={() => setGuideAvailable(!guideAvailable)}
-              />
-            </label>
-            <br />
-            <label>
-              Parking Available:
-              <input
-                type="checkbox"
-                checked={parkingAvailable}
-                onChange={() => setParkingAvailable(!parkingAvailable)}
-              />
-            </label>
-            <br />
-            <label>
-              Alcohol Allowed:
-              <input
-                type="checkbox"
-                checked={alcoholAllowed}
-                onChange={() => setAlcoholAllowed(!alcoholAllowed)}
-              />
-            </label>
-            <br />
-            <label>
-              Differently Abled Accesibility:
-              <input
-                type="checkbox"
-                checked={isDiffAccess}
-                onChange={() => setIsDiffAccess(!isDiffAccess)}
-              />
-            </label>
-            <br />
-            <label>
-              Pet Allowed:
-              <input
-                type="checkbox"
-                checked={isPetAllowed}
-                onChange={() => setIsPetAllowed(!isPetAllowed)}
-                v
-              />
-            </label>
-            <br />
-            <label>
-              Free Goodies:
-              <input
-                type="checkbox"
-                checked={isFree}
-                onChange={() => setIsFree(!isFree)}
-              />
-            </label>
-            <button
-              type="submit"
-              className={
-                !eventCreated ? "create-event-btn" : "event-already-created"
-              }
-              disabled={eventCreated}
-            >
-              {!eventCreated ? "Create Event" : "Event Succesfully Created !!"}
-            </button>
+                disabled={eventCreated}
+              >
+                {!eventCreated
+                  ? "Create Event"
+                  : "Event Succesfully Created !!"}
+              </button>
+            </div>
           </div>
-        </div>
-      </form>
+        </form>
+      </div>
+      <Footer />
     </div>
   );
 }

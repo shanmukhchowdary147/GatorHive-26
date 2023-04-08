@@ -13,9 +13,7 @@ function LoginForm() {
     const value = password;
     const regex =
       /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,256}$/;
-    console.log("regex:", regex.test(value));
     return regex.test(value);
-    console.log("isValid:", isValid);
   };
 
   const handleSubmit = async (event) => {
@@ -26,7 +24,6 @@ function LoginForm() {
       return;
     }
 
-    console.log(`Login form submitted: email=${email}, password=${password}`);
     const loginData = {
       email: email,
       password: password,
@@ -36,7 +33,6 @@ function LoginForm() {
       loginData
     );
     const token = responseLogin.data.accessToken;
-    console.log("Lprint:", token);
     Cookies.set("token", token);
     // console.log("fromtoken:", Cookies.get("token"));
     window.location.href = "/";
@@ -104,13 +100,11 @@ function SignupForm() {
       phoneNumber: "1234567890",
     };
 
-    console.log(signupData);
     const response = await Axios.post(
       `${process.env.REACT_APP_BASE_URL}/auth/signup`,
       signupData
     );
     const token = response.data.token;
-    console.log("print:", token);
     Cookies.set("token", token);
     // console.log("fromtoken:", Cookies.get("token"));
     window.location.href = "/";

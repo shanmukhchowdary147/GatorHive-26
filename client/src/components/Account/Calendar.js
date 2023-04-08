@@ -50,9 +50,30 @@ function Home() {
 
     setYesterdayEvents(filteredEventsYest);
 
-    //shourya code
+    //<------------shourya code
 
-    const eventWithCalenderDates = events.map((event) => {
+    const filteredEventsFuture = events.filter((event) => {
+      const eventDate = new Date(event.eventAtUtc);
+      const today = new Date();
+      const tomorrow = new Date(
+        today.getFullYear(),
+        today.getMonth(),
+        today.getDate() + 1
+      );
+      const eventYear = eventDate.getFullYear();
+      const eventMonth = eventDate.getMonth();
+      const eventDay = eventDate.getDate();
+      const tomorrowYear = tomorrow.getFullYear();
+      const tomorrowMonth = tomorrow.getMonth();
+      const tomorrowDay = tomorrow.getDate();
+      const isTomorrow =
+        eventYear === tomorrowYear &&
+        eventMonth === tomorrowMonth &&
+        eventDay >= tomorrowDay;
+      return isTomorrow;
+    });
+
+    const eventWithCalenderDates = filteredEventsFuture.map((event) => {
       const eventDate = new Date(event.eventAtUtc);
       const eventCalenderDate = new Date(
         eventDate.toLocaleDateString("en-US", {
@@ -64,9 +85,11 @@ function Home() {
         date: eventCalenderDate,
       };
     });
+
     setCalenderEvents(eventWithCalenderDates);
 
-    //shourya code
+    //--------->shourya code
+
     const filteredEventsTod = events.filter((event) => {
       const eventDate = new Date(event.eventAtUtc);
       const today = new Date();
@@ -216,25 +239,31 @@ function Home() {
 
   return (
     <div className="calendar-main">
-      <table className="calendar">
-        <tbody>
-          <tr>
-            <td>
-              <button class="buttons" onClick={handlePrev}>
-                &lt;
-              </button>
-            </td>
-            <td colSpan="5">{renderTitleRow()}</td>
-            <td>
-              <button class="buttons" onClick={handleNext}>
-                &gt;
-              </button>
-            </td>
-          </tr>
-          {renderDayNameRow()}
-          {renderDateRows()}
-        </tbody>
-      </table>
+      <div className="calendar-container">
+        <table className="calendar">
+          <tbody>
+            <tr>
+              <td>
+                <button class="buttons" onClick={handlePrev}>
+                  &lt;
+                </button>
+              </td>
+              <td colSpan="5">{renderTitleRow()}</td>
+              <td>
+                <button class="buttons" onClick={handleNext}>
+                  &gt;
+                </button>
+              </td>
+            </tr>
+            {renderDayNameRow()}
+            {renderDateRows()}
+          </tbody>
+        </table>
+        <div className="green-box-indicator">
+          <div className="green-box"></div>
+          <p>You have evnts on that day</p>
+        </div>
+      </div>
       <div className="event-cards-container">
         <div className="events-card">
           <h2>Yesterday's Events</h2>
@@ -277,7 +306,6 @@ function Home() {
         </div>
       </div>
     </div>
-    
   );
 }
 

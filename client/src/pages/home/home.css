@@ -4,6 +4,10 @@
   padding: 20px;
 }
 
+.home-main-cont {
+  background-color: rgb(240, 238, 238);
+}
+
 .carousels {
   display: flex;
   justify-content: center;
@@ -35,6 +39,7 @@
   border-radius: 15px 0px 0px 15px;
   width: 70%;
   font-size: 16px;
+  background-color: white !important;
 }
 
 .search-form button {

@@ -3,22 +3,15 @@ import { useLocation } from "react-router-dom";
 import "./Search.css";
 import { Button } from "react-bootstrap";
 import Axios from "axios";
+import Footer from "../../components/Footer/Footer";
+import LinearProgress from "@mui/material/LinearProgress";
 
 function SearchPage() {
   const location = useLocation();
   const urlParams = new URLSearchParams(location.search);
   const searchText = decodeURIComponent(urlParams.get("q"));
   const [events, setEvents] = useState([]);
-
-  // useEffect(() => {
-  //   Axios.get(`http://localhost:8000/events/`)
-  //     .then((response) => {
-  //       setEvents(Object.values(response.data));
-  //     })
-  //     .catch((error) => {
-  //       console.error(error);
-  //     });
-  // }, []);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -33,9 +26,6 @@ function SearchPage() {
     };
     fetchData();
   }, []);
-
-  // console.log("op", events);
-  // console.log(Object.values(eventsData));
 
   const [searchQuery, setSearchQuery] = useState(searchText);
   const [sortOption, setSortOption] = useState("");
@@ -518,6 +508,7 @@ function SearchPage() {
           </div>
         </div>
         <div className="event-list">
+          <LinearProgress />
           {sortedEvents.map((event) => (
             <div
               className="event-card"
@@ -544,6 +535,9 @@ function SearchPage() {
             </div>
           ))}
         </div>
+      </div>
+      <div className="footer-cont1">
+        <Footer />
       </div>
     </div>
   );

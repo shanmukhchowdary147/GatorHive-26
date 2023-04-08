@@ -7,15 +7,23 @@ import { IoChatbubbleEllipsesSharp } from "react-icons/io5";
 import Cookies from "js-cookie";
 import Axios from "axios";
 import { Redirect } from "react-router-dom";
+import Footer from "../../components/Footer/Footer";
 // import EventSlider from "../../components/EventSlider/EventSlider";
 
 const Home = () => {
-  console.log(Cookies.get("token"));
   // state for the carousel images
   const images = [
+    require("../../images/c3.jpg"),
+    require("../../images/c4.jpg"),
+    require("../../images/c2.jpg"),
     require("../../images/bg3.jpg"),
-    require("../../images/bg4.jpg"),
+  ];
+
+  const images1 = [
+    require("../../images/c5.jpg"),
+    require("../../images/c1.jpg"),
     require("../../images/bg5.jpg"),
+    require("../../images/c2.jpg"),
   ];
 
   const [cardData, setCardData] = useState([]);
@@ -72,33 +80,34 @@ const Home = () => {
   }
 
   return (
-    <div className="home">
-      <div className="carousels">
-        <div className="carousel">
-          <SimpleImageSlider
-            width={700}
-            height={350}
-            images={images}
-            showBullets={true}
-            showNavs={true}
-            className="custom-slider-class"
-            autoPlay={true}
-            autoPlayDelay={4.0}
-            // onClick={clickImage(idx, event)}
-          />
-        </div>
-        <div className="carousel">
-          <SimpleImageSlider
-            width={700}
-            height={350}
-            images={images}
-            showBullets={true}
-            showNavs={true}
-            className="custom-slider-class"
-            autoPlayDelay={4.0}
-            autoPlay={true}
-          />
-          {/* <Carousel>
+    <div className="home-main-cont">
+      <div className="home">
+        <div className="carousels">
+          <div className="carousel">
+            <SimpleImageSlider
+              width={700}
+              height={350}
+              images={images}
+              showBullets={true}
+              showNavs={true}
+              className="custom-slider-class"
+              autoPlay={true}
+              autoPlayDelay={4.0}
+              // onClick={clickImage(idx, event)}
+            />
+          </div>
+          <div className="carousel">
+            <SimpleImageSlider
+              width={700}
+              height={350}
+              images={images1}
+              showBullets={true}
+              showNavs={true}
+              className="custom-slider-class"
+              autoPlayDelay={4.0}
+              autoPlay={true}
+            />
+            {/* <Carousel>
             {carouselImages.map((image, i) => (
               <img
                 key={i}
@@ -108,43 +117,45 @@ const Home = () => {
               />
             ))}
           </Carousel> */}
+          </div>
+        </div>
+        <form className="search-form" onSubmit={handleSubmit}>
+          <input
+            type="text"
+            placeholder="Search for events........"
+            value={searchQuery}
+            onChange={(event) => setSearchQuery(event.target.value)}
+          />
+          <button type="submit">
+            <BiSearchAlt />
+          </button>
+        </form>
+        <h2 className="trending-events">Trending Events</h2>
+        <div className="cards">
+          {cardData.map((card, index) => (
+            <div
+              key={index}
+              className="popular-card"
+              onClick={() => handleTrendingEventCardClick(card.id)}
+            >
+              <img src={card.posterLink} alt={`Card ${index}`} />
+              <div className="card-info">
+                <h3>{card.eventName}</h3>
+                <p>{convertUtcToLocal(card.eventAtUtc)}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+        <div className="view-more">
+          <button onClick={handleViewMore}>View More</button>
+        </div>
+        <div className="chatbot-btn">
+          <button onClick={handleChatbotClick}>
+            <IoChatbubbleEllipsesSharp />
+          </button>
         </div>
       </div>
-      <form className="search-form" onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="Search for events........"
-          value={searchQuery}
-          onChange={(event) => setSearchQuery(event.target.value)}
-        />
-        <button type="submit">
-          <BiSearchAlt />
-        </button>
-      </form>
-      <h2 className="trending-events">Trending Events</h2>
-      <div className="cards">
-        {cardData.map((card, index) => (
-          <div
-            key={index}
-            className="popular-card"
-            onClick={() => handleTrendingEventCardClick(card.id)}
-          >
-            <img src={card.posterLink} alt={`Card ${index}`} />
-            <div className="card-info">
-              <h3>{card.eventName}</h3>
-              <p>{convertUtcToLocal(card.eventAtUtc)}</p>
-            </div>
-          </div>
-        ))}
-      </div>
-      <div className="view-more">
-        <button onClick={handleViewMore}>View More</button>
-      </div>
-      <div className="chatbot-btn">
-        <button onClick={handleChatbotClick}>
-          <IoChatbubbleEllipsesSharp />
-        </button>
-      </div>
+      <Footer />
     </div>
   );
 };

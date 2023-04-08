@@ -17,28 +17,27 @@ import EventDetails from "./pages/EventDetails/EventDetails";
 import HostEvent from "./pages/HostEvent/HostEvent";
 import StudentOrgs from "./pages/StudentOrgs/StudentOrgs";
 import AboutUs from "./pages/AboutUs/AboutUs";
-import Fake from "./Fake";
 import Chatbot from "./pages/Chatbot/Chatbot";
 
 function App() {
   return (
     <Router>
-      <div>
+      <div className="body-cont">
         <Header />
+
         <Switch>
           <Route exact path="/login" component={Login} />
           <Route exact path="/" component={Home} />
           <Route path="/account" component={Account} />
           <Route path="/search" component={Search} />
           <Route path="/host-event" component={HostEvent} />
-          <Route path="/fake" component={Fake} />
           <Route path="/event" component={EventDetails} />
           <Route path="/student-orgs" component={StudentOrgs} />
           <Route path="/about-us" component={AboutUs} />
           <Route path="/chatbot" component={Chatbot} />
         </Switch>
-        <Footer />
       </div>
+      {/* <Footer className="footer-cont" /> */}
     </Router>
   );
 }

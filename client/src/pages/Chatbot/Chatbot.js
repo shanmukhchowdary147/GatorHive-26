@@ -25,7 +25,7 @@ function Chatbot() {
   return (
     <div className="chatbot-container">
       <h1 className="chatbot-title">Chatbot</h1>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="chatbot-form">
         <input
           className="chatbot-input"
           type="text"
