@@ -11,7 +11,6 @@ function Header() {
   useEffect(() => {
     const token = Cookies.get("token");
     if (token) {
-      console.log("token", token);
       setProfile("profile");
     } else {
       setProfile("login");
@@ -22,12 +21,16 @@ function Header() {
     setShowDropdown(!showDropdown);
   };
 
+  function handleLogout() {
+    Cookies.remove("token");
+  }
+
   return (
     <nav className="sticky-header">
       <div className="logo">
         <a href="/">GatorHive</a>
       </div>
-      <div className="header-ight-part">
+      <div className="header-right-part">
         <a href="/host-event" className="host-event-btn">
           Host an Event
         </a>
@@ -44,6 +47,9 @@ function Header() {
                 <a href="/account/upcoming">Upcoming Events</a>
                 <a href="/account/attended">Events Attended</a>
                 <a href="/account/hosted">Events Hosted</a>
+                <a href="/login" onClick={handleLogout}>
+                  Logout
+                </a>
               </div>
             )}
           </div>

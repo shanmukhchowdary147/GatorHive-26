@@ -1,4 +1,4 @@
-.search-cont {
+/* .search-cont {
   background-image: linear-gradient(to bottom right, #000428, #004e92);
 }
 .search-page {
@@ -6,20 +6,67 @@
   padding: 20px;
   margin: 0 auto;
   width: 85%;
+  position: relative;
+  width: 100%;
+  height: 100%;
+} */
+
+.search-page {
+  background-color: rgb(15, 17, 16);
+  color: rgb(200, 200, 200) !important;
+  height: 100vh;
 }
 
 .left-box {
-  width: 25%;
-  position: sticky;
   padding: 10px 10px 20px 20px;
-  height: 100vh;
-  background-color: rgb(228, 228, 228);
+  /* height: 100vh; */
   border: rgb(114, 113, 113) 1px solid;
+  background-color: rgb(24, 24, 24);
+  color: rgb(200, 200, 200);
   border-radius: 5px;
+
+  position: absolute;
+  width: 25%;
+  height: 82%;
+  top: 11%;
+  left: 5%;
   /* position: fixed;
   left: 0; */
 }
 
+.event-list {
+  display: flex;
+  flex-direction: column;
+  margin-left: 20px;
+
+  position: absolute;
+  width: 60%;
+  height: 85%;
+  top: 11%;
+  right: 5%;
+  overflow-y: auto;
+  border-bottom: black 1px solid;
+  border-radius: 0px 0px 5px 5px;
+  padding-bottom: 10px;
+  /* overflow-y: scroll;
+  flex: 1;
+  float: right;
+  position: relative; */
+}
+
+.event-list::-webkit-scrollbar {
+  display: none;
+}
+
+.footer-cont1 {
+  position: relative;
+  bottom: 0;
+  left: 0;
+}
+
+.event-list {
+  scrollbar-width: none;
+}
 .left-box input[type="text"] {
   width: 90%;
   padding: 8px;
@@ -27,6 +74,21 @@
   /* box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.1); */
   font-size: 16px;
   margin-bottom: 20px;
+  color: rgb(200, 200, 200);
+  background-color: #434343;
+}
+
+.left-box select {
+  /* background-color: #434343; */
+  color: black;
+}
+
+.filter-options input {
+  color: #434343;
+}
+
+.sort-options input {
+  background-color: #434343 !important;
 }
 
 .sort-options select {
@@ -60,18 +122,6 @@
   margin-right: 10px;
 }
 
-.event-list {
-  display: flex;
-  flex-direction: column;
-  max-width: 70%;
-  margin-left: 20px;
-  height: 100%;
-  /* overflow-y: scroll;
-  flex: 1;
-  float: right;
-  position: relative; */
-}
-
 .event-card {
   display: flex;
   flex-direction: row;
@@ -81,7 +131,10 @@
   margin-bottom: 20px;
   border: rgb(114, 113, 113) 1px solid;
   padding: 10px;
-  background-color: white;
+  background-color: rgb(24, 24, 24);
+
+  color: rgb(200, 200, 200);
+
   cursor: pointer;
   /* border-radius: 10px; */
 }

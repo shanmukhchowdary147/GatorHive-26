@@ -91,6 +91,7 @@
   border-radius: 15px;
   width: 40vh;
   font-size: 16px;
+  background-color: white !important;
 }
 
 .search-orgs button {

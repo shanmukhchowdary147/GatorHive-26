@@ -4,6 +4,15 @@
   text-align: center;
 }
 
+/* .body-cont {
+  height: 100vh;
+}
+.footer-cont {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+} */
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
