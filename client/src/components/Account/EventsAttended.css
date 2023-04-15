@@ -1,14 +1,27 @@
+.App {
+  padding-right: 20px;
+}
 .attended-event-list {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
   margin-left: 20px;
+  margin-right: 200px;
   width: 100%;
+  overflow-y: auto;
+  height: 80vh;
+}
+
+.attended-event-list::-webkit-scrollbar {
+  display: none;
 }
 
 .attended-event-card {
   display: flex;
-  flex-direction: row;
+  /* flex-direction: row; */
   align-items: center;
   border-radius: 5px;
+  flex-basis: calc(20% - 5px);
   box-shadow: 2px 2px 2px rgba(73, 71, 71, 0.1);
   margin-bottom: 20px;
   border: rgb(114, 113, 113) 1px solid;
@@ -16,7 +29,8 @@
   background-color: white;
   cursor: pointer;
   max-width: 250px;
-  overflow: hidden;
+  max-height: 400px;
+  /* overflow: hidden; */
   margin: 10px;
 }
 

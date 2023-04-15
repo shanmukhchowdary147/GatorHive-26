@@ -7,6 +7,7 @@ import Button from "@mui/material/Button";
 import Cookies from "js-cookie";
 import { useLocation } from "react-router-dom";
 import Axios from "axios";
+import Footer from "../../components/Footer/Footer";
 
 const EventDetails = () => {
   const [eventDetails, setEventDetails] = useState({});
@@ -171,165 +172,172 @@ const EventDetails = () => {
   };
 
   return (
-    <div className="event-details-page" onClick={handleOverlayClick}>
-      <div className="event-details-left">
-        <img src={eventDetails.posterLink} alt={eventDetails.eventName} />
-        <p className="event-time">
-          {convertUtcToLocal(eventDetails.eventAtUtc)}
-        </p>
-        <p className="entry-Fee">Entry Fee: ${eventDetails.entryFee}</p>
-        <p className="event-location">
-          <MdLocationOn className="location-icon" /> Venue:{" "}
-          {eventDetails.eventLocation}
-        </p>
-      </div>
-      <div className="event-details-right">
-        <h1 className="event-name">{eventDetails.eventName}</h1>
-        <h4 className="club-name">{eventDetails.orgName}</h4>
-        <p className="event-description">{eventDetails.eventDetails}</p>
-        <p className="event-features">
-          Category: {eventDetails.categoryName} | Food:{" "}
-          {eventDetails.food === 0 && "Veg"}
-          {eventDetails.food === 1 && "Non-veg"}
-          {eventDetails.food === 2 && "Both Veg & Non-Veg"} | Theme:{" "}
-          {eventDetails.ifOfficial ? "Official" : "Un Official"} | Event Type:{" "}
-          {eventDetails.eventType === 0 && "Online"}
-          {eventDetails.eventType === 1 && "Offline"}
-          {eventDetails.eventType === 2 && "Both Online & Offline"}
-        </p>
-        <ul className="event-availabilities">
-          <li
-            className={
-              eventDetails.ifFreeGoodies ? "feature-tick" : "feature-cross"
-            }
-          >
-            Free Goodies
-          </li>
-          <li
-            className={
-              eventDetails.ifAlcohol ? "feature-tick" : "feature-cross"
-            }
-          >
-            Alcohol
-          </li>
-          <li
-            className={eventDetails.ifGuide ? "feature-tick" : "feature-cross"}
-          >
-            Guide Available
-          </li>
-          <li
-            className={
-              eventDetails.ifDifferentlyAbledAccessibility
-                ? "feature-tick"
-                : "feature-cross"
-            }
-          >
-            Differently-Abled Accessibility
-          </li>
-          <li
-            className={
-              eventDetails.ifParking ? "feature-tick" : "feature-cross"
-            }
-          >
-            Parking Available
-          </li>
-          <li
-            className={
-              eventDetails.ifPetsAllowed ? "feature-tick" : "feature-cross"
-            }
-          >
-            Pets Allowed
-          </li>
-          <li
-            className={
-              eventDetails.ifRegisterAsGroup ? "feature-tick" : "feature-cross"
-            }
-          >
-            Register As Group
-          </li>
-          <li
-            className={
-              eventDetails.ifRideTogether ? "feature-tick" : "feature-cross"
-            }
-          >
-            Ride Together
-          </li>
-        </ul>
-        <div className="registration-buttons">
-          <Button
-            variant="contained"
-            endIcon={<CiBookmark />}
-            onClick={registerToEvent}
-            className={
-              registrationClassName(alreadyRegistered)
-              // alreadyRegistered ? "register-invisible" : "register-visible"
-            }
-          >
-            {registrationString(alreadyRegistered)}
-          </Button>
-          <Button
-            variant="contained"
-            endIcon={<MdOutlineGroups />}
-            onClick={openCreateOrgForm}
-            className={registrationClassName(alreadyGroupRegistered)}
-          >
-            {registrationGroupString(alreadyGroupRegistered)}
-          </Button>
+    <div>
+      <div className="event-details-page" onClick={handleOverlayClick}>
+        <div className="event-details-left">
+          <img src={eventDetails.posterLink} alt={eventDetails.eventName} />
+          <p className="event-time">
+            {convertUtcToLocal(eventDetails.eventAtUtc)}
+          </p>
+          <p className="entry-Fee">Entry Fee: ${eventDetails.entryFee}</p>
+          <p className="event-location">
+            <MdLocationOn className="location-icon" /> Venue:{" "}
+            {eventDetails.eventLocation}
+          </p>
         </div>
-        <div>
-          {isFormOpen && (
-            <div className="overlay">
-              <div className="form">
-                <div className="header">
-                  <h3>Enter Your Group Details</h3>
-                  <button onClick={() => setIsFormOpen(false)}>X</button>
-                </div>
-                <form
-                  className="group-register-form"
-                  onSubmit={registerAsGroup}
-                >
-                  {groupEmails.map((email, index) => (
-                    <div key={index}>
-                      <label>Email ID:</label>
-                      <input
-                        type="text"
-                        value={email}
-                        placeholder="Enter Email ID of your companion"
-                        onChange={(event) => handleEmailChange(index, event)}
-                      />
-                      {index > 0 && (
-                        <button
-                          type="button"
-                          onClick={() => handleRemoveEmail(index)}
-                          className="remove-email"
-                        >
-                          -
-                        </button>
-                      )}
-                    </div>
-                  ))}
-                  <div className="email-add">
-                    <button
-                      type="button"
-                      onClick={handleAddEmail}
-                      className="add-email"
-                    >
-                      Add email
-                    </button>
+        <div className="event-details-right">
+          <h1 className="event-name">{eventDetails.eventName}</h1>
+          <h4 className="club-name">{eventDetails.orgName}</h4>
+          <p className="event-description">{eventDetails.eventDetails}</p>
+          <p className="event-features">
+            Category: {eventDetails.categoryName} | Food:{" "}
+            {eventDetails.food === 0 && "Veg"}
+            {eventDetails.food === 1 && "Non-veg"}
+            {eventDetails.food === 2 && "Both Veg & Non-Veg"} | Theme:{" "}
+            {eventDetails.ifOfficial ? "Official" : "Un Official"} | Event Type:{" "}
+            {eventDetails.eventType === 0 && "Online"}
+            {eventDetails.eventType === 1 && "Offline"}
+            {eventDetails.eventType === 2 && "Both Online & Offline"}
+          </p>
+          <ul className="event-availabilities">
+            <li
+              className={
+                eventDetails.ifFreeGoodies ? "feature-tick" : "feature-cross"
+              }
+            >
+              Free Goodies
+            </li>
+            <li
+              className={
+                eventDetails.ifAlcohol ? "feature-tick" : "feature-cross"
+              }
+            >
+              Alcohol
+            </li>
+            <li
+              className={
+                eventDetails.ifGuide ? "feature-tick" : "feature-cross"
+              }
+            >
+              Guide Available
+            </li>
+            <li
+              className={
+                eventDetails.ifDifferentlyAbledAccessibility
+                  ? "feature-tick"
+                  : "feature-cross"
+              }
+            >
+              Differently-Abled Accessibility
+            </li>
+            <li
+              className={
+                eventDetails.ifParking ? "feature-tick" : "feature-cross"
+              }
+            >
+              Parking Available
+            </li>
+            <li
+              className={
+                eventDetails.ifPetsAllowed ? "feature-tick" : "feature-cross"
+              }
+            >
+              Pets Allowed
+            </li>
+            <li
+              className={
+                eventDetails.ifRegisterAsGroup
+                  ? "feature-tick"
+                  : "feature-cross"
+              }
+            >
+              Register As Group
+            </li>
+            <li
+              className={
+                eventDetails.ifRideTogether ? "feature-tick" : "feature-cross"
+              }
+            >
+              Ride Together
+            </li>
+          </ul>
+          <div className="registration-buttons">
+            <Button
+              variant="contained"
+              endIcon={<CiBookmark />}
+              onClick={registerToEvent}
+              className={
+                registrationClassName(alreadyRegistered)
+                // alreadyRegistered ? "register-invisible" : "register-visible"
+              }
+            >
+              {registrationString(alreadyRegistered)}
+            </Button>
+            <Button
+              variant="contained"
+              endIcon={<MdOutlineGroups />}
+              onClick={openCreateOrgForm}
+              className={registrationClassName(alreadyGroupRegistered)}
+            >
+              {registrationGroupString(alreadyGroupRegistered)}
+            </Button>
+          </div>
+          <div>
+            {isFormOpen && (
+              <div className="overlay">
+                <div className="form">
+                  <div className="header">
+                    <h3>Enter Your Group Details</h3>
+                    <button onClick={() => setIsFormOpen(false)}>X</button>
                   </div>
-                  <button
-                    type="submit"
-                    className="grp-register-btn"
-                    disabled={grpRegisterDone}
+                  <form
+                    className="group-register-form"
+                    onSubmit={registerAsGroup}
                   >
-                    Register As Group
-                  </button>
-                </form>
+                    {groupEmails.map((email, index) => (
+                      <div key={index}>
+                        <label>Email ID:</label>
+                        <input
+                          type="text"
+                          value={email}
+                          placeholder="Enter Email ID of your companion"
+                          onChange={(event) => handleEmailChange(index, event)}
+                        />
+                        {index > 0 && (
+                          <button
+                            type="button"
+                            onClick={() => handleRemoveEmail(index)}
+                            className="remove-email"
+                          >
+                            -
+                          </button>
+                        )}
+                      </div>
+                    ))}
+                    <div className="email-add">
+                      <button
+                        type="button"
+                        onClick={handleAddEmail}
+                        className="add-email"
+                      >
+                        Add email
+                      </button>
+                    </div>
+                    <button
+                      type="submit"
+                      className="grp-register-btn"
+                      disabled={grpRegisterDone}
+                    >
+                      Register As Group
+                    </button>
+                  </form>
+                </div>
               </div>
-            </div>
-          )}
+            )}
+          </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

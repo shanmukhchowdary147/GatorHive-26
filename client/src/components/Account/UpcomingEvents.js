@@ -45,10 +45,10 @@ function UpcomingEvents() {
   return (
     <div className="App">
       <h1>Upcoming Events</h1>
-      <div className="upcoming-event-list">
+      <div className="attended-event-list">
         {event.map((event) => (
           <div
-            className="upcoming-event-card"
+            className="attended-event-card"
             key={event.id}
             onClick={() => handleEventCardClick(event.id)}
           >

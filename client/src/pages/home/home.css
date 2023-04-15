@@ -16,7 +16,7 @@
 
 .carousel {
   margin: 20px;
-  /* overflow: hidden; */
+  border-radius: 50%;
 }
 
 .carousel img {
@@ -66,8 +66,8 @@
   width: calc(20% - 10px);
   margin-bottom: 20px;
   margin: 3px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
+  border: 1px solid #adadad;
+  border-radius: 8px;
   overflow: hidden;
 }
 

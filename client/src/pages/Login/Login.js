@@ -3,6 +3,7 @@ import { Form, Button } from "react-bootstrap";
 import "./Login.css";
 import Axios from "axios";
 import Cookies from "js-cookie";
+import Footer from "../../components/Footer/Footer";
 
 function LoginForm() {
   const [email, setEmail] = useState("");
@@ -171,13 +172,16 @@ function SignupForm() {
 
 function LoginSignupPage() {
   return (
-    <div className="login-signup-container">
-      <div className="login-box">
-        <LoginForm />
+    <div>
+      <div className="login-signup-container">
+        <div className="login-box">
+          <LoginForm />
+        </div>
+        <div className="signup-box">
+          <SignupForm />
+        </div>
       </div>
-      <div className="signup-box">
-        <SignupForm />
-      </div>
+      <Footer />
     </div>
   );
 }
